@@ -27,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ./**/*.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,6 +46,8 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2"
   }

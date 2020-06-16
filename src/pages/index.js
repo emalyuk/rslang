@@ -1,10 +1,10 @@
-import React, { FC } from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import store from "pages/app/store";
 import App from "./app/App";
 
-const Root: FC = () => (
+const Root = () => (
   <BrowserRouter>
     <Provider store={store}>
       <App />
