@@ -1,19 +1,15 @@
 import React, { FC } from "react";
-import { Store } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import store from "pages/app/store";
 import App from "./app/App";
 
-interface RootProps {
-  store: Store<any>;
-}
-
 const Root: FC = () => (
-  //   <Provider store={store as any}>
   <BrowserRouter>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </BrowserRouter>
-  //   </Provider>
 );
 
 export default Root;
