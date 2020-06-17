@@ -5,4 +5,5 @@ export default {
   forgotPassword: '/forgot-password',
   game: '/game',
   team: '/team',
+  promo: '/promo',
 };

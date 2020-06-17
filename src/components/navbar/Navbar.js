@@ -22,6 +22,9 @@ export const Navbar = () => {
       <button type='button' onClick={() => history.push('/team')}>
         Team
       </button>
+      <button type='button' onClick={() => history.push('/promo')}>
+        Promo
+      </button>
     </div>
   );
 };
