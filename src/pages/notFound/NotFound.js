@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export const NotFound = () => {
   return (
-    <div className="usc-footer">
+    <div className='usc-footer'>
       <h1>NotFound</h1>
     </div>
   );

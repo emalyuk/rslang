@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getLoginInfo } from "pages/auth/login/LoginSliceReducer";
+import { getLoginInfo } from "./LoginSliceReducer";
 
 export const Login = () => {
   const dispatch = useDispatch();

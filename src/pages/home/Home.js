@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getHomeInfo } from "pages/home/HomeReducer";
+import { getHomeInfo } from "./HomeSliceReducer";
 
 export const Home = () => {
   const dispatch = useDispatch();

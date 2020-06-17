@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export const Registration = () => {
   return (
-    <div className="usc-footer">
+    <div className='usc-footer'>
       <h1>Registration</h1>
     </div>
   );
