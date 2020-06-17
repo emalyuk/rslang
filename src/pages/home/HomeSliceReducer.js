@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getHomeData } from "pages/home/HomeApi";
+import { getHomeData } from "./HomeApi";
 
 const initialHomeState = {
   data: [],
