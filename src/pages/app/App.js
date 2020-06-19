@@ -7,6 +7,7 @@ import './App.scss';
 const Home = lazy(() => import('../../pages/home/Home'));
 const Login = lazy(() => import('../../pages/auth/login/Login'));
 const Registration = lazy(() => import('../../pages/auth/registration/Registration'));
+const Team = lazy(() => import('../../pages/team/Team'));
 const NotFound = lazy(() => import('../../pages/notFound/NotFound'));
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
             <Route path={routes.home} component={Home} exact />
             <Route path={routes.login} component={Login} exact />
             <Route path={routes.registration} component={Registration} exact />
+            <Route path={routes.team} component={Team} exact />
             <Route component={NotFound} />
           </Switch>
         </React.Suspense>

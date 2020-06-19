@@ -11,6 +11,7 @@ export const Navbar = () => {
       <span onClick={() => history.push("/login")}>Login</span>
       <span onClick={() => history.push("/registration")}>Registration</span>
       <span onClick={() => history.push("/game")}>Game</span>
+      <span onClick={() => history.push("/team")}>Team</span>
     </div>
   );
 };
