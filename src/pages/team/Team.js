@@ -1,19 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Team.scss';
-import TeamCard from "./TeamCard";
+import { TeamCard } from '../../components';
+import { teamData } from '../../constants';
 
 const Team = () => {
   return (
-    <div className='container team-container'>
-      <h1 className="page-title">Our team</h1>
-      <div className="break"></div>
-      <p className="team-description">
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-      <div className="break"></div>
-      <TeamCard/>
-    </div>
-  );
+    <>
+      <div className='container team'>
+        <h1 className='team__header'>Our team</h1>
+        <ul className='team__members'>
+          {teamData.map((obj, id) => {
+            return (
+              <TeamCard
+                key={id.toString()}
+                cssClass='team__member'
+                data={obj}
+              />
+            )
+          })}
+        </ul>
+      </div>
+    </>
+  )
 };
 
 export default Team;
+

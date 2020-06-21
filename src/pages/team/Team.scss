@@ -1,89 +1,31 @@
-@font-face {
-  font-family: "San Francisco";
-  src: url("../../assets/fonts/SFP-Bold.woff2") format('woff2');
-  font-weight: 900;
-  font-style: normal;
+@import '../../scss/variables';
+@import '../../scss/mixins';
+
+.team{
+  font-family: $teamFont, sans-serif;
+  padding-bottom: 20px;
 }
 
-@font-face {
-  font-family: "San Francisco";
-  src: url("../../assets/fonts/SFP-Semibold.woff2") format('woff2');
-  font-weight: 600;
-  font-style: normal;
+.team__header{
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-@font-face {
-  font-family: "San Francisco";
-  src: url("../../assets/fonts/SFP-Medium.woff2") format('woff2');
-  font-weight: 500;
-  font-style: normal;
-}
+.team__members{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 20px;
 
-@font-face {
-  font-family: "San Francisco";
-  src: url("../../assets/fonts/SFP-Regular.woff2") format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "San Francisco";
-  src: url("../../assets/fonts/SFP-Light.woff2") format('woff2');
-  font-weight: 300;
-  font-style: normal;
-}
-
-.container {
-  font-family: "San Francisco";
-  background: url("../../assets/img/team-page-bg.jpg") no-repeat right top / 55%, #f9f9f9;
-  line-height: 1.5;
-}
-
-.team-container {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 1440px;
-  margin: 0 auto;
-  justify-content: space-between;
-  align-content: flex-start;
-  padding: 60px 20px 20px;
-}
-
-.page-title {
-  font-size: 50px;
-  font-weight: 600;
-  color: #717171;
-  letter-spacing: 2px;
-  line-height: 70px;
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-.team-description {
-  width: 50%;
-  font-style: 18px;
-  margin-bottom: 120px;
-}
-
-.break {
-  flex-basis: 100%;
-  height: 0;
-}
-
-@media (max-width: 1340px) {
-  .team-container {
+  @include exSm(){
+    grid-template-columns: 280px;
     justify-content: center;
   }
-  .container {
-    background: none;
-  }
-  .team-description {
-    width: 640px;
-  }
 }
 
-@media (max-width: 680px) {
-  .team-description {
-    display: none;
-  }
+.team__member{
+  min-height: 350px;
 }

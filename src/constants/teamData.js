@@ -5,8 +5,7 @@ const teamData = [
     position: 'Project Manager',
     city: 'Minsk',
     avatar: 'eMalyuk.jpg',
-    contribution:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    duties: ['Project manager', 'Organizer and mastermind', 'Scrum master'],
   },
   {
     github: 'abukato',
@@ -14,8 +13,7 @@ const teamData = [
     position: 'Frontend Developer',
     city: 'Minsk',
     avatar: 'aBukato.jpg',
-    contribution:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    duties: ['FrontEnd Developer', 'Game developer', 'Main Page Developer'],
   },
   {
     github: 'anreikas',
@@ -23,8 +21,7 @@ const teamData = [
     position: 'Frontend Developer',
     city: 'Minsk',
     avatar: 'aKazey.jpg',
-    contribution:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    duties: ['FrontEnd Developer', 'Game developer', 'Main Page Developer'],
   },
   {
     github: 'himimetsu',
@@ -32,8 +29,7 @@ const teamData = [
     position: 'Frontend Developer',
     city: 'Nizhny Novgorod',
     avatar: 'vIvanov.jpg',
-    contribution:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    duties: ['FrontEnd Developer', 'Game developer', 'Main Page Developer'],
   },
   {
     github: 'krohnic',
@@ -41,8 +37,7 @@ const teamData = [
     position: 'Frontend Developer',
     city: 'Minsk',
     avatar: 'nKroh.jpg',
-    contribution:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    duties: ['FrontEnd Developer', 'Game developer', 'Main Page Developer'],
   },
   {
     github: 'a-klimovich',
@@ -50,8 +45,7 @@ const teamData = [
     position: 'Frontend Developer',
     city: 'Lida',
     avatar: 'aKlimovich.jpg',
-    contribution:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    duties: ['FrontEnd Developer', 'Game developer', 'Main Page Developer'],
   },
   {
     github: 'aleksey-drozdov',
@@ -59,8 +53,7 @@ const teamData = [
     position: 'Frontend Developer',
     city: 'Minsk',
     avatar: 'aDrozdov.jpg',
-    contribution:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.',
+    duties: ['FrontEnd Developer', 'Game developer', 'Main Page Developer'],
   },
 ];
 
