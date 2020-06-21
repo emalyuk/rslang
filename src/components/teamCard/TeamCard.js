@@ -35,8 +35,7 @@ const TeamCard = (props) => {
                   {duty}
                 </li>
               )
-            })
-            }
+            })}
           </ul>
         </div>
       </li>

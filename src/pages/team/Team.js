@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './Team.scss';
 import { TeamCard } from '../../components';
 import { teamData } from '../../constants';
@@ -26,4 +25,3 @@ const Team = () => {
 };
 
 export default Team;
-

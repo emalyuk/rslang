@@ -1,17 +1,17 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import "./Navbar.scss";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import './Navbar.scss';
 
 export const Navbar = () => {
-  let history = useHistory();
+  const history = useHistory();
 
   return (
-    <div className="navbar">
-      <span onClick={() => history.push("/")}>Home</span>
-      <span onClick={() => history.push("/login")}>Login</span>
-      <span onClick={() => history.push("/registration")}>Registration</span>
-      <span onClick={() => history.push("/game")}>Game</span>
-      <span onClick={() => history.push("/team")}>Team</span>
+    <div className='navbar'>
+      <button type='button' onClick={() => history.push('/')}>Home</button>
+      <button type='button' onClick={() => history.push('/login')}>Login</button>
+      <button type='button' onClick={() => history.push('/registration')}>Registration</button>
+      <button type='button' onClick={() => history.push('/game')}>Game</button>
+      <button type='button' onClick={() => history.push('/team')}>Team</button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getLoginInfo } from "./LoginSliceReducer";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getLoginInfo } from './LoginSliceReducer';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -11,10 +11,10 @@ export const Login = () => {
   }, []);
 
   return (
-    <div className="usc-footer">
+    <div className='usc-footer'>
       <h1>Login</h1>
       {data.map((value, index) => (
-        <div key={index}>{value}</div>
+        <div key={index.toString()}>{value}</div>
       ))}
     </div>
   );
