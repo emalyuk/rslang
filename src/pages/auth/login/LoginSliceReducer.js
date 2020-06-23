@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialLoginState = {
   data: [],
@@ -6,7 +6,7 @@ const initialLoginState = {
 };
 
 const loginSlice = createSlice({
-  name: "home",
+  name: 'home',
   initialState: { ...initialLoginState },
   reducers: {
     getLoginDataSuccess(state, action) {
@@ -31,7 +31,7 @@ export const loginSliceReducer = loginSlice.reducer;
 
 export const getLoginInfo = () => async (dispatch) => {
   try {
-    const data = ["login", "data"]; // emulate success response
+    const data = ['login', 'data']; // emulate success response
 
     if (data) {
       dispatch(getLoginDataSuccess(data));
@@ -39,6 +39,6 @@ export const getLoginInfo = () => async (dispatch) => {
       dispatch(getLoginDataFailure(data));
     }
   } catch (err) {
-    console.log("Home something went wrong");
+    console.log('Home something went wrong');
   }
 };

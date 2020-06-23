@@ -1,0 +1,31 @@
+@import '../../scss/variables';
+@import '../../scss/mixins';
+
+.team{
+  font-family: $teamFont, sans-serif;
+  padding-bottom: 20px;
+}
+
+.team__header{
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.team__members{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 20px;
+
+  @include exSm(){
+    grid-template-columns: 280px;
+    justify-content: center;
+  }
+}
+
+.team__member{
+  min-height: 350px;
+}

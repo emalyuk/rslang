@@ -4,4 +4,5 @@ export default {
   registration: '/registration',
   forgotPassword: '/forgot-password',
   game: '/game',
+  team: '/team',
 };

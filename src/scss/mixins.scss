@@ -1,0 +1,24 @@
+
+@mixin exSm(){
+  @media  (max-width: $smBreak - 0.1px){
+      @content;
+  }
+}
+
+@mixin sm(){
+  @media (min-width: $smBreak) and (max-width: $mdBreak - 0.1px){
+      @content;
+  }
+}
+
+@mixin md(){
+  @media (min-width: $mdBreak) and (max-width: $lgBreak - 0.1px){
+      @content;
+  }
+}
+
+@mixin lg(){
+  @media (min-width: $lgBreak) and (max-width: $exLgBreak - 0.1px){
+      @content;
+  }
+}

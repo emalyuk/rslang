@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getHomeData } from "./HomeApi";
+import { createSlice } from '@reduxjs/toolkit';
+import { getHomeData } from './HomeApi';
 
 const initialHomeState = {
   data: [],
@@ -7,7 +7,7 @@ const initialHomeState = {
 };
 
 const homeSlice = createSlice({
-  name: "home",
+  name: 'home',
   initialState: { ...initialHomeState },
   reducers: {
     getDataSuccess(state, action) {
@@ -41,6 +41,6 @@ export const getHomeInfo = () => async (dispatch) => {
       dispatch(getDataFailure(data));
     }
   } catch (err) {
-    console.log("Home something went wrong");
+    console.log('Home something went wrong');
   }
 };
