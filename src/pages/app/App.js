@@ -6,6 +6,8 @@ import PrivateRoute from './PrivateRoute';
 import routes from '../../routes';
 
 import './App.scss';
+import Savanna from '../../games/savanna/Savanna';
+import Game from '../game/Game';
 
 const Home = lazy(() => import('pages/home/Home'));
 const Team = lazy(() => import('pages/team/Team'));
@@ -23,6 +25,7 @@ const App = () => {
         <React.Suspense fallback={<Loading />}>
           <Switch>
             <Route path={routes.login} component={Login} exact />
+            <Route path={routes.game} component={Game} exact />
             <Route path={routes.registration} component={Registration} exact />
 
             <PrivateRoute path={routes.team} component={Team} exact />

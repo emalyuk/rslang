@@ -4,5 +4,6 @@ export { default as TeamCard } from './teamCard/TeamCard';
 export { default as Footer } from './footer/Footer';
 export { default as CheckBox } from './checkBox/CheckBox';
 export { default as DeleteModal } from './deleteModal/DeleteModal';
+export { default as ModalWindow } from './modalWindow/ModalWindow';
 export { default as LeoFaw } from './leoFaw/LeoFaw';
 export { default as ModalWindow } from './modalWindow/ModalWindow';
