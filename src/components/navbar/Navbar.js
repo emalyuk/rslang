@@ -2,12 +2,14 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import NavItem from './NavItem';
+import Logo from '../logo/Logo';
 
-import './Logo.scss';
 import './Navbar.scss';
 
 export const Navbar = () => {
   const history = useHistory();
+
+  // TODO: вынести это нах...
   const navOptions = [
     { route: '/', title: 'Home' },
     { route: '/login', title: 'Login' },
@@ -20,10 +22,7 @@ export const Navbar = () => {
   return (
     <header className='header'>
       <div className='header__container'>
-        <div className='logo'>
-          <span className='logo__highlight'>RS</span>
-          lang
-        </div>
+        <Logo />
 
         <nav className='nav'>
           <div className='nav__list'>
@@ -36,6 +35,7 @@ export const Navbar = () => {
             ))}
           </div>
         </nav>
+
       </div>
     </header>
   );

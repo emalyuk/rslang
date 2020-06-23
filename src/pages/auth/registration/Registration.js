@@ -5,7 +5,7 @@ import './Registration.scss';
 import Input from '../../../components/input/Input';
 import Button from '../../../components/button/Button';
 
-import { createUser } from '../requests/request';
+import createUser from './RegistrationApi';
 
 export const Registration = () => {
   const [email, setEmail] = useState('');
@@ -35,7 +35,7 @@ export const Registration = () => {
   }
 
   return (
-    <div className='usc-footer'>
+    <div className='auth-wrapper'>
       <p className='authpage-title'>
         <span>Learning English</span>
         <br />

@@ -1,5 +1,6 @@
 .header {
   width: 100%;
+  margin-bottom: 50px;
 
   &__container{
     display: flex;
@@ -14,9 +15,19 @@
   .nav {
     display: flex;
 
+    button {
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+
     &__list {
       display: flex;
       cursor: pointer;
+
+      @media screen and (max-width: 768px) {
+        display: none;
+      }
     }
 
     &__item {

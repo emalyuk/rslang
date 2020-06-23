@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Input from '../../../components/input/Input';
 import Button from '../../../components/button/Button';
 
-import { signInUser } from '../requests/request';
+import signInUser from './LoginApi';
 
 import './loginStyles.scss';
 
@@ -30,7 +30,7 @@ export const Login = () => {
   }
 
   return (
-    <div className='usc-footer'>
+    <div className='auth-wrapper'>
       <p className='authpage-title'>
         <span>Learning English</span>
         <br />
