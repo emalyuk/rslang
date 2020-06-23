@@ -1,0 +1,29 @@
+.authpage-title {
+  font-size: 50px;
+  color: #717171;
+  font-weight: 600;
+  letter-spacing: 2px;
+  line-height: 70px;
+
+  span {
+    font-weight: 300;
+  }
+}
+
+.login-form {
+  width: 480px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+
+  margin: 16px 0;
+  font-size: 18px;
+  padding: 12px;
+  padding-left: 0;
+
+  input:nth-child(n) {
+    margin-bottom: 20px;
+  }
+}
