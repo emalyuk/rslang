@@ -1,20 +1,23 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import NavItem from './NavItem';
+
 import './Logo.scss';
 import './Navbar.scss';
 
 export const Navbar = () => {
   const history = useHistory();
+  const navOptions = [
+    { route: '/', title: 'Home' },
+    { route: '/login', title: 'Login' },
+    { route: '/registration', title: 'Registration' },
+    { route: '/game', title: 'Game' },
+    { route: '/promo', title: 'Promo' },
+    { route: '/team', title: 'Team' },
+  ]
 
   return (
-  // <div className="navbar">
-  //   <span onClick={() => history.push("/")}>Home</span>
-  //   <span onClick={() => history.push("/login")}>Login</span>
-  //   <span onClick={() => history.push("/registration")}>Registration</span>
-  //   <span onClick={() => history.push("/game")}>Game</span>
-  // </div>
-
     <header className='header'>
       <div className='header__container'>
         <div className='logo'>
@@ -23,31 +26,15 @@ export const Navbar = () => {
         </div>
 
         <nav className='nav'>
-          <ul className='nav__list'>
-            <li onClick={() => history.push('/')} className='nav__item'>
-              <span href='#' className='nav__link'>Home</span>
-            </li>
-
-            <li onClick={() => history.push('/login')} className='nav__item'>
-              <span href='#' className='nav__link'>Login</span>
-            </li>
-
-            <li onClick={() => history.push('/registration')} className='nav__item'>
-              <span href='#' className='nav__link'>Registration</span>
-            </li>
-
-            <li onClick={() => history.push('/game')} className='nav__item'>
-              <span href='#' className='nav__link'>Game</span>
-            </li>
-
-            <li onClick={() => history.push('/promo')} className='nav__item'>
-              <span href='#' className='nav__link'>Promo</span>
-            </li>
-
-            <li onClick={() => history.push('/team')} className='nav__item'>
-              <span href='#' className='nav__link'>Team</span>
-            </li>
-          </ul>
+          <div className='nav__list'>
+            {navOptions.map((item) => (
+              <NavItem
+                key={item.title}
+                onClick={() => history.push(item.route)}
+                title={item.title}
+              />
+            ))}
+          </div>
         </nav>
       </div>
     </header>

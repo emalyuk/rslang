@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getHomeInfo } from "./HomeSliceReducer";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getHomeInfo } from './HomeSliceReducer';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -11,12 +11,12 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="home">
+    <div className='home'>
       <h1>Home</h1>
-      <div className="home-container">
+      <div className='home-container'>
         <h2>Our response is: </h2>
         {data.map((value, index) => (
-          <div key={index}>{value}</div>
+          <div key={index.toString()}>{value}</div>
         ))}
       </div>
     </div>
