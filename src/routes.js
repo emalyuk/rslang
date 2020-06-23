@@ -8,4 +8,7 @@ export default {
   game: '/game',
   team: '/team',
   dictionary: '/dictionary',
+  games: {
+    savanna: '/game/savanna',
+  },
 };
