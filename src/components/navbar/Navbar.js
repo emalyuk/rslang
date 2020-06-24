@@ -1,43 +1,27 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { navOptionsUnLoginUser } from '../../constants/constants';
 
 import NavItem from './NavItem';
-import Logo from '../logo/Logo';
 
 import './Navbar.scss';
 
-export const Navbar = () => {
+export const Navbar = (props) => {
   const history = useHistory();
-
-  // TODO: вынести это нах...
-  const navOptions = [
-    { route: '/', title: 'Home' },
-    { route: '/login', title: 'Login' },
-    { route: '/registration', title: 'Registration' },
-    { route: '/game', title: 'Game' },
-    { route: '/promo', title: 'Promo' },
-    { route: '/team', title: 'Team' },
-  ]
+  const { className, onSelect } = props;
 
   return (
-    <header className='header'>
-      <div className='header__container'>
-        <Logo />
-
-        <nav className='nav'>
-          <div className='nav__list'>
-            {navOptions.map((item) => (
-              <NavItem
-                key={item.title}
-                onClick={() => history.push(item.route)}
-                title={item.title}
-              />
-            ))}
-          </div>
-        </nav>
-
+    <nav className={`nav ${className}`}>
+      <div className='nav__list'>
+        {navOptionsUnLoginUser.map((item) => (
+          <NavItem
+            key={item.title}
+            onClick={() => { history.push(item.route); onSelect() }}
+            title={item.title}
+          />
+        ))}
       </div>
-    </header>
+    </nav>
   );
 };
 

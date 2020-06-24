@@ -1,19 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import signInUser from './LoginApi';
+
 const initialLoginState = {
   data: [],
-  errors: null,
+  error: null,
+  isLoading: false,
 };
 
 const loginSlice = createSlice({
-  name: 'home',
+  name: 'login',
   initialState: { ...initialLoginState },
   reducers: {
+    getLoginDataRequest(state) {
+      state.isLoading = true;
+    },
     getLoginDataSuccess(state, action) {
       state.data = action.payload;
+      state.isLoading = false;
     },
     getLoginDataFailure(state, action) {
       state.error = action.payload;
+      state.isLoading = false;
     },
     resetLoginState(state) {
       state = initialLoginState;
@@ -25,20 +33,21 @@ export const {
   getLoginDataSuccess,
   getLoginDataFailure,
   resetLoginState,
+  getLoginDataRequest,
 } = loginSlice.actions;
 
 export const loginSliceReducer = loginSlice.reducer;
 
-export const getLoginInfo = () => async (dispatch) => {
+export const getLoginInfo = (data) => async (dispatch) => {
   try {
-    const data = ['login', 'data']; // emulate success response
+    dispatch(getLoginDataRequest());
+    const response = await signInUser(data);
 
-    if (data) {
-      dispatch(getLoginDataSuccess(data));
-    } else {
-      dispatch(getLoginDataFailure(data));
-    }
+    //TODO: закинкть токен в локал сторадж + редирект на хоме скрин
+    console.log(response);
+
+    dispatch(getLoginDataSuccess(response.data));
   } catch (err) {
-    console.log('Home something went wrong');
+    dispatch(getLoginDataFailure(err));
   }
 };

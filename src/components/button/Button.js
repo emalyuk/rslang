@@ -1,17 +1,18 @@
 import React from 'react';
 
-import './Button.scss';
+import './ButtonStyles.scss';
 
 const Button = (props) => {
   const {
-    value,
+    children,
     onClick,
     className,
+    disabled,
   } = props;
 
   return (
-    <button onClick={onClick} className={className}>
-      {value}
+    <button disabled={disabled} onClick={onClick} className={className}>
+      {children}
     </button>
   );
 }

@@ -1,0 +1,18 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: -20px;
+  z-index: 1;
+
+  width: calc(100% + 40px);
+  height: 100vh;
+
+  background: rgba(211, 235, 255, 0.2);
+  filter: drop-shadow(2px 4px 6px black);
+
+  display: none;
+}
+
+.overlay.active {
+  display: block;
+}

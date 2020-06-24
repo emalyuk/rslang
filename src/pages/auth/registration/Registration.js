@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-
-import './Registration.scss';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getRegistrationInfo } from './RegistrationSliceReducer';
+import ROUTER from '../../../routes';
 
 import Input from '../../../components/input/Input';
 import Button from '../../../components/button/Button';
-
-import createUser from './RegistrationApi';
+import Form from '../../../components/form/Form';
+import Subtitle from '../../../components/subtitle/subtitle';
 
 export const Registration = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { isLoading } = useSelector((state) => state.login);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,7 +34,10 @@ export const Registration = () => {
     e.preventDefault();
 
     if (password === confirmPassword) {
-      await createUser({ email, password })
+      if (!isLoading) {
+        await getRegistrationInfo({ email, password })(dispatch);
+        history.push(ROUTER.login);
+      }
     } else {
       alert('Password and confirm password are not equale!');
     }
@@ -36,18 +45,20 @@ export const Registration = () => {
 
   return (
     <div className='auth-wrapper'>
-      <p className='authpage-title'>
+      <Subtitle>
         <span>Learning English</span>
         <br />
         Registration Now!
-      </p>
+      </Subtitle>
 
-      <form className='login-form' onSubmit={formSubmition}>
-        <Input value={email} onChange={handleEmailChange} type='email' className='email' placeholder='Email' />
-        <Input value={password} onChange={handlePasswordChange} type='password' className='password' placeholder='Password' />
-        <Input value={confirmPassword} onChange={handlePasswordConfirm} type='password' className='password' placeholder='Password' />
-        <Button value='Sign Up' />
-      </form>
+      <Form className='form login-form' onSubmit={formSubmition}>
+        <Input required value={email} onChange={handleEmailChange} type='email' className='email' placeholder='Email' />
+        <Input required value={password} onChange={handlePasswordChange} type='password' className='password' placeholder='Password' />
+        <Input required value={confirmPassword} onChange={handlePasswordConfirm} type='password' className='password' placeholder='Password' />
+        <Button disabled={isLoading}>
+          Sign Up
+        </Button>
+      </Form>
     </div>
   );
 };
