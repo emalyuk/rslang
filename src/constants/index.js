@@ -1,4 +1,4 @@
 import teamData from './teamData';
-import { imgPath, githubUserLink } from './constants';
+import { imgPath, githubUserLink, rsSchoolLink } from './constants';
 
-export { teamData, imgPath, githubUserLink };
+export { teamData, imgPath, githubUserLink, rsSchoolLink };
