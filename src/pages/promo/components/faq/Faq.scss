@@ -16,6 +16,9 @@ $black:#515656;
     & .faqItem-openBtn::before{
       transform: translate(-50%, -50%) rotate(0deg);
     }
+    & .faqItem-question{
+      color: #000000;
+    }
   }
   &-title{
     display: flex;
@@ -47,6 +50,7 @@ $black:#515656;
   }
   &-question{
     pointer-events: none;
+    color: $black;
   }
   &-answer{
     display: flex;
@@ -54,5 +58,7 @@ $black:#515656;
     max-height: 0px;
     overflow: hidden;
     transition: all 0.5s ease;
+    color: $black;
+    text-align: justify;
   }
 }

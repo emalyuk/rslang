@@ -6,16 +6,17 @@ import Feature from './components/feature/Feature'
 import Faq from './components/faq/Faq'
 
 export const Promo = () => {
-  function test(e) {
+  function openFaq(e) {
     const faqArr = Array.from(e.target.parentElement.parentElement.childNodes)
-    console.dir(e.target);
-    if (e.target.parentElement.classList.contains('isActive')) {
-      e.target.parentElement.classList.remove('isActive')
+    const faqItem = e.target.parentElement;
+
+    if (faqItem.classList.contains('isActive')) {
+      faqItem.classList.remove('isActive')
     } else {
       for (let i = 0; i < faqArr.length; i += 1) {
         faqArr[i].classList.remove('isActive')
       }
-      e.target.parentElement.classList.add('isActive');
+      faqItem.classList.add('isActive');
     }
   }
 
@@ -27,8 +28,9 @@ export const Promo = () => {
           <div className='hero-description'>
             <h1>The Best App in the Universe</h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod temp or incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
+              RS Lang - это эффективный сервис для нескучного изучения
+              английского языка. Более 6 человек во всем мире
+              выбрали RS Lang.
             </p>
           </div>
           <div className='hero-image'>
@@ -40,32 +42,40 @@ export const Promo = () => {
       <section className='services-section'>
         <div className='services container'>
           {data.service.map((item) => (
-            <Service icon={item.icon} title={item.title} description={item.description} key={item.id} />
+            <Service
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+              key={item.id}
+            />
           ))}
         </div>
       </section>
 
       <div className='features container'>
-        <h2 className='title'>SPECIAL FEATURES</h2>
+        <h2 className='title'>ОСОБЫЕ ВОЗМОЖНОСТИ</h2>
         <p className='features-description'>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Velit voluptates, temporibus at, facere harum fugiat!
+          Наша команда разработчиков провела опросы и постаралась сделать для Вам максимально удобное приложение для изучения языка.
         </p>
         <div className='features-items'>
           {data.feature.map((item) => (
-            <Feature icon={item.icon} title={item.title} description={item.description} key={item.id} />
+            <Feature
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+              key={item.id}
+            />
           ))}
         </div>
       </div>
 
       <section className='faq'>
         <div className='faq-content container'>
-          <h2 className='faq-title'>FREQUENTLY ASKED QUESTIONS</h2>
-          <p className='faq-description'>Loasdflk aksdhfkashd galshdf askdjhf jadsf</p>
+          <h2 className='faq-title'>ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ</h2>
           <div
             className='faq-items'
             onClick={(e) => {
-              test(e)
+              openFaq(e)
             }}
           >
             {data.faq.map((item) => (
