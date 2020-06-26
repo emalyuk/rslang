@@ -1,6 +1,6 @@
 /*----colors----*/
 $white: #ffffff;
-$gray: #f2fefe;
+$gray: #efefea;
 $black:#515656;
 
 .features-item{
@@ -17,5 +17,16 @@ $black:#515656;
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
     transform: translateY(-5px);
     background-color: $gray;
+  }
+}
+
+@media screen and (max-width:768px){
+  .features-item{
+    width: 35%;
+  }
+}
+@media screen and (max-width:425px){
+  .features-item{
+    width: 100%;
   }
 }

@@ -23,7 +23,7 @@ export const Promo = () => {
   return (
     <div className='Promo'>
 
-      <div className='hero'>
+      <section className='hero'>
         <div className='container hero-section'>
           <div className='hero-description'>
             <h1>The Best App in the Universe</h1>
@@ -37,7 +37,7 @@ export const Promo = () => {
             <img src='./assets/images/promo/hero-mobile.png' alt='mobile' />
           </div>
         </div>
-      </div>
+      </section>
 
       <section className='services-section'>
         <div className='services container'>
@@ -52,7 +52,7 @@ export const Promo = () => {
         </div>
       </section>
 
-      <div className='features container'>
+      <section className='features container'>
         <h2 className='title'>ОСОБЫЕ ВОЗМОЖНОСТИ</h2>
         <p className='features-description'>
           Наша команда разработчиков провела опросы и постаралась сделать для Вам максимально удобное приложение для изучения языка.
@@ -67,7 +67,7 @@ export const Promo = () => {
             />
           ))}
         </div>
-      </div>
+      </section>
 
       <section className='faq'>
         <div className='faq-content container'>
