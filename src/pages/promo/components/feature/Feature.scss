@@ -6,13 +6,16 @@ $black:#515656;
 .features-item{
   margin-top: 20px;
   padding: 50px 20px;
-  width: 27%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   text-align: center;
   transition: all 0.3s ease;
+  & img{
+    margin-bottom: 20px;
+  }
   &:hover{
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
     transform: translateY(-5px);
