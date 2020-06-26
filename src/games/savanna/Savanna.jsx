@@ -172,22 +172,24 @@ const Savanna = () => {
       default:
     }
 
-    if (answer === 'true') {
-      const copyRes = { ...results };
-      copyRes.valid.push(words[wordNumber]);
-      setResults(copyRes);
-      if (playSound) {
-        new Audio('https://raw.githubusercontent.com/himimetsu/rs-lang-data/master/success.mp3').play();
+    if (fails < 5 && wordNumber + 1 < words.length) {
+      if (answer === 'true') {
+        const copyRes = { ...results };
+        copyRes.valid.push(words[wordNumber]);
+        setResults(copyRes);
+        if (playSound) {
+          new Audio('https://raw.githubusercontent.com/himimetsu/rs-lang-data/master/success.mp3').play();
+        }
+        changeBackgroundPosition(backgroundPosition + 3);
+      } else if (answer === 'false') {
+        const copyRes = { ...results };
+        copyRes.invalid.push(words[wordNumber]);
+        setResults(copyRes);
+        if (playSound) {
+          new Audio('https://raw.githubusercontent.com/himimetsu/rs-lang-data/master/error.mp3').play();
+        }
+        setFails(fails + 1);
       }
-      changeBackgroundPosition(backgroundPosition + 3);
-    } else if (answer === 'false') {
-      const copyRes = { ...results };
-      copyRes.invalid.push(words[wordNumber]);
-      setResults(copyRes);
-      if (playSound) {
-        new Audio('https://raw.githubusercontent.com/himimetsu/rs-lang-data/master/error.mp3').play();
-      }
-      setFails(fails + 1);
     }
 
     repeatAnimate();
