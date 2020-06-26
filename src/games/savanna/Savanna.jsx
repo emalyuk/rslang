@@ -157,16 +157,16 @@ const Savanna = () => {
   const choose = (key) => {
     let answer;
     switch (key) {
-      case '1':
+      case 49:
         answer = document.querySelector(".answer[data-id='1']").getAttribute('data-answer');
         break;
-      case '2':
+      case 50:
         answer = document.querySelector(".answer[data-id='2']").getAttribute('data-answer');
         break;
-      case '3':
+      case 51:
         answer = document.querySelector(".answer[data-id='3']").getAttribute('data-answer');
         break;
-      case '4':
+      case 52:
         answer = document.querySelector(".answer[data-id='4']").getAttribute('data-answer');
         break;
       default:
@@ -204,8 +204,8 @@ const Savanna = () => {
   };
 
   const keyHandler = (event) => {
-    const keyDown = event.key;
-    if (keyDown === '1' || keyDown === '2' || keyDown === '3' || keyDown === '4') {
+    const keyDown = event.keyCode;
+    if (keyDown === 49 || keyDown === 50 || keyDown === 51 || keyDown === 52) {
       choose(keyDown);
     }
   };
