@@ -3,8 +3,8 @@ import './Feature.scss';
 
 export const Feature = ({ icon, title, description }) => {
   return (
-    <div className='services-box'>
-      <img src={icon} alt='services icon' />
+    <div className='features-item'>
+      <img src={icon} alt='feature icon' />
       <p>{title}</p>
       <p>{description}</p>
     </div>
