@@ -1,16 +1,19 @@
 {
   "service": [
     {
+      "id": 0,
       "icon": "./assets/images/promo/service/icon-1.png",
       "title": "asdfasfdasdf",
       "description": "description"
     },
     {
+      "id": 1,
       "icon": "./assets/images/promo/service/icon-2.png",
       "title": "title",
       "description": "description"
     },
     {
+      "id": 2,
       "icon": "./assets/images/promo/service/icon-3.png",
       "title": "title",
       "description": "description"
@@ -18,26 +21,31 @@
   ],
   "feature": [
     {
+      "id": 0,
       "icon": "./assets/images/promo/features/icon-1.png",
       "title": "Creative Design",
       "description": "description"
     },
     {
+      "id": 1,
       "icon": "./assets/images/promo/features/icon-2.png",
       "title": "Unlimited Features",
       "description": "description"
     },
     {
+      "id": 2,
       "icon": "./assets/images/promo/features/icon-4.png",
       "title": "Retina ready",
       "description": "description"
     },
     {
+      "id": 3,
       "icon": "./assets/images/promo/features/icon-5.png",
       "title": "High Resolution",
       "description": "description"
     },
     {
+      "id": 4,
       "icon": "./assets/images/promo/features/icon-6.png",
       "title": "Clean Codes",
       "description": "description"
@@ -45,6 +53,17 @@
   ],
   "faq": [
     {
+      "id": 0,
+      "question": "question",
+      "answer": "answer"
+    },
+    {
+      "id": 1,
+      "question": "question",
+      "answer": "answer"
+    },
+    {
+      "id": 2,
       "question": "question",
       "answer": "answer"
     }
