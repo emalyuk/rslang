@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Loading, Navbar } from 'components';
+import { Loading, Navbar, Footer } from '../../components';
 import routes from 'routes';
 import './App.scss';
 
@@ -25,6 +25,7 @@ const App = () => {
           </Switch>
         </React.Suspense>
       </div>
+      <Footer />
     </div>
   );
 };
