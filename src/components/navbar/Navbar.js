@@ -7,11 +7,21 @@ export const Navbar = () => {
 
   return (
     <div className='navbar'>
-      <button type='button' onClick={() => history.push('/')}>Home</button>
-      <button type='button' onClick={() => history.push('/login')}>Login</button>
-      <button type='button' onClick={() => history.push('/registration')}>Registration</button>
-      <button type='button' onClick={() => history.push('/game')}>Game</button>
-      <button type='button' onClick={() => history.push('/team')}>Team</button>
+      <button type='button' onClick={() => history.push('/')}>
+        Home
+      </button>
+      <button type='button' onClick={() => history.push('/login')}>
+        Login
+      </button>
+      <button type='button' onClick={() => history.push('/registration')}>
+        Registration
+      </button>
+      <button type='button' onClick={() => history.push('/game')}>
+        Game
+      </button>
+      <button type='button' onClick={() => history.push('/team')}>
+        Team
+      </button>
     </div>
   );
 };
