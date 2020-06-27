@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './ButtonStyles.scss';
 
@@ -11,7 +12,7 @@ const Button = (props) => {
   } = props;
 
   return (
-    <button disabled={disabled} onClick={onClick} className={className}>
+    <button type='button' disabled={disabled} onClick={onClick} className={className}>
       {children}
     </button>
   );
