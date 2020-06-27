@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import signInUser from './LoginApi';
+import { signInUser } from './LoginApi';
+import { userLoginDataKey } from '../../../constants/constants';
 
 const initialLoginState = {
   data: [],
   error: null,
   isLoading: false,
+  isUserLoggedIn: Boolean(global.localStorage.getItem(userLoginDataKey)),
 };
 
 const loginSlice = createSlice({
@@ -18,6 +20,7 @@ const loginSlice = createSlice({
     getLoginDataSuccess(state, action) {
       state.data = action.payload;
       state.isLoading = false;
+      state.isUserLoggedIn = true;
     },
     getLoginDataFailure(state, action) {
       state.error = action.payload;
@@ -41,10 +44,10 @@ export const loginSliceReducer = loginSlice.reducer;
 export const getLoginInfo = (data) => async (dispatch) => {
   try {
     dispatch(getLoginDataRequest());
-    const response = await signInUser(data);
 
-    //TODO: закинкть токен в локал сторадж + редирект на хоме скрин
-    console.log(response);
+    const response = await signInUser(data);
+    const signInUserData = JSON.stringify(response.data);
+    global.localStorage.setItem(userLoginDataKey, signInUserData);
 
     dispatch(getLoginDataSuccess(response.data));
   } catch (err) {

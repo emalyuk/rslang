@@ -52,9 +52,33 @@ export const Registration = () => {
       </Subtitle>
 
       <Form className='form login-form' onSubmit={formSubmition}>
-        <Input required value={email} onChange={handleEmailChange} type='email' className='email' placeholder='Email' />
-        <Input required value={password} onChange={handlePasswordChange} type='password' className='password' placeholder='Password' />
-        <Input required value={confirmPassword} onChange={handlePasswordConfirm} type='password' className='password' placeholder='Password' />
+        <Input
+          required
+          value={email}
+          onChange={handleEmailChange}
+          type='email'
+          className='email'
+          placeholder='Email'
+        />
+
+        <Input
+          required
+          value={password}
+          onChange={handlePasswordChange}
+          type='password'
+          className='password'
+          placeholder='Password'
+        />
+
+        <Input
+          required
+          value={confirmPassword}
+          onChange={handlePasswordConfirm}
+          type='password'
+          className='password'
+          placeholder='Confirm Password'
+        />
+
         <Button disabled={isLoading}>
           Sign Up
         </Button>

@@ -1,9 +1,14 @@
 import axios from '../../../api/axios';
+import { userLoginDataKey } from '../../../constants/constants';
 
-const signInUser = async (data) => {
+export const signInUser = async (data) => {
   const res = await axios.post('/signin', data)
-
   return res;
 };
 
-export default signInUser;
+export const logOut = () => {
+  global.localStorage.removeItem(userLoginDataKey);
+  global.location.reload();
+}
+
+export default { signInUser, logOut };

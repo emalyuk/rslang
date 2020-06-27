@@ -12,7 +12,7 @@ import Subtitle from '../../../components/subtitle/subtitle';
 export const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isLoading } = useSelector((state) => state.login);
+  const { isLoading, isUserLoggedIn } = useSelector((state) => state.login);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,12 +25,16 @@ export const Login = () => {
     setPassword(e.target.value);
   }
 
-  const formSubmition = (e) => {
-    e.preventDefault();
-
-    if (!isLoading) {
-      getLoginInfo({ email, password })(dispatch);
+  useEffect(() => {
+    if (isUserLoggedIn) {
       history.push(ROUTER.home);
+    }
+  }, [isUserLoggedIn]);
+
+  const formSubmition = async (e) => {
+    e.preventDefault();
+    if (!isLoading) {
+      await getLoginInfo({ email, password })(dispatch);
     }
   }
 
