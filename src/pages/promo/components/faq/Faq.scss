@@ -57,5 +57,9 @@
     transition: all 0.5s ease;
     color: $black;
     text-align: justify;
+
+    p {
+      margin-bottom: 0;
+    }
   }
 }
