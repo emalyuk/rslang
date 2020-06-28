@@ -1,6 +1,6 @@
 import React from 'react';
 import './Promo.scss';
-import data from './data.json'
+import data from '../../constants/promoData.json'
 import Service from './components/service/Service'
 import Feature from './components/feature/Feature'
 import Faq from './components/faq/Faq'
@@ -9,13 +9,12 @@ export const Promo = () => {
   function openFaq(e) {
     const faqArr = Array.from(e.target.parentElement.parentElement.childNodes)
     const faqItem = e.target.parentElement;
-
     if (faqItem.classList.contains('isActive')) {
       faqItem.classList.remove('isActive')
     } else {
-      for (let i = 0; i < faqArr.length; i += 1) {
-        faqArr[i].classList.remove('isActive')
-      }
+      faqArr.map((item) => {
+        item.classList.remove('isActive')
+      });
       faqItem.classList.add('isActive');
     }
   }
@@ -55,7 +54,8 @@ export const Promo = () => {
       <section className='features container'>
         <h2 className='title'>ОСОБЫЕ ВОЗМОЖНОСТИ</h2>
         <p className='features-description'>
-          Наша команда разработчиков провела опросы и постаралась сделать для Вам максимально удобное приложение для изучения языка.
+          Наша команда разработчиков провела опросы и постаралась сделать
+          для Ваc максимально удобное приложение для изучения языка.
         </p>
         <div className='features-items'>
           {data.feature.map((item) => (

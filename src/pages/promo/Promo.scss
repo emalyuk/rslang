@@ -1,7 +1,5 @@
-/*----colors----*/
-$white: #ffffff;
-$gray: #efefea;
-$black:#515656;
+@import '../../scss/variables';
+@import '../../scss/mixins';
 /*-----styles------*/
 .container{
   max-width: 1020px;
@@ -116,7 +114,7 @@ $black:#515656;
 }
 
 /*------adaptive----*/
-@media screen and (max-width:425px){
+@media screen and (max-width:$smBreak){
   .Promo .hero-image{
     display: none;
   }

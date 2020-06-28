@@ -1,7 +1,5 @@
-$blue: #342d9b;
-$white: #ffffff;
-$gray: #efefea;
-$black:#515656;
+@import '../../../../scss/variables';
+@import '../../../../scss/mixins';
 
 .faqItem{
   display: flex;

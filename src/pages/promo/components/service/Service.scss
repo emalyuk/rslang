@@ -1,7 +1,5 @@
-/*----colors----*/
-$white: #ffffff;
-$gray: #efefea;
-$black:#515656;
+@import '../../../../scss/variables';
+@import '../../../../scss/mixins';
 
 .services-box{
   display: flex;
@@ -21,12 +19,12 @@ $black:#515656;
     background-color: $white;
   }
 }
-@media screen and (max-width:768px){
+@media screen and (max-width:$mdBreak){
   .services-box{
     width: 35%;
   }
 }
-@media screen and (max-width:425px){
+@media screen and (max-width:$smBreak){
   .services-box{
     width: 100%;
   }
