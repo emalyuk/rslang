@@ -14,8 +14,8 @@ const Progress = ({ wordsCountLearned }) => {
   );
   return (
     <div className='home__status__progress home-box'>
-      <h4 className='home-box__title'>За всё время</h4>
-      <div className='home__status__progress--box'>
+      <h4 className='home-box-title'>За всё время</h4>
+      <div className='home__status__progress--box home-box-inner'>
         <div className='home__status__progress--label'>{progressBarTitle}</div>
         <div className='progress'>
           <div

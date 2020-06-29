@@ -9,7 +9,7 @@ const TodayTarget = ({ comletedCards, totalCards }) => {
   const resultCardsMessage = `Сегодня вы выполнили ${comletedCards} карточек. Для достижения цели завершите ${cardsLeft} карточек.`;
 
   return (
-    <div className='home__status__target'>
+    <div className='home__status__target home-box-inner'>
       <p className='home__status__target--title'>Цель на сегодня:</p>
       <p className='home__status__target--total'>{totalCardsMessage}</p>
       <p className='home__status__target--result'>{resultCardsMessage}</p>

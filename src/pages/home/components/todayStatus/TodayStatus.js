@@ -22,7 +22,7 @@ const TodayStatus = ({
 
   return (
     <div className='home__status__today-status home-box'>
-      <h4 className='home__status__title home-box__title'>Сегодня</h4>
+      <h4 className='home__status__title home-box-title'>Сегодня</h4>
       <div className='home__status__container'>
         <div className='home__status__stats'>
           {todayInfoItems.map(({ label, count }) => {
