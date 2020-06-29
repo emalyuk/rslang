@@ -13,6 +13,7 @@ const Login = lazy(() => import('pages/auth/login/Login'));
 const Registration = lazy(() => import('pages/auth/registration/Registration'));
 const NotFound = lazy(() => import('pages/notFound/NotFound'));
 const Promo = lazy(() => import('pages/promo/Promo'));
+const Dictionary = lazy(() => import('pages/dictionary/Dictionary'));
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
             <PrivateRoute path={routes.home} component={Home} exact />
             <PrivateRoute path={routes.promo} component={Promo} exact />
 
+            <Route path={routes.dictionary} component={Dictionary} exact />
             <Route component={NotFound} />
           </Switch>
         </React.Suspense>
