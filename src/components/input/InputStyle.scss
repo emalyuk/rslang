@@ -1,7 +1,9 @@
+@import '../../scss/variables.scss';
+
 input {
   box-sizing: border-box;
   width: 100%;
-  border: 1px solid #717171;
+  border: 1px solid $baseGray;
   border-radius: 5px;
   padding: 16px;
   outline: 0;

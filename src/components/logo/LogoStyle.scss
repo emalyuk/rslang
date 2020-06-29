@@ -1,3 +1,5 @@
+@import '../../scss/variables.scss';
+
 .logo {
   font-size: 32px;
   cursor: pointer;
@@ -6,7 +8,7 @@
     padding: 0 7px;
     margin-right: 7px;
     font-weight: 600;
-    color: #fff;
+    color: $secondColor;
     background-size: 300% 100%;
     border-radius: 5px;
     transition: all .4s ease-in-out;

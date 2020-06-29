@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { navOptions, navOptionsUnLoginUser, userLoginDataKey } from '../../constants/constants';
+import { navOptions, navOptionsUnLoginUser } from '../../constants/constants';
 
 import NavItem from './NavItem';
 import { logOut } from '../../pages/auth/login/LoginApi';
@@ -16,12 +17,6 @@ export const Navbar = (props) => {
   const navigation = () => {
     return (isUserLoggedIn) ? navOptions : navOptionsUnLoginUser;
   }
-
-  // TODO: llogOut в логин API,
-  // const logOut = () => {
-  //   global.localStorage.removeItem(userLoginDataKey);
-  //   global.location.reload();
-  // }
 
   return (
     <nav className={`nav ${className}`}>
@@ -46,3 +41,8 @@ export const Navbar = (props) => {
 };
 
 export default Navbar;
+
+Navbar.propTypes = {
+  className: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
+}

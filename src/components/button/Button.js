@@ -19,3 +19,16 @@ const Button = (props) => {
 }
 
 export default Button;
+
+Button.propTypes = {
+  onClick: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
+  className: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
+  children: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
+}

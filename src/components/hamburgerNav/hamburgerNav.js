@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './hamburgerNavStyle.scss';
 
@@ -15,3 +16,8 @@ export const Humburger = (props) => {
 }
 
 export default Humburger;
+
+Humburger.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
+}

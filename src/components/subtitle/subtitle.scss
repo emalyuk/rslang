@@ -1,6 +1,8 @@
+@import '../../scss/variables.scss';
+
 .authpage-title {
   font-size: 50px;
-  color: #717171;
+  color: $baseGray;
   font-weight: 600;
   letter-spacing: 2px;
   line-height: 70px;

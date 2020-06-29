@@ -1,13 +1,20 @@
-$exSmBreak: 320px;
-$smBreak: 575px;
-$mdBreak: 768px;
-$lgBreak: 992px;
-$exLgBreak: 1200px;
+//width
+$exSmBreak    : 320px;
+$smBreak      : 575px;
+$mdBreak      : 768px;
+$lgBreak      : 992px;
+$exLgBreak    : 1200px;
 
-
+// fonts
 $teamFont: "San Francisco";
 
+//base color
+$firstColor   : #000000;
+$secondColor  : #ffffff;
 
-$firstColor: #000000;
-$secondColor: #ffffff;
-$thirdColor: #032a45;
+$thirdColor   : #032a45;
+$baseGray     : #717171;
+$lightPink    : #faebd7;
+
+//urlls
+$baseBgImage  : url("./assets/img/auth-page-bg.jpg");

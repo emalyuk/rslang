@@ -49,7 +49,7 @@ export const Login = () => {
       <Form onSubmit={formSubmition} className='form login-form'>
         <Input required value={email} onChange={handleEmailChange} type='email' className='email' placeholder='Email' />
         <Input required value={password} onChange={handlePasswordChange} type='password' className='password' placeholder='Password' />
-        <Button disabled={isLoading} className='submit btn-hover color-9'>
+        <Button onClick={() => {}} disabled={isLoading} className='submit btn-hover color-9'>
           Login
         </Button>
       </Form>

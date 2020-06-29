@@ -1,3 +1,5 @@
+@import '../../scss/variables.scss';
+
 .nav {
   display: flex;
   transition: .7s;
@@ -7,7 +9,7 @@
     box-shadow: none;
     background: transparent;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: $mdBreak) {
       text-align: left;
     }
   }
@@ -16,7 +18,7 @@
     display: flex;
     cursor: pointer;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: $mdBreak) {
       flex-direction: column;
       justify-content: center;
       width: 100%;
@@ -36,7 +38,7 @@
 
   &__link {
     position: relative;
-    color: #717171;
+    color: $baseGray;
     text-decoration: none;
   }
 
@@ -47,7 +49,7 @@
     top: 0;
     width: 0;
     height: 100%;
-    border-bottom: 2px solid #717171;
+    border-bottom: 2px solid $baseGray;
     transition: 0.5s;
   }
 
@@ -55,13 +57,13 @@
     width: 100%;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: $mdBreak) {
     width: 50%;
     height: 100vh;
     position: absolute;
     top: 0;
     left: -100%;
-    background: antiquewhite;
+    background: $lightPink;
     z-index: 9;
     justify-content: center;
   }
@@ -70,7 +72,7 @@
 .nav.active {
   left: -20px;
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: $smBreak) {
     width: calc(100% + 40px);
   }
 }

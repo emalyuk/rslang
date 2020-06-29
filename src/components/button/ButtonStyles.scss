@@ -1,9 +1,11 @@
+@import '../../scss/variables.scss';
+
 button {
   width: 100%;
   max-width: 480px;
   font-size: 22px;
   font-weight: 600;
-  color: #fff;
+  color: $secondColor;
   cursor: pointer;
   margin: 0;
   height: 55px;

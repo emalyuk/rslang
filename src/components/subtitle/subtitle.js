@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './subtitle.scss';
 
@@ -13,3 +14,7 @@ const Subtitle = (props) => {
 }
 
 export default Subtitle;
+
+Subtitle.propTypes = {
+  children: PropTypes.array.isRequired,
+}

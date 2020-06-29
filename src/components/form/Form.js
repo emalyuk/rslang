@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './FormStyle.scss';
 
@@ -13,3 +14,9 @@ const Form = (props) => {
 }
 
 export default Form;
+
+Form.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
+  children: PropTypes.array.isRequired,
+}
