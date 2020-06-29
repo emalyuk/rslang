@@ -2,9 +2,17 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomeInfo } from './HomeSliceReducer';
 
+import HomeStatus from './components/homeStatus';
+
+import './Home.scss';
+
 export const Home = () => {
   const dispatch = useDispatch();
   const { data, errors } = useSelector((state) => state.home);
+
+  // MockData
+  const wordsCountLearned = 555;
+  const totalCardsPerDay = 20;
 
   useEffect(() => {
     dispatch(getHomeInfo());
@@ -12,12 +20,11 @@ export const Home = () => {
 
   return (
     <div className='home'>
-      <h1>Home</h1>
-      <div className='home-container'>
-        <h2>Our response is: </h2>
-        {data.map((value, index) => (
-          <div key={index.toString()}>{value}</div>
-        ))}
+      <div className='home-container container'>
+        <HomeStatus
+          wordsCountLearned={wordsCountLearned}
+          totalCardsPerDay={totalCardsPerDay}
+        />
       </div>
     </div>
   );

@@ -1,0 +1,15 @@
+@import '../../../../scss/variables.scss';
+
+.home__status__target {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: $secondColor;
+  text-align: center;
+
+  &--title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}

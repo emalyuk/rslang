@@ -4,6 +4,7 @@ const imgPath = '/img/';
 const githubUserLink = 'https://github.com/';
 const userLoginDataKey = 'JWT';
 const rsSchoolLink = 'https://rs.school/';
+const wordsCountTotal = 3600;
 
 const navOptions = [
   { route: ROUTS.home, title: 'Home' },
@@ -18,5 +19,7 @@ const navOptionsUnLoginUser = [
 ];
 
 export {
-  imgPath, githubUserLink, navOptions, navOptionsUnLoginUser, userLoginDataKey, rsSchoolLink,
+  imgPath, githubUserLink, navOptions,
+  navOptionsUnLoginUser, userLoginDataKey,
+  rsSchoolLink, wordsCountTotal,
 };
