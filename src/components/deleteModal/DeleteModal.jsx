@@ -1,5 +1,6 @@
 import React from 'react';
 import './DeleteModal.scss';
+import PropTypes from 'prop-types';
 
 const DeleteModal = ({ hideFunc }) => {
   const deleteWord = () => {
@@ -45,6 +46,10 @@ const DeleteModal = ({ hideFunc }) => {
       </div>
     </div>
   );
+};
+
+DeleteModal.propTypes = {
+  hideFunc: PropTypes.func.isRequired,
 };
 
 export default DeleteModal;
