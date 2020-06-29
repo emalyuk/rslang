@@ -5,7 +5,7 @@ import './TodayStatsItem.scss';
 
 const TodayStatsItem = ({ label, count }) => {
   return (
-    <div className='home__status__stats--item'>
+    <div className='home__status__stats--item home-box-inner'>
       <p className='home__status__stats--item__label'>{`${label}:`}</p>
       <div className='home__status__stats--item__count'>{count}</div>
     </div>

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getHomeInfo } from './HomeSliceReducer';
 
 import HomeStatus from './components/homeStatus';
+import CardSettings from './components/cardSettings';
 
 import './Home.scss';
 
@@ -25,6 +26,7 @@ export const Home = () => {
           wordsCountLearned={wordsCountLearned}
           totalCardsPerDay={totalCardsPerDay}
         />
+        <CardSettings />
       </div>
     </div>
   );

@@ -1,13 +1,33 @@
 @import '../../scss/variables';
+@import '../../scss/mixins';
 
 .home {
   font-family: $teamFont;
   font-size: 18px;
+
+  &-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 20px;
+  }
 
   &-box {
     background-color: $fourthColor;
     border-radius: 10px;
     margin-bottom: 20px;
     padding: 20px;
+
+    &-inner {
+      background-color: $secondColor;
+      border-radius: 10px;
+      padding: 10px;
+    }
+  }
+}
+
+@media (max-width: $lgBreak) {
+  .home-container {
+    grid-template-columns: 1fr;
+    justify-content: center;
   }
 }
