@@ -43,8 +43,6 @@ export const getRegistrationInfo = (data) => async (dispatch) => {
     dispatch(getRegistrationDataRequest());
     const response = await createUser(data);
 
-    console.log(response);
-
     dispatch(getRegistrationDataSuccess(response));
   } catch (err) {
     dispatch(getRegistrationDataFailure(err));
