@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './CheckBox.scss';
+import PropTypes from 'prop-types';
 
 const CheckBox = ({ id, click, isAll }) => {
   const boxRef = useRef();
@@ -49,6 +50,12 @@ const CheckBox = ({ id, click, isAll }) => {
       </div>
     </div>
   );
+};
+
+CheckBox.propTypes = {
+  id: PropTypes.string.isRequired,
+  click: PropTypes.func.isRequired,
+  isAll: PropTypes.bool.isRequired,
 };
 
 export default CheckBox;
