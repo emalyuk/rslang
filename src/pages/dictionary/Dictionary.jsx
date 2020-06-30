@@ -78,7 +78,7 @@ const Dictonary = () => {
   };
 
   useEffect(() => {
-    dispatch(updateWords());
+    dispatch(updateAllWords());
   }, []);
 
   return (
