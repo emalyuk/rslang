@@ -9,10 +9,11 @@ const Button = (props) => {
     onClick,
     className,
     disabled,
+    type,
   } = props;
 
   return (
-    <button type='button' disabled={disabled} onClick={onClick} className={className}>
+    <button type={type} disabled={disabled} onClick={onClick} className={className}>
       {children}
     </button>
   );
@@ -31,4 +32,5 @@ Button.propTypes = {
   ]).isRequired,
   children: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
+  type: PropTypes.string.isRequired,
 }

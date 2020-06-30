@@ -79,7 +79,7 @@ export const Registration = () => {
           placeholder='Confirm Password'
         />
 
-        <Button onClick={() => {}} className='' disabled={isLoading}>
+        <Button type='submit' onClick={() => {}} className='' disabled={isLoading}>
           Sign Up
         </Button>
       </Form>
