@@ -1,16 +1,17 @@
 import React, { lazy } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Loading, Header } from '../../components';
+import { Loading, Header, Footer } from '../../components';
 
 import PrivateRoute from './PrivateRoute';
 import routes from '../../routes';
+
 import './App.scss';
 
-const Home = lazy(() => import('../../pages/home/Home'));
-const Login = lazy(() => import('../../pages/auth/login/Login'));
-const Registration = lazy(() => import('../../pages/auth/registration/Registration'));
-const Team = lazy(() => import('../../pages/team/Team'));
-const NotFound = lazy(() => import('../../pages/notFound/NotFound'));
+const Home = lazy(() => import('pages/home/Home'));
+const Team = lazy(() => import('pages/team/Team'));
+const Login = lazy(() => import('pages/auth/login/Login'));
+const Registration = lazy(() => import('pages/auth/registration/Registration'));
+const NotFound = lazy(() => import('pages/notFound/NotFound'));
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           </Switch>
         </React.Suspense>
       </div>
+      <Footer />
     </div>
   );
 };

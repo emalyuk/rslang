@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "plugin:jsx-a11y/recommended"],
+  "extends": ["react-app", "airbnb", "plugin:jsx-a11y/recommended"],
   "plugins": ["jsx-a11y"],
   "rules": {
     "import/no-named-as-default": 0,
@@ -14,5 +14,12 @@
         "extensions": [".js", ".jsx", "tsx"]
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
   }
 }

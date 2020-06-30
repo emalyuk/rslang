@@ -2,6 +2,8 @@ import ROUTS from '../routes';
 
 const imgPath = '/img/';
 const githubUserLink = 'https://github.com/';
+const userLoginDataKey = 'JWT';
+const rsSchoolLink = 'https://rs.school/';
 
 const navOptions = [
   { route: ROUTS.home, title: 'Home' },
@@ -15,8 +17,6 @@ const navOptionsUnLoginUser = [
   { route: ROUTS.registration, title: 'Registration' },
 ];
 
-const userLoginDataKey = 'JWT';
-
 export {
-  imgPath, githubUserLink, navOptions, navOptionsUnLoginUser, userLoginDataKey,
-}
+  imgPath, githubUserLink, navOptions, navOptionsUnLoginUser, userLoginDataKey, rsSchoolLink,
+};
