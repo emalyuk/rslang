@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import Axios from 'axios';
+import fetchWords from '../../utils/fetchWords';
 
 const initialDictionaryState = {
   showDeleteModal: false,
@@ -7,6 +7,9 @@ const initialDictionaryState = {
   words: [],
   trash: [],
   isAllSelected: false,
+  deletedWords: [],
+  difficultWords: [],
+  studiedWords: [],
 };
 
 const dictionarySlice = createSlice({
@@ -28,6 +31,15 @@ const dictionarySlice = createSlice({
     getIsAllSelected(state, action) {
       state.isAllSelected = action.payload;
     },
+    getDeletedWords(state, action) {
+      state.deletedWords = action.payload;
+    },
+    getStudiedWords(state, action) {
+      state.studiedWords = action.payload;
+    },
+    getDifficultWords(state, action) {
+      state.difficultWords = action.payload;
+    },
   },
 });
 
@@ -37,6 +49,9 @@ export const {
   getSelect,
   toggleDeleteModal,
   getIsAllSelected,
+  getDeletedWords,
+  getDifficultWords,
+  getStudiedWords,
 } = dictionarySlice.actions;
 
 export const dictionarySliceReducer = dictionarySlice.reducer;
@@ -65,19 +80,44 @@ export const changeShowDeleteModal = (value) => async (dispatch) => {
   }
 };
 
-export const updateWords = () => async (dispatch) => {
+export const updateDeletedWords = (value) => async (dispatch) => {
   try {
-    const response = await Axios.get('https://afternoon-falls-25894.herokuapp.com/words?page=0&group=0');
-    const words = response.data.map((res) => {
-      return {
-        word: res.word,
-        translate: res.wordTranslate,
-        id: res.id,
-        audio: res.audio,
-        image: res.image,
-      };
-    });
-    dispatch(getWords(words));
+    dispatch(getDeletedWords(value));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateStudiedWords = (value) => async (dispatch) => {
+  try {
+    dispatch(getStudiedWords(value));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateDifficultWords = (value) => async (dispatch) => {
+  try {
+    dispatch(getDifficultWords(value));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateWords = (value) => async (dispatch) => {
+  try {
+    dispatch(getWords(value));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateAllWords = () => async (dispatch) => {
+  try {
+    dispatch(getDeletedWords(await fetchWords(1, 0)));
+    dispatch(getDifficultWords(await fetchWords(0, 3)));
+    dispatch(getStudiedWords(await fetchWords(0, 0)))
+    dispatch(getWords(await fetchWords(0, 4)));
   } catch (error) {
     console.log(error);
   }
@@ -85,7 +125,6 @@ export const updateWords = () => async (dispatch) => {
 
 export const updateTrash = (value) => async (dispatch) => {
   try {
-    console.log(value);
     dispatch(getTrash(value));
   } catch (error) {
     console.log(error);
