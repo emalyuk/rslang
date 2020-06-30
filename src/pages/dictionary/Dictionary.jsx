@@ -103,9 +103,16 @@ const Dictonary = () => {
         <div className='toggle-tabs'>
           {!isSelect && renderOptions()}
         </div>
+        <div className='trash-icon' onClick={() => dispatch(changeShowDeleteModal(true))}></div>
       </div>
       <div className='dictionary-content'>
-        <DictionaryTabs words={words} currentTab={currentTab} />
+        <DictionaryTabs
+          words={words}
+          currentTab={currentTab}
+          deletedWords={deletedWords}
+          difficultWords={difficultWords}
+          studiedWords={studiedWords}
+        />
       </div>
     </div>
   );
