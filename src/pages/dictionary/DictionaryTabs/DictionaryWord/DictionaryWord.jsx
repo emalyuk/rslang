@@ -38,17 +38,24 @@ const DictionaryWord = ({ word, translate, image, audio, id, isAll }) => {
     }
   };
 
+  const deleteWord = (idWord) => {
+    const copyTrash = trash.slice();
+    copyTrash.push(idWord);
+    dispatch(updateTrash(copyTrash));
+    dispatch(changeShowDeleteModal(true));
+  };
+
   return (
     <div className='dictionary-word'>
       <CheckBox id={id} click={() => toggleWordInTrash(id, false)} isAll={isAll} />
-      <div className='audio-icon' onClick={() => playAudio(audio)} />
+      <div className='audio-icon' onClick={() => playAudio(linkRaw, audio)} />
       <div className='my-words'>
         <div className='word'>{word}</div>
         <div className='translate'>{translate}</div>
       </div>
-      <div className='word-image' style={{ backgroundImage: `url('${rawImage}${image}')` }} />
+      <div className='word-image' style={{ backgroundImage: `url('${linkRaw}${image}')` }} />
       <LeoFaw color='orange' />
-      {!isSelect && <div className='trash-icon' onClick={() => toggleWordInTrash(id, true)} />}
+      {!isSelect && <div className='trash-icon' onClick={() => deleteWord(id)} />}
     </div>
   );
 };
