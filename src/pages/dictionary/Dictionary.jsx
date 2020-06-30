@@ -92,7 +92,11 @@ const Dictonary = () => {
             <button type='button'>Посмотреть все карточки</button>
           </div>
           <div className='button-wrapper'>
-            <button type='button'>Изучить слова</button>
+            <button type='button'>
+              <span>
+                Изучить слова
+              </span>
+            </button>
           </div>
         </div>
       </div>
