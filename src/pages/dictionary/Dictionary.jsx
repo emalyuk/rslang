@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Dictionary.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import CheckBox from '../../components/CheckBox/CheckBox';
-import LeoFaw from '../../components/LeoFaw/LeoFaw';
-import { updateWords, toggleIsAllSelected } from './DictionaryReducer';
+import CheckBox from '../../components/checkBox/CheckBox';
+import LeoFaw from '../../components/leoFaw/LeoFaw';
+import { updateWords, toggleIsAllSelected, changeShowDeleteModal, updateAllWords } from './DictionaryReducer';
 import DictionaryTabs from './DictionaryTabs/DictionaryTabs';
 
 const Dictonary = () => {
   const [currentTab, setCurrentTab] = useState('all');
   const words = useSelector((state) => state.dictionary.words);
-  const isAllSelected = useSelector((state) => state.dictionary.isAllSelected)
+  const deletedWords = useSelector((state) => state.dictionary.deletedWords);
+  const difficultWords = useSelector((state) => state.dictionary.difficultWords);
+  const studiedWords = useSelector((state) => state.dictionary.studiedWords);
+  const isAllSelected = useSelector((state) => state.dictionary.isAllSelected);
   const dispatch = useDispatch();
   const allTabRef = useRef();
   const studiedTabRef = useRef();
