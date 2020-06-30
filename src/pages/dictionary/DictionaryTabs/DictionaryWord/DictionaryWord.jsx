@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import './DictionaryWord.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import LeoFaw from '../../../../components/LeoFaw/LeoFaw';
-import CheckBox from '../../../../components/CheckBox/CheckBox';
+import LeoFaw from '../../../../components/leoFaw/LeoFaw';
+import CheckBox from '../../../../components/checkBox/CheckBox';
 import playAudio from '../../../../utils/playAudio';
 import { changeShowDeleteModal, updateTrash, toggleIsSelect, toggleIsAllSelected } from '../../DictionaryReducer';
 
 const DictionaryWord = ({ word, translate, image, audio, id, isAll }) => {
   const trash = useSelector((state) => state.dictionary.trash);
   const isSelect = useSelector((state) => state.dictionary.isSelect);
-  const [rawImage] = useState('https://raw.githubusercontent.com/himimetsu/rslang-data/master/');
+  const [linkRaw] = useState('https://raw.githubusercontent.com/himimetsu/rslang-data/master/');
   const dispatch = useDispatch();
 
   const toggleWordInTrash = (sd, showModal) => {
     const copyTrash = trash.slice();
-
     if (!showModal) {
       if (trash.length === 0) {
         copyTrash.push(sd);
