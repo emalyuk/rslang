@@ -1,0 +1,15 @@
+.settings__select {
+  cursor: pointer;
+  max-width: 80px;
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}
