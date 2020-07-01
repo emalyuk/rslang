@@ -7,24 +7,14 @@ import {
 } from '../../../../constants/constants';
 import arrayOfNumbers from '../../../../utils/arrayOfNumber';
 
-import SettingSwitcher from '../settingSwitcher';
+import CardSettingsSwitcherBox from '../cardSettingsSwitcherBox';
 import CardsCountSelect from '../cardsCountSelect';
 
-import {
-  primaryCardSettings,
-  secondaryCardSettings,
-} from '../../../../constants/cardSettingsData';
+import { initialSettings } from '../../../../constants/cardSettingsData';
 
 import './CardSettings.scss';
 
 const CardSettings = () => {
-  const initialSettings = {
-    cardsCount: {
-      maxCardsPerDay: 50,
-      newCardsPerDay: 50,
-    },
-  };
-
   const [settings, setSettings] = useState(initialSettings);
 
   const maxCardsArrayOfNumber = arrayOfNumbers(
@@ -41,23 +31,45 @@ const CardSettings = () => {
     const selectedValue = Number(event.target.value);
 
     if (optionName === 'maxCardsPerDay') {
-      setSettings((prevState) => ({
-        ...prevState,
+      setSettings({
+        ...settings,
         cardsCount: {
-          ...prevState.cardsCount,
           maxCardsPerDay: selectedValue,
           newCardsPerDay: selectedValue,
         },
-      }));
+      });
     } else {
-      setSettings((prevState) => ({
-        ...prevState,
+      setSettings({
+        ...settings,
         cardsCount: {
-          ...prevState.cardsCount,
-          [optionName]: selectedValue,
+          ...settings.cardsCount,
+          newCardsPerDay: selectedValue,
         },
-      }));
+      });
     }
+  }
+
+  // TODO: useCallback, useMemo ? Check switch possibility
+
+  const handleOnChangeSwitcher = (option, categoryLabel) => {
+    const index = settings[categoryLabel].findIndex((el) => el.option === option);
+
+    const oldItem = settings[categoryLabel][index];
+    const newItem = {
+      ...oldItem,
+      isChecked: !oldItem.isChecked,
+    };
+
+    const newSettings = [
+      ...settings[categoryLabel].slice(0, index),
+      newItem,
+      ...settings[categoryLabel].slice(index + 1),
+    ];
+
+    setSettings({
+      ...settings,
+      [categoryLabel]: newSettings,
+    });
   }
 
   console.log(settings)
@@ -66,25 +78,20 @@ const CardSettings = () => {
     <div className='home__settings home-box'>
       <h4 className='home__settings__title home-box-title'>Настройки</h4>
       <div className='home__settings__container'>
-        <div className='home-box-inner'>
-          <div className='home__settings__container--title'>
-            Основные (одна из опций обязательна)
-          </div>
-          {primaryCardSettings.map(({ label, option }) => {
-            return (
-              <SettingSwitcher label={label} option={option} key={option} />
-            );
-          })}
-        </div>
 
-        <div className='home-box-inner'>
-          <div className='home__settings__container--title'>Дополнительные</div>
-          {secondaryCardSettings.map(({ label, option }) => {
-            return (
-              <SettingSwitcher label={label} option={option} key={option} />
-            );
-          })}
-        </div>
+        <CardSettingsSwitcherBox
+          title='Основные (одна из опций обязательна)'
+          categoryLabel='mainInfoOnCard'
+          settings={settings.mainInfoOnCard}
+          handleChange={handleOnChangeSwitcher}
+        />
+
+        <CardSettingsSwitcherBox
+          title='Дополнительные'
+          categoryLabel='extraInfoOnCard'
+          settings={settings.extraInfoOnCard}
+          handleChange={handleOnChangeSwitcher}
+        />
 
         <div className='home-box-inner'>
           <div className='home__settings__container--title'>
