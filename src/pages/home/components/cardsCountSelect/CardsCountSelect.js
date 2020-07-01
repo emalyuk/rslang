@@ -13,9 +13,8 @@ const CardsCountSelect = ({
       <div className='select__label'>{`${label}:`}</div>
       <select
         className='custom-select custom-select-sm settings__select'
-        data-tag={tag}
         value={selectedOption}
-        onChange={handleChangeSelect}
+        onChange={(event) => handleChangeSelect(event, tag)}
         onBlur={() => { }}
       >
         {
