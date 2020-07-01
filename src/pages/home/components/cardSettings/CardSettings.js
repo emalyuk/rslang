@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import CardSettingsSwitcherBox from '../cardSettingsSwitcherBox';
+import CardsCountSelect from '../cardsCountSelect';
 
 import {
   minLimitCardsPerDay,
@@ -6,11 +9,7 @@ import {
   minLimitNewCardsPerDay,
 } from '../../../../constants/constants';
 import arrayOfNumbers from '../../../../utils/arrayOfNumber';
-
-import CardSettingsSwitcherBox from '../cardSettingsSwitcherBox';
-import CardsCountSelect from '../cardsCountSelect';
-
-import { initialSettings } from '../../../../constants/cardSettingsData';
+import { initialSettings, settingsLabelName } from '../../../../constants/cardSettingsData';
 
 import './CardSettings.scss';
 
@@ -23,26 +22,26 @@ const CardSettings = () => {
   );
 
   const maxNewCardsArrayOfNumber = arrayOfNumbers(
-    minLimitNewCardsPerDay, settings.cardsCount.maxCardsPerDay + 1,
+    minLimitNewCardsPerDay, settings.wordsPerDay + 1,
   );
 
   const handleOnChangeSelect = (event, tag) => {
-    const optionName = tag;
     const selectedValue = Number(event.target.value);
 
-    if (optionName === 'maxCardsPerDay') {
+    if (tag === settingsLabelName.maxCardsPerDay.en) {
       setSettings({
         ...settings,
-        cardsCount: {
-          maxCardsPerDay: selectedValue,
+        optional: {
+          ...settings.optional,
           newCardsPerDay: selectedValue,
         },
+        wordsPerDay: selectedValue,
       });
     } else {
       setSettings({
         ...settings,
-        cardsCount: {
-          ...settings.cardsCount,
+        optional: {
+          ...settings.optional,
           newCardsPerDay: selectedValue,
         },
       });
@@ -50,66 +49,75 @@ const CardSettings = () => {
   }
 
   // TODO: useCallback, useMemo ? Check switch possibility
-
   const handleOnChangeSwitcher = (option, categoryLabel) => {
-    const index = settings[categoryLabel].findIndex((el) => el.option === option);
+    const index = settings.optional[categoryLabel].findIndex((el) => el.option === option);
 
-    const oldItem = settings[categoryLabel][index];
+    const oldItem = settings.optional[categoryLabel][index];
     const newItem = {
       ...oldItem,
       isChecked: !oldItem.isChecked,
     };
 
     const newSettings = [
-      ...settings[categoryLabel].slice(0, index),
+      ...settings.optional[categoryLabel].slice(0, index),
       newItem,
-      ...settings[categoryLabel].slice(index + 1),
+      ...settings.optional[categoryLabel].slice(index + 1),
     ];
 
     setSettings({
       ...settings,
-      [categoryLabel]: newSettings,
+      optional: {
+        ...settings.optional,
+        [categoryLabel]: newSettings,
+      },
     });
   }
 
-  console.log(settings)
+  useEffect(() => {
+    localStorage.setItem('settings', JSON.stringify(settings));
+    // return () => {
+    //   cleanup
+    // }
+  }, [settings])
 
   return (
     <div className='home__settings home-box'>
-      <h4 className='home__settings__title home-box-title'>Настройки</h4>
+      <h4 className='home__settings__title home-box-title'>
+        {settingsLabelName.settings}
+      </h4>
       <div className='home__settings__container'>
 
         <CardSettingsSwitcherBox
-          title='Основные (одна из опций обязательна)'
-          categoryLabel='mainInfoOnCard'
-          settings={settings.mainInfoOnCard}
+          title={settingsLabelName.mainInfoOnCard.ru}
+          categoryLabel={settingsLabelName.mainInfoOnCard.en}
+          settings={settings.optional.mainInfoOnCard}
           handleChange={handleOnChangeSwitcher}
         />
 
         <CardSettingsSwitcherBox
-          title='Дополнительные'
-          categoryLabel='extraInfoOnCard'
-          settings={settings.extraInfoOnCard}
+          title={settingsLabelName.extraInfoOnCard.ru}
+          categoryLabel={settingsLabelName.extraInfoOnCard.en}
+          settings={settings.optional.extraInfoOnCard}
           handleChange={handleOnChangeSwitcher}
         />
 
         <div className='home-box-inner'>
           <div className='home__settings__container--title'>
-            Количество карточек
+            {settingsLabelName.cardsNumber}
           </div>
 
           <CardsCountSelect
-            label='Максимум в день'
-            tag='maxCardsPerDay'
-            selectedOption={settings.cardsCount.maxCardsPerDay}
+            label={settingsLabelName.maxCardsPerDay.ru}
+            tag={settingsLabelName.maxCardsPerDay.en}
+            selectedOption={settings.wordsPerDay}
             arrayOfNumbers={maxCardsArrayOfNumber}
             handleChangeSelect={handleOnChangeSelect}
           />
 
           <CardsCountSelect
-            label='Новых в день'
-            tag='newCardsPerDay'
-            selectedOption={settings.cardsCount.newCardsPerDay}
+            label={settingsLabelName.newCardsPerDay.ru}
+            tag={settingsLabelName.newCardsPerDay.en}
+            selectedOption={settings.optional.newCardsPerDay}
             arrayOfNumbers={maxNewCardsArrayOfNumber}
             handleChangeSelect={handleOnChangeSelect}
           />
