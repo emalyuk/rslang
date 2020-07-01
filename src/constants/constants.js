@@ -4,7 +4,11 @@ const imgPath = '/img/';
 const githubUserLink = 'https://github.com/';
 const userLoginDataKey = 'JWT';
 const rsSchoolLink = 'https://rs.school/';
+
 const wordsCountTotal = 3600;
+const maxLimitCardsPerDay = 50;
+const minLimitCardsPerDay = 10;
+const minLimitNewCardsPerDay = 0;
 
 const navOptions = [
   { route: ROUTS.home, title: 'Home' },
@@ -22,4 +26,7 @@ export {
   imgPath, githubUserLink, navOptions,
   navOptionsUnLoginUser, userLoginDataKey,
   rsSchoolLink, wordsCountTotal,
+  maxLimitCardsPerDay,
+  minLimitCardsPerDay,
+  minLimitNewCardsPerDay,
 };
