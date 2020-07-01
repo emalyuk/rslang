@@ -26,8 +26,8 @@ const CardSettings = () => {
     minLimitNewCardsPerDay, settings.cardsCount.maxCardsPerDay + 1,
   );
 
-  const handleOnSelectChange = (event) => {
-    const optionName = event.target.dataset.tag;
+  const handleOnChangeSelect = (event, tag) => {
+    const optionName = tag;
     const selectedValue = Number(event.target.value);
 
     if (optionName === 'maxCardsPerDay') {
@@ -103,7 +103,7 @@ const CardSettings = () => {
             tag='maxCardsPerDay'
             selectedOption={settings.cardsCount.maxCardsPerDay}
             arrayOfNumbers={maxCardsArrayOfNumber}
-            handleChangeSelect={handleOnSelectChange}
+            handleChangeSelect={handleOnChangeSelect}
           />
 
           <CardsCountSelect
@@ -111,7 +111,7 @@ const CardSettings = () => {
             tag='newCardsPerDay'
             selectedOption={settings.cardsCount.newCardsPerDay}
             arrayOfNumbers={maxNewCardsArrayOfNumber}
-            handleChangeSelect={handleOnSelectChange}
+            handleChangeSelect={handleOnChangeSelect}
           />
         </div>
       </div>
