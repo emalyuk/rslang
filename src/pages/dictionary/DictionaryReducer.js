@@ -128,10 +128,12 @@ export const updateWords = (value) => async (dispatch) => {
 
 export const updateAllWords = () => async (dispatch) => {
   try {
-    dispatch(getDeletedWords(await fetchWords(1, 0)));
-    dispatch(getDifficultWords(await fetchWords(0, 3)));
-    dispatch(getStudiedWords(await fetchWords(0, 0)))
-    dispatch(getWords(await fetchWords(0, 4)));
+    const difficultFetchWords = await fetchWords(0, 3);
+    const studiedFetchWords = await fetchWords(0, 0);
+    dispatch(getDifficultWords(difficultFetchWords));
+    dispatch(getStudiedWords(studiedFetchWords))
+    const allWordsArray = shuffleArray(difficultFetchWords.concat(studiedFetchWords, []));
+    dispatch(getWords(allWordsArray))
   } catch (error) {
     console.log(error);
   }
