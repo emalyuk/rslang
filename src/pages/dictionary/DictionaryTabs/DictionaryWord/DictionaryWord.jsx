@@ -6,7 +6,7 @@ import CheckBox from '../../../../components/checkBox/CheckBox';
 import playAudio from '../../../../utils/playAudio';
 import { changeShowDeleteModal, updateTrash, toggleIsSelect, toggleIsAllSelected } from '../../DictionaryReducer';
 
-const DictionaryWord = ({ word, translate, image, audio, id, isAll }) => {
+const DictionaryWord = ({ word, translate, image, audio, id, isAll, color }) => {
   const trash = useSelector((state) => state.dictionary.trash);
   const isSelect = useSelector((state) => state.dictionary.isSelect);
   const [linkRaw] = useState('https://raw.githubusercontent.com/himimetsu/rslang-data/master/');
@@ -54,7 +54,7 @@ const DictionaryWord = ({ word, translate, image, audio, id, isAll }) => {
         <div className='translate'>{translate}</div>
       </div>
       <div className='word-image' style={{ backgroundImage: `url('${linkRaw}${image}')` }} />
-      <LeoFaw color='orange' />
+      <LeoFaw color={color} />
       {!isSelect && <div className='trash-icon' onClick={() => deleteWord(id)} />}
     </div>
   );
