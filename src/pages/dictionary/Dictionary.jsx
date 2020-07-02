@@ -102,7 +102,7 @@ const Dictonary = () => {
       </div>
       <div className='dictionary-control'>
         <div className='check-all'>
-          <CheckBox click={() => allSelectedDictionary()} />
+          <CheckBox click={() => allSelectedDictionary()} id='allSelect' isAll={isAllSelected ? true : false} />
         </div>
         <div className='toggle-tabs'>
           {!isSelect && renderOptions()}
