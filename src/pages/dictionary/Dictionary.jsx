@@ -3,7 +3,7 @@ import './Dictionary.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckBox from '../../components/checkBox/CheckBox';
 import LeoFaw from '../../components/leoFaw/LeoFaw';
-import { updateWords, toggleIsAllSelected, changeShowDeleteModal, updateAllWords } from './DictionaryReducer';
+import { toggleIsAllSelected, changeShowDeleteModal, updateAllWords, updateTrash } from './DictionaryReducer';
 import DictionaryTabs from './DictionaryTabs/DictionaryTabs';
 
 const Dictonary = () => {
