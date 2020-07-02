@@ -12,6 +12,7 @@ const Team = lazy(() => import('pages/team/Team'));
 const Login = lazy(() => import('pages/auth/login/Login'));
 const Registration = lazy(() => import('pages/auth/registration/Registration'));
 const NotFound = lazy(() => import('pages/notFound/NotFound'));
+const Promo = lazy(() => import('pages/promo/Promo'));
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
             <PrivateRoute path={routes.team} component={Team} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
+            <PrivateRoute path={routes.promo} component={Promo} exact />
 
             <Route component={NotFound} />
           </Switch>
