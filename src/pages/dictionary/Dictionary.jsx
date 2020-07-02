@@ -85,7 +85,10 @@ const Dictonary = () => {
     <div className='dictionary-wrapper'>
       <div className='dictionary-header'>
         <div className='dictionary-title'>
-          {words && `Мой словарь (${words.length})`}
+          {currentTab === 'all' && `Все слова (${words.length})`}
+          {currentTab === 'studied' && `Изученные слова (${studiedWords.length})`}
+          {currentTab === 'deleted' && `Удалённые слова (${deletedWords.length})`}
+          {currentTab === 'difficult' && `Сложные слова (${difficultWords.length})`}
         </div>
         <div className='dictionary-header-buttons'>
           <div className='button-wrapper'>
