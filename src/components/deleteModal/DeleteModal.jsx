@@ -50,6 +50,7 @@ const DeleteModal = ({ hideFunc }) => {
 
 DeleteModal.propTypes = {
   hideFunc: PropTypes.func.isRequired,
+  tab: PropTypes.string.isRequired,
 };
 
 export default DeleteModal;
