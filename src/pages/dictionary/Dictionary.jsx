@@ -73,9 +73,26 @@ const Dictonary = () => {
   );
 
   const allSelectedDictionary = () => {
-    console.log('all selected');
     dispatch(toggleIsAllSelected(!isAllSelected));
   };
+
+  useEffect(() => {
+    if (isAllSelected) {
+      const copyTrash = [];
+      if (currentTab === 'all') {
+        words.forEach((word) => copyTrash.push(word.id));
+      } else if (currentTab === 'studied') {
+        studiedWords.forEach((word) => copyTrash.push(word.id));
+      } else if (currentTab === 'difficult') {
+        difficultWords.forEach((word) => copyTrash.push(word.id));
+      } else {
+        deletedWords.forEach((word) => copyTrash.push(word.id));
+      }
+      dispatch(updateTrash(copyTrash));
+    } else {
+      dispatch(updateTrash([]));
+    }
+  }, [isAllSelected]);
 
   useEffect(() => {
     dispatch(updateAllWords());
