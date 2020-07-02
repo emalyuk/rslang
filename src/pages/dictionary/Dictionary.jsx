@@ -21,9 +21,9 @@ const Dictonary = () => {
   const isSelect = useSelector((state) => state.dictionary.isSelect);
   const [tabs] = useState([
     { content: 'Все', tabName: allTabRef, id: 'all' },
-    { content: <LeoFaw color='gray' />, tabName: studiedTabRef, id: 'studied' },
+    { content: <LeoFaw color='green' />, tabName: studiedTabRef, id: 'studied' },
     { content: <LeoFaw color='orange' />, tabName: difficultTabRef, id: 'difficult' },
-    { content: <LeoFaw color='green' />, tabName: deletedTabRef, id: 'deleted' },
+    { content: <LeoFaw color='red' />, tabName: deletedTabRef, id: 'deleted' },
   ]);
 
   const changeActiveOption = (value) => {
