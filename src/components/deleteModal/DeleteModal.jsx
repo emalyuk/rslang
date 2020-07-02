@@ -24,7 +24,7 @@ const DeleteModal = ({ hideFunc }) => {
             <button
               className='delete-btn'
               type='button'
-              onClick={() => deleteWord()}
+              onClick={() => deleteWords()}
             >
               <span className='delete-btn-content'>
                 Удалить слова
@@ -35,7 +35,7 @@ const DeleteModal = ({ hideFunc }) => {
             <button
               className='cancel-btn'
               type='button'
-              onClick={() => clearTrashWords()}
+              onClick={() => cancelDeleteModal()}
             >
               <span className='cancel-btn-content'>
                 Отмена
