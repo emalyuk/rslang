@@ -32,24 +32,27 @@ const DictionaryTabs = ({ words, currentTab, difficultWords, studiedWords, delet
           ))}
         </div>
       )}
+
       {currentTab === 'studied' && (
         <div className='dictionary-studied'>
           {studiedWords && studiedWords.map((studiedWord) => (
-            <DictionaryWord {...studiedWord} key={studiedWord.id} isAll={isAllSelected} />
+            <DictionaryWord {...studiedWord} key={studiedWord.id} isAll={isAllSelected} color='green' />
           ))}
         </div>
       )}
+
       {currentTab === 'difficult' && (
         <div className='dictionary-difficult'>
           {difficultWords && difficultWords.map((difficultWord) => (
-            <DictionaryWord {...difficultWord} key={difficultWord.id} isAll={isAllSelected} />
+            <DictionaryWord {...difficultWord} key={difficultWord.id} isAll={isAllSelected} color='orange' />
           ))}
         </div>
       )}
+
       {currentTab === 'deleted' && (
         <div className='dictionary-deleted'>
           {deletedWords && deletedWords.map((deletedWord) => (
-            <DictionaryWord {...deletedWord} key={deletedWord.id} isAll={isAllSelected} />
+            <DictionaryWord {...deletedWord} key={deletedWord.id} isAll={isAllSelected} color='red' />
           ))}
         </div>
       )}
