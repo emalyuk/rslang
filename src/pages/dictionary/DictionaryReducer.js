@@ -11,6 +11,7 @@ const initialDictionaryState = {
   deletedWords: [],
   difficultWords: [],
   studiedWords: [],
+  currentTab: 'all',
 };
 
 const dictionarySlice = createSlice({
@@ -41,6 +42,9 @@ const dictionarySlice = createSlice({
     getDifficultWords(state, action) {
       state.difficultWords = action.payload;
     },
+    getCurrentTab(state, action) {
+      state.currentTab = action.payload;
+    },
   },
 });
 
@@ -53,9 +57,18 @@ export const {
   getDeletedWords,
   getDifficultWords,
   getStudiedWords,
+  getCurrentTab,
 } = dictionarySlice.actions;
 
 export const dictionarySliceReducer = dictionarySlice.reducer;
+
+export const changeCurrentTab = (value) => async (dispatch) => {
+  try {
+    dispatch(getCurrentTab(value));
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export const toggleIsAllSelected = (value) => async (dispatch) => {
   try {
