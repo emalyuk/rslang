@@ -6,8 +6,6 @@ import PrivateRoute from './PrivateRoute';
 import routes from '../../routes';
 
 import './App.scss';
-import Savanna from '../../games/savanna/Savanna';
-import Game from '../game/Game';
 
 const Game = lazy(() => import('pages/game/Game'));
 const Savanna = lazy(() => import('../../games/savanna/Savanna'));
