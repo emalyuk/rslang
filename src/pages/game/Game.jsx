@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Game.scss';
 import { useHistory } from 'react-router-dom';
+import { games } from './data';
 
 const Game = () => {
-  const [games] = useState(['savanna', 'speak-it', 'audio-challenge', 'english-puzzle', 'sprint', 'own-game']);
   const history = useHistory();
 
   return (
