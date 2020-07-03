@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Savanna.scss';
 import { useSelector, useDispatch } from 'react-redux';
+import { defaultHearts } from './data';
 import Axios from 'axios';
 import { getSavannaInfo, changeWordNumber, changeShowCloseModal, changeShowResultsModal, changeWords, changePlaySound, changeIsRefresh } from './SavannaReducer';
-import ModalWindow from '../../components/ModalWindow/ModalWindow';
+import ModalWindow from '../../components/modalWindow/ModalWindow';
 import StartModal from './modals/start/StartModal';
 import CloseModal from './modals/close/CloseModal';
 import ResultsModal from './modals/results/ResultsModal';
@@ -17,7 +18,14 @@ const Savanna = () => {
   const dispatch = useDispatch();
   const wordNumber = useSelector((state) => state.savanna.wordNumber);
   const words = useSelector((state) => state.savanna.words);
-  const showStart = useSelector((state) => state.savanna.showStart)
+  const showStart = useSelector((state) => state.savanna.showStart);
+  const [answerRefs] = useState({
+    0: useRef(),
+    1: useRef(),
+    2: useRef(),
+    3: useRef(),
+  });
+  const answerTrueRef = useRef();
   const [backgroundPosition, changeBackgroundPosition] = useState(0);
   const [rightWord, setRightWord] = useState([]);
   const [fails, setFails] = useState(0);
@@ -47,14 +55,13 @@ const Savanna = () => {
       copyRes.invalid.push(words[wordNumber]);
       setResults(copyRes);
     }
-    const anime = document.getElementsByClassName('answer-true')[0];
-    anime.setAttribute('data-state', 'end');
+    answerTrueRef.current.dataset.state = 'end';
     if (wordNumber + 1 < words.length && fails < 5) {
       dispatch(changeWordNumber(wordNumber + 1));
     }
     if (fails < 5) {
       setTimeout(() => {
-        anime.setAttribute('data-state', 'start');
+        answerTrueRef.current.dataset.state = 'start';
       }, 300);
       setFails(fails + 1);
     }
@@ -78,6 +85,7 @@ const Savanna = () => {
   const renderAnswerChoice = () => (
     currentStage.map((item, index) => (
       <span
+        ref={answerRefs[index]}
         className='answer'
         data-answer={item.answer}
         key={item.id}
@@ -135,17 +143,17 @@ const Savanna = () => {
   const choose = (key) => {
     let answer;
     switch (key) {
-      case 49:
-        answer = document.querySelector(".answer[data-id='1']").getAttribute('data-answer');
+      case '1':
+        answer = answerRefs[0].current.dataset.answer;
         break;
-      case 50:
-        answer = document.querySelector(".answer[data-id='2']").getAttribute('data-answer');
+      case '2':
+        answer = answerRefs[1].current.dataset.answer;
         break;
-      case 51:
-        answer = document.querySelector(".answer[data-id='3']").getAttribute('data-answer');
+      case '3':
+        answer = answerRefs[2].current.dataset.answer;
         break;
-      case 52:
-        answer = document.querySelector(".answer[data-id='4']").getAttribute('data-answer');
+      case '4':
+        answer = answerRefs[3].current.dataset.answer;
         break;
       default:
     }
@@ -207,8 +215,7 @@ const Savanna = () => {
       valid: [],
       invalid: [],
     });
-    const anime = document.getElementsByClassName('answer-true')[0];
-    anime.setAttribute('data-state', 'start');
+    answerTrueRef.current.dataset.state = 'start';
     setHearts([
       {
         id: 1,
@@ -240,8 +247,7 @@ const Savanna = () => {
 
   useEffect(() => {
     if (!showStart) {
-      const anime = document.getElementsByClassName('answer-true')[0];
-      anime.setAttribute('data-state', 'start');
+      answerTrueRef.current.dataset.state = 'start';
     }
   }, [showStart]);
 
@@ -252,10 +258,9 @@ const Savanna = () => {
         copyHearts[fails - 1].live = false;
         if (fails === 5) {
           dispatch(changeShowResultsModal(true));
-          const anime = document.getElementsByClassName('answer-true')[0];
-          anime.setAttribute('data-state', 'end');
+          answerTrueRef.current.dataset.state = 'end';
         }
-      // setHearts(copyHearts);
+        // setHearts(copyHearts);
       }
     }
   }, [fails]);
@@ -263,8 +268,7 @@ const Savanna = () => {
   useEffect(() => {
     if (wordNumber + 1 === words.length) {
       dispatch(changeShowResultsModal(true));
-      const anime = document.getElementsByClassName('answer-true')[0];
-      anime.setAttribute('data-state', 'end');
+      answerTrueRef.current.dataset.state = 'end';
     }
   }, [wordNumber]);
 
@@ -298,6 +302,7 @@ const Savanna = () => {
           </div>
           <div className='answer-wrapper'>
             <div
+              ref={answerTrueRef}
               className='answer-true'
               onTransitionEnd={() => repeatAnimateAndFails()}
             >
