@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import fetchWords from '../../utils/fetchWords';
-import shuffleArray from '../../utils/shuffleArray';
 
 const initialDictionaryState = {
   showDeleteModal: false,
