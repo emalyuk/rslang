@@ -272,10 +272,10 @@ const Savanna = () => {
 
   return (
     <div className='savanna-wrapper' style={{ backgroundPositionY: `calc(100% - ${backgroundPosition}%` }}>
-      {showCloseModal ? <ModalWindow><CloseModal /></ModalWindow> : null}
-      {showResultsModal ? <ModalWindow><ResultsModal results={results} /></ModalWindow> : null}
-      {showStart ? <StartModal /> : null}
-      {!showStart ? (
+      {showCloseModal && <ModalWindow><CloseModal /></ModalWindow>}
+      {showResultsModal && <ModalWindow><ResultsModal results={results} /></ModalWindow>}
+      {showStart && <StartModal />}
+      {!showStart && (
         <div className='savanna-game' onKeyDown={(event) => keyHandler(event)} tabIndex='0'>
           <div className='answer-choice'>
             {renderAnswerChoice()}
@@ -303,7 +303,7 @@ const Savanna = () => {
             </div>
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 };
