@@ -3,7 +3,7 @@ import './ResultsModal.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import DeleteModal from '../delete/DeleteModal';
-import ModalWindow from '../../../../components/ModalWindow/ModalWindow';
+import { ModalWindow } from '../../../../components';
 import { changeShowDeleteModal, changeShowResultsModal, changeIsRefresh } from '../../SavannaReducer';
 
 const ResultsModal = ({ results }) => {

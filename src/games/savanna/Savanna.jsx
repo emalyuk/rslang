@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Savanna.scss';
 import { useSelector, useDispatch } from 'react-redux';
+import { ModalWindow } from '../../components';
 import { defaultHearts } from './data';
 import Axios from 'axios';
 import { getSavannaInfo, changeWordNumber, changeShowCloseModal, changeShowResultsModal, changeWords, changePlaySound, changeIsRefresh } from './SavannaReducer';
-import ModalWindow from '../../components/modalWindow/ModalWindow';
 import StartModal from './modals/start/StartModal';
 import CloseModal from './modals/close/CloseModal';
 import ResultsModal from './modals/results/ResultsModal';
