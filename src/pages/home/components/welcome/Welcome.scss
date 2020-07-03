@@ -1,0 +1,21 @@
+@import '../../../../scss/variables';
+@import '../../../../scss/mixins.scss';
+
+.home__welcome {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  &__title {
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 16px;
+  }
+
+  @include exSm(){
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+}
+
