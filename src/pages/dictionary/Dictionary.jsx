@@ -1,31 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Dictionary.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import CheckBox from '../../components/checkBox/CheckBox';
-import LeoFaw from '../../components/leoFaw/LeoFaw';
+import CheckBox from '../../components';
+import LeoFaw from '../../components';
 import { toggleIsAllSelected, changeShowDeleteModal, updateAllWords, updateTrash } from './DictionaryReducer';
 import DictionaryTabs from './DictionaryTabs/DictionaryTabs';
 
 const Dictonary = () => {
-  const [currentTab, setCurrentTab] = useState('all');
+  const [currentTab, setCurrentTab] = useState('studied');
   const { words, deletedWords, difficultWords, isAllSelected, studiedWords } = useSelector((state) => state.dictionary);
   const dispatch = useDispatch();
-  const allTabRef = useRef();
   const studiedTabRef = useRef();
   const difficultTabRef = useRef();
   const deletedTabRef = useRef();
   const isSelect = useSelector((state) => state.dictionary.isSelect);
   const [tabs] = useState([
-    { content: 'Все', tabName: allTabRef, id: 'all' },
     { content: <LeoFaw color='green' />, tabName: studiedTabRef, id: 'studied' },
     { content: <LeoFaw color='orange' />, tabName: difficultTabRef, id: 'difficult' },
     { content: <LeoFaw color='red' />, tabName: deletedTabRef, id: 'deleted' },
   ]);
 
   const changeActiveOption = (value) => {
-    if (allTabRef.current.dataset.select === 'true') {
-      allTabRef.current.dataset.select = 'false';
-    } else if (studiedTabRef.current.dataset.select === 'true') {
+    if (studiedTabRef.current.dataset.select === 'true') {
       studiedTabRef.current.dataset.select = 'false';
     } else if (difficultTabRef.current.dataset.select === 'true') {
       difficultTabRef.current.dataset.select = 'false';
@@ -35,18 +31,14 @@ const Dictonary = () => {
 
     switch (value) {
       case 1:
-        allTabRef.current.dataset.select = 'true';
-        setCurrentTab('all');
-        break;
-      case 2:
         studiedTabRef.current.dataset.select = 'true';
         setCurrentTab('studied');
         break;
-      case 3:
+      case 2:
         difficultTabRef.current.dataset.select = 'true';
         setCurrentTab('difficult');
         break;
-      case 4:
+      case 3:
         deletedTabRef.current.dataset.select = 'true';
         setCurrentTab('deleted');
         break;
@@ -75,9 +67,7 @@ const Dictonary = () => {
   useEffect(() => {
     if (isAllSelected) {
       const copyTrash = [];
-      if (currentTab === 'all') {
-        words.forEach((word) => copyTrash.push(word.id));
-      } else if (currentTab === 'studied') {
+      if (currentTab === 'studied') {
         studiedWords.forEach((word) => copyTrash.push(word.id));
       } else if (currentTab === 'difficult') {
         difficultWords.forEach((word) => copyTrash.push(word.id));
@@ -98,7 +88,6 @@ const Dictonary = () => {
     <div className='dictionary-wrapper'>
       <div className='dictionary-header'>
         <div className='dictionary-title'>
-          {currentTab === 'all' && `Все слова (${words.length})`}
           {currentTab === 'studied' && `Изученные слова (${studiedWords.length})`}
           {currentTab === 'deleted' && `Удалённые слова (${deletedWords.length})`}
           {currentTab === 'difficult' && `Сложные слова (${difficultWords.length})`}

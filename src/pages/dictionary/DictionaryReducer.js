@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import fetchWords from '../../utils/fetchWords';
-import shuffleArray from '../../utils/shuffleArray';
 
 const initialDictionaryState = {
   showDeleteModal: false,
   isSelect: false,
-  words: [],
   trash: [],
   isAllSelected: false,
   deletedWords: [],
@@ -23,9 +21,6 @@ const dictionarySlice = createSlice({
     },
     toggleDeleteModal(state, action) {
       state.showDeleteModal = action.payload;
-    },
-    getWords(state, action) {
-      state.words = action.payload;
     },
     getSelect(state, action) {
       state.isSelect = action.payload;
@@ -49,7 +44,6 @@ const dictionarySlice = createSlice({
 });
 
 export const {
-  getWords,
   getTrash,
   getSelect,
   toggleDeleteModal,
@@ -118,22 +112,12 @@ export const updateDifficultWords = (value) => async (dispatch) => {
   }
 };
 
-export const updateWords = (value) => async (dispatch) => {
-  try {
-    dispatch(getWords(value));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const updateAllWords = () => async (dispatch) => {
   try {
     const difficultFetchWords = await fetchWords(0, 3);
     const studiedFetchWords = await fetchWords(0, 0);
     dispatch(getDifficultWords(difficultFetchWords));
     dispatch(getStudiedWords(studiedFetchWords))
-    const allWordsArray = shuffleArray(difficultFetchWords.concat(studiedFetchWords, []));
-    dispatch(getWords(allWordsArray))
   } catch (error) {
     console.log(error);
   }
