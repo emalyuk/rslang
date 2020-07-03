@@ -11,5 +11,11 @@
 }
 
 .progress {
-  background-color: $fourthColor;
+  background-color: $mainHomeColor;
+
+  &-bar {
+    background-image: linear-gradient(135deg, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+    transition: all .2s ease-in-out;
+  }
 }

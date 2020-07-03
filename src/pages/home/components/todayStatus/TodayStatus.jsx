@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TodayTarget from '../todayTarget';
-import TodayStatsItem from '../todayStatsItem';
+import TodayTarget from '../todayTarget/TodayTarget';
+import TodayStatsItem from '../todayStatsItem/TodayStatsItem';
 
 import './TodayStatus.scss';
 

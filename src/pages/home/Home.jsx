@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomeInfo } from './HomeSliceReducer';
 
-import HomeStatus from './components/homeStatus';
-import CardSettings from './components/cardSettings';
+import HomeStatus from './components/homeStatus/HomeStatus';
+import CardSettings from './components/cardSettings/CardSettings';
 
 import './Home.scss';
 

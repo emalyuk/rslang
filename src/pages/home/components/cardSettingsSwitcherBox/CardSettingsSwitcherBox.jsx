@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SettingSwitcher from '../settingSwitcher';
+import SettingSwitcher from '../settingSwitcher/SettingSwitcher';
 
 import './CardSettingsSwitcherBox.scss';
 

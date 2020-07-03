@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Welcome from '../welcome/Welcome';
-import TodayStatus from '../todayStatus';
-import Progress from '../progress';
+import TodayStatus from '../todayStatus/TodayStatus';
+import Progress from '../progress/Progress';
 
 import './HomeStatus.scss';
 

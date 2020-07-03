@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import CardSettingsSwitcherBox from '../cardSettingsSwitcherBox';
-import CardsCountSelect from '../cardsCountSelect';
+import CardSettingsSwitcherBox from '../cardSettingsSwitcherBox/CardSettingsSwitcherBox';
+import CardsCountSelect from '../cardsCountSelect/CardsCountSelect';
 
 import {
   minLimitCardsPerDay,
