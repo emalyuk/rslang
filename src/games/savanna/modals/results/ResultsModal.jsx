@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ResultsModal.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import DeleteModal from '../delete/DeleteModal';
+import { DeleteModal } from '../../../../components';
 import { ModalWindow } from '../../../../components';
 import { changeShowDeleteModal, changeShowResultsModal, changeIsRefresh } from '../../SavannaReducer';
 
