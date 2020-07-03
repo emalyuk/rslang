@@ -8,6 +8,7 @@ import { getSavannaInfo, changeWordNumber, changeShowCloseModal, changeShowResul
 import StartModal from './modals/start/StartModal';
 import CloseModal from './modals/close/CloseModal';
 import ResultsModal from './modals/results/ResultsModal';
+import shuffleArray from '../../utils/shuffleArray';
 
 const Savanna = () => {
   const {
@@ -127,19 +128,6 @@ const Savanna = () => {
       }
     }
     return newStage;
-  };
-
-  const shuffleArray = (paramArray) => {
-    const arr = paramArray
-    let j;
-    let temp;
-    for (let i = arr.length - 1; i > 0; i -= 1) {
-      j = Math.floor(Math.random() * (i + 1));
-      temp = arr[j];
-      arr[j] = arr[i];
-      arr[i] = temp;
-    }
-    return arr;
   };
 
   const choose = (key) => {
