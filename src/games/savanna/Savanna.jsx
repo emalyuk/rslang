@@ -216,28 +216,7 @@ const Savanna = () => {
       invalid: [],
     });
     answerTrueRef.current.dataset.state = 'start';
-    setHearts([
-      {
-        id: 1,
-        live: true,
-      },
-      {
-        id: 2,
-        live: true,
-      },
-      {
-        id: 3,
-        live: true,
-      },
-      {
-        id: 4,
-        live: true,
-      },
-      {
-        id: 5,
-        live: true,
-      },
-    ]);
+    setHearts(defaultHearts);
     setFails(0);
     const newWords = await getNewDefaultWords();
     dispatch(changeWords(newWords))
