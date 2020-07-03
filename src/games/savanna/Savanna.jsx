@@ -239,7 +239,6 @@ const Savanna = () => {
           dispatch(changeShowResultsModal(true));
           answerTrueRef.current.dataset.state = 'end';
         }
-        // setHearts(copyHearts);
       }
     }
   }, [fails]);
