@@ -25,38 +25,16 @@ const Savanna = () => {
     valid: [],
     invalid: [],
   });
-  const [hearts, setHearts] = useState([
-    {
-      id: 1,
-      live: true,
-    },
-    {
-      id: 2,
-      live: true,
-    },
-    {
-      id: 3,
-      live: true,
-    },
-    {
-      id: 4,
-      live: true,
-    },
-    {
-      id: 5,
-      live: true,
-    },
-  ]);
+  const [hearts, setHearts] = useState(defaultHearts);
   const [currentStage, setCurrentStage] = useState([]);
 
   const repeatAnimate = () => {
-    const anime = document.getElementsByClassName('answer-true')[0];
-    anime.setAttribute('data-state', 'end');
+    answerTrueRef.current.dataset.state = 'end';
     if (wordNumber + 1 < words.length && fails < 5) {
       dispatch(changeWordNumber(wordNumber + 1));
     }
     setTimeout(() => {
-      anime.setAttribute('data-state', 'start');
+      answerTrueRef.current.dataset.state = 'start';
     }, 300);
   };
 
