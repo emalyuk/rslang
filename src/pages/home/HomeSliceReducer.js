@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getHomeData } from './HomeApi';
 
 const initialHomeState = {
   data: [],

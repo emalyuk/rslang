@@ -9,6 +9,8 @@ const wordsCountTotal = 3600;
 const maxLimitCardsPerDay = 50;
 const minLimitCardsPerDay = 10;
 const minLimitNewCardsPerDay = 0;
+const responseStatusNotFound = 404;
+const responseStatusInvalidToken = 401;
 
 const navOptions = [
   { route: ROUTS.home, title: 'Home' },
@@ -29,4 +31,6 @@ export {
   maxLimitCardsPerDay,
   minLimitCardsPerDay,
   minLimitNewCardsPerDay,
+  responseStatusNotFound,
+  responseStatusInvalidToken,
 };

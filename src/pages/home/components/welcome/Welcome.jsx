@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Button from '../../../../components/button/Button';
 
 import './Welcome.scss';
 
-const Welcome = () => {
+const Welcome = ({ handleClick }) => {
   const firstWelcomeMessage = 'Добро пожаловать!';
   return (
     <div className='home__welcome home-box'>
@@ -15,12 +17,16 @@ const Welcome = () => {
         type='button'
         className='button-start'
         disabled={false}
-        onClick={() => console.log('START')}
+        onClick={handleClick}
       >
-        Начать изучение слов
+        Учить слова
       </Button>
     </div>
   );
 };
+
+Welcome.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+}
 
 export default Welcome;

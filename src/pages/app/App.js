@@ -26,7 +26,6 @@ const App = () => {
 
             <PrivateRoute path={routes.team} component={Team} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
-            <PrivateRoute path={routes.home} component={Home} exact />
             <PrivateRoute path={routes.promo} component={Promo} exact />
 
             <Route component={NotFound} />

@@ -1,10 +1,28 @@
 import axios from 'axios';
 
-// examples api calls
+import { userLoginDataKey } from '../../constants/constants';
 
-// example api GET
-export const getHomeData = async () => {
-  return axios.get('https://api-football-v1.p.rapidapi.com/v2/predictions/157462')
-}
+const authOption = JSON.parse(localStorage.getItem(userLoginDataKey))
+const { token, userId } = authOption;
+const settingsUrl = `${process.env.REACT_APP_BASE_URL}/users/${userId}/settings`;
 
-export const postHomeData = async (reqBody) => axios.post('home', reqBody);
+const homeService = axios.create({
+  baseURL: settingsUrl,
+  headers: {
+    Accept: 'application/json',
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  },
+});
+
+export const getSettingsData = async () => homeService.get();
+
+export const putSettingsData = async (data) => axios({
+  url: settingsUrl,
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    Authorization: `Bearer ${token}`,
+  },
+  data,
+});
