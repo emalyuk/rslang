@@ -3,17 +3,14 @@ import './DeleteModal.scss';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  updateWords, updateDeletedWords, updateStudiedWords,
+  updateDeletedWords, updateStudiedWords,
   updateDifficultWords, updateTrash, toggleIsAllSelected, toggleIsSelect,
 } from '../../pages/dictionary/DictionaryReducer';
 
 const DeleteModal = ({ hideFunc, tab }) => {
   const dispatch = useDispatch();
+  const { deletedWords, difficultWords, studiedWords } = useSelector((state) => state.dictionary);
   const trashWords = useSelector((state) => state.dictionary.trash);
-  const words = useSelector((state) => state.dictionary.words);
-  const deletedWords = useSelector((state) => state.dictionary.deletedWords);
-  const difficultWords = useSelector((state) => state.dictionary.difficultWords);
-  const studiedWords = useSelector((state) => state.dictionary.studiedWords);
 
   const deleteWordsFromTrash = (section, copyWords) => {
     const copyTrash = trashWords.slice();
@@ -37,10 +34,6 @@ const DeleteModal = ({ hideFunc, tab }) => {
     }
 
     switch (section) {
-      case 'words':
-        dispatch(updateWords(newArr));
-        dispatch(updateDeletedWords(copyDeletedWords));
-        break;
       case 'deletedWords':
         dispatch(updateDeletedWords(newArr));
         break;
@@ -63,10 +56,6 @@ const DeleteModal = ({ hideFunc, tab }) => {
   const deleteWords = () => {
     let copySectionWords = [];
     switch (tab) {
-      case 'all':
-        copySectionWords = words.slice();
-        deleteWordsFromTrash('words', copySectionWords);
-        break;
       case 'deleted':
         copySectionWords = deletedWords.slice();
         deleteWordsFromTrash('deletedWords', copySectionWords);
