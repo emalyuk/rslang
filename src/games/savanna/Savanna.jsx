@@ -10,15 +10,17 @@ import CloseModal from './modals/close/CloseModal';
 import ResultsModal from './modals/results/ResultsModal';
 
 const Savanna = () => {
-  const playSound = useSelector((state) => state.savanna.playSound);
+  const {
+    playSound,
+    showCloseModal,
+    showResultsModal,
+    isRefresh,
+    wordNumber,
+    showStart,
+    words,
+  } = useSelector((state) => state.savanna);
   const [defaultPage, setDefaultPage] = useState(0);
-  const showCloseModal = useSelector((state) => state.savanna.showCloseModal);
-  const showResultsModal = useSelector((state) => state.savanna.showResultsModal);
-  const isRefresh = useSelector((state) => state.savanna.isRefresh);
   const dispatch = useDispatch();
-  const wordNumber = useSelector((state) => state.savanna.wordNumber);
-  const words = useSelector((state) => state.savanna.words);
-  const showStart = useSelector((state) => state.savanna.showStart);
   const [answerRefs] = useState({
     0: useRef(),
     1: useRef(),
