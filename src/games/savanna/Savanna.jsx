@@ -143,16 +143,16 @@ const Savanna = () => {
   const choose = (key) => {
     let answer;
     switch (key) {
-      case '1':
+      case 49:
         answer = answerRefs[0].current.dataset.answer;
         break;
-      case '2':
+      case 50:
         answer = answerRefs[1].current.dataset.answer;
         break;
-      case '3':
+      case 51:
         answer = answerRefs[2].current.dataset.answer;
         break;
-      case '4':
+      case 52:
         answer = answerRefs[3].current.dataset.answer;
         break;
       default:
