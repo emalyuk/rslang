@@ -8,11 +8,7 @@ import DictionaryTabs from './DictionaryTabs/DictionaryTabs';
 
 const Dictonary = () => {
   const [currentTab, setCurrentTab] = useState('all');
-  const words = useSelector((state) => state.dictionary.words);
-  const deletedWords = useSelector((state) => state.dictionary.deletedWords);
-  const difficultWords = useSelector((state) => state.dictionary.difficultWords);
-  const studiedWords = useSelector((state) => state.dictionary.studiedWords);
-  const isAllSelected = useSelector((state) => state.dictionary.isAllSelected);
+  const { words, deletedWords, difficultWords, isAllSelected, studiedWords } = useSelector((state) => state.dictionary);
   const dispatch = useDispatch();
   const allTabRef = useRef();
   const studiedTabRef = useRef();
