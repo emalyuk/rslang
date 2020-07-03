@@ -11,6 +11,7 @@ const Game = () => {
       <div className='game-wrapper'>
         {games.map((game) => (
           <div
+            key={game}
             className='link-game'
             onClick={() => history.push(`/game/${game}`)}
           >
