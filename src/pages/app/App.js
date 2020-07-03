@@ -6,9 +6,9 @@ import PrivateRoute from './PrivateRoute';
 import routes from '../../routes';
 
 import './App.scss';
-import Savanna from '../../games/savanna/Savanna';
-import Game from '../game/Game';
 
+const Game = lazy(() => import('pages/game/Game'));
+const Savanna = lazy(() => import('../../games/savanna/Savanna'));
 const Home = lazy(() => import('pages/home/Home'));
 const Team = lazy(() => import('pages/team/Team'));
 const Login = lazy(() => import('pages/auth/login/Login'));
@@ -27,6 +27,7 @@ const App = () => {
             <Route path={routes.login} component={Login} exact />
             <Route path={routes.game} component={Game} exact />
             <Route path={routes.registration} component={Registration} exact />
+            <Route path={routes.games.savanna} component={Savanna} exact />
 
             <PrivateRoute path={routes.team} component={Team} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
