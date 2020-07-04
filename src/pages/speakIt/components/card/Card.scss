@@ -1,15 +1,26 @@
-.card{
+@import '../../../../scss/variables';
+@import '../../../../scss/mixins';
+.Card {
+  width: 18%;
   padding: 10px;
   margin-top: 10px;
+  background-color: $secondColor;
   cursor: pointer;
   transition: all 0.3s ease;
-  &:hover{
-    box-shadow: 5px 5px 10px 0 rgba($color: #000000, $alpha: 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &:hover {
+    box-shadow: 5px 5px 10px 0 rgba($color: $firstColor, $alpha: 0.3);
   }
-  &.isActive{
-    background-color: red;
+  &.isActive {
+    background-color: $fourthColor;
+    box-shadow: 5px 5px 10px 0 rgba($color: $firstColor, $alpha: 0.3);
   }
-  & p{
+  &.isGame {
+    pointer-events: none;
+  }
+  & p {
     margin: 0;
   }
 }

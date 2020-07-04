@@ -2,19 +2,25 @@ import React from 'react';
 import './Card.scss';
 
 const Card = ({
-  word, wordTranslate, activeId, setActiveId, id, setActiveImg, image, setActiveAudio, audio
+  word, transcription, activeId, setActiveId, id, setActiveImg, image, setActiveAudio, audio, setWordTranslate, wordTranslate, audioPlayer, isGameMod
 }) => {
   const isActive = activeId === id;
 
   function setCurrendItem(id, image, setActiveImg, setActiveId) {
-    setActiveId(id);
-    setActiveImg(image)
-    setActiveAudio(audio)
+    if (isActive) {
+      audioPlayer.play()
+    } else {
+      setActiveId(id);
+      setActiveImg(image)
+      setActiveAudio(audio)
+      setWordTranslate(wordTranslate)
+    }
+
   }
   return (
-    <div className={['card ', isActive ? 'isActive' : '', id].join(' ')} onClick={() => setCurrendItem(id, image, setActiveImg, setActiveId)}>
+    <div className={['Card ', isActive ? 'isActive' : '', id, isGameMod ? 'isGame' : ''].join(' ')} onClick={() => setCurrendItem(id, image, setActiveImg, setActiveId)}>
       <p>{word}</p>
-      <p>{wordTranslate}</p>
+      <p>{transcription}</p>
     </div>
   )
 }
