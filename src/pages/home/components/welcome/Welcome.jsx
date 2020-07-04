@@ -7,7 +7,7 @@ import Button from 'components/button/Button';
 
 import './Welcome.scss';
 
-const Welcome = ({ handleClick }) => {
+const Welcome = () => {
   const firstWelcomeMessage = 'Добро пожаловать!';
   const history = useHistory();
   return (
@@ -28,10 +28,6 @@ const Welcome = ({ handleClick }) => {
       </Button>
     </div>
   );
-};
-
-Welcome.propTypes = {
-  handleClick: PropTypes.func.isRequired,
 };
 
 export default Welcome;

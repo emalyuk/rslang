@@ -1,20 +1,31 @@
 const initialSettings = {
   wordsPerDay: 50,
   optional: {
-    mainInfoOnCard: [
-      { label: 'Перевод слова', option: 'isShowWordTranslation', isChecked: true },
-      { label: 'Предложение с объяснением значения слова', option: 'isShowWordMeaning', isChecked: true },
-      { label: 'Предложение с примером использования слова', option: 'isShowWordExample', isChecked: true },
-    ],
-    extraInfoOnCard: [
-      { label: 'Транскрипция слова', option: 'isShowWordTranscription', isChecked: true },
-      { label: 'Картинка-ассоциация', option: 'isShowWordImage', isChecked: true },
-      { label: 'Перевод предложений', option: 'isShowSentenceTranslation', isChecked: true },
-      { label: 'Кнопка показать ответ', option: 'isShowAnswerButton', isChecked: true },
-      { label: 'Кнопки оценки сложности слов', option: 'isShowAnkiButtons', isChecked: true },
-    ],
+    mainInfoOnCard: {
+      isShowWordTranslation: true,
+      isShowWordMeaning: true,
+      isShowWordExample: true,
+    },
+    extraInfoOnCard: {
+      isShowWordTranscription: true,
+      isShowWordImage: true,
+      isShowSentenceTranslation: true,
+      isShowAnswerButton: true,
+      isShowAnkiButtons: true,
+    },
     newCardsPerDay: 50,
   },
+};
+
+const labelsForSwitchers = {
+  isShowWordTranslation: 'Перевод слова',
+  isShowWordMeaning: 'Предложение с объяснением значения слова',
+  isShowWordExample: 'Предложение с примером использования слова',
+  isShowWordTranscription: 'Транскрипция слова',
+  isShowWordImage: 'Картинка-ассоциация',
+  isShowSentenceTranslation: 'Перевод предложений',
+  isShowAnswerButton: 'Кнопка показать ответ',
+  isShowAnkiButtons: 'Кнопки оценки сложности слов',
 };
 
 const settingsLabelName = {
@@ -38,4 +49,4 @@ const settingsLabelName = {
   cardsNumber: 'Количество карточек',
 };
 
-export { initialSettings, settingsLabelName };
+export { initialSettings, settingsLabelName, labelsForSwitchers };
