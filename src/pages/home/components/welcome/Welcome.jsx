@@ -1,12 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+
+import ROUTER from '../../../../routes';
 
 import Button from '../../../../components/button/Button';
 
 import './Welcome.scss';
 
-const Welcome = ({ handleClick }) => {
+const Welcome = () => {
   const firstWelcomeMessage = 'Добро пожаловать!';
+  const history = useHistory();
   return (
     <div className='home__welcome home-box'>
       <div>
@@ -17,16 +20,12 @@ const Welcome = ({ handleClick }) => {
         type='button'
         className='button-start'
         disabled={false}
-        onClick={handleClick}
+        onClick={() => history.push(ROUTER.cards)}
       >
         Учить слова
       </Button>
     </div>
   );
 };
-
-Welcome.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-}
 
 export default Welcome;

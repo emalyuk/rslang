@@ -3,6 +3,7 @@ import ROUTS from '../routes';
 const imgPath = '/img/';
 const githubUserLink = 'https://github.com/';
 const userLoginDataKey = 'JWT';
+const userSettingsDataKey = 'settings';
 const rsSchoolLink = 'https://rs.school/';
 
 const wordsCountTotal = 3600;
@@ -33,4 +34,5 @@ export {
   minLimitNewCardsPerDay,
   responseStatusNotFound,
   responseStatusInvalidToken,
+  userSettingsDataKey,
 };

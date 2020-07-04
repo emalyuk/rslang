@@ -1,5 +1,5 @@
 import axios from '../../../api/axios';
-import { userLoginDataKey } from '../../../constants/constants';
+import { userLoginDataKey, userSettingsDataKey } from '../../../constants/constants';
 
 export const signInUser = async (data) => {
   const res = await axios.post('/signin', data)
@@ -8,6 +8,7 @@ export const signInUser = async (data) => {
 
 export const logOut = () => {
   global.localStorage.removeItem(userLoginDataKey);
+  global.localStorage.removeItem(userSettingsDataKey);
   global.location.reload();
 }
 
