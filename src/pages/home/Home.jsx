@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Loading from 'components/loading/Loading';
@@ -52,47 +52,53 @@ export const Home = () => {
   console.log('updatepage');
   // TODO: useCallback, useMemo
 
-  const handleOnChangeSelect = (event, tag) => {
-    const selectedValue = Number(event.target.value);
+  const handleOnChangeSelect = useCallback(
+    (event, tag) => {
+      const selectedValue = Number(event.target.value);
 
-    const newSettings = {
-      ...settings,
-      optional: {
-        ...settings.optional,
-        newWordsPerDay: selectedValue,
-      },
-    };
-
-    if (tag === settingsLabelName.maxWordsPerDay.en) {
-      setSettings({
-        ...newSettings,
-        wordsPerDay: selectedValue,
-      });
-    } else {
-      setSettings(newSettings);
-    }
-  };
-
-  const handleOnChangeSwitcher = (option, categoryLabel) => {
-    const oldValue = settings.optional[categoryLabel][option];
-
-    if (categoryLabel === settingsLabelName.cardMainInfo.en) {
-      if (!isPossibilitySwitch(settings.optional.cardMainInfo, option)) {
-        return false;
-      }
-    }
-
-    setSettings({
-      ...settings,
-      optional: {
-        ...settings.optional,
-        [categoryLabel]: {
-          ...settings.optional[categoryLabel],
-          [option]: !oldValue,
+      const newSettings = {
+        ...settings,
+        optional: {
+          ...settings.optional,
+          newWordsPerDay: selectedValue,
         },
-      },
-    });
-  };
+      };
+
+      if (tag === settingsLabelName.maxWordsPerDay.en) {
+        setSettings({
+          ...newSettings,
+          wordsPerDay: selectedValue,
+        });
+      } else {
+        setSettings(newSettings);
+      }
+    },
+    [settings],
+  );
+
+  const handleOnChangeSwitcher = useCallback(
+    (option, categoryLabel) => {
+      const oldValue = settings.optional[categoryLabel][option];
+
+      if (categoryLabel === settingsLabelName.cardMainInfo.en) {
+        if (!isPossibilitySwitch(settings.optional.cardMainInfo, option)) {
+          return false;
+        }
+      }
+
+      setSettings({
+        ...settings,
+        optional: {
+          ...settings.optional,
+          [categoryLabel]: {
+            ...settings.optional[categoryLabel],
+            [option]: !oldValue,
+          },
+        },
+      });
+    },
+    [settings],
+  );
 
   return (
     <div className='home'>
