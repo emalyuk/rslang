@@ -10,6 +10,8 @@ const initialSettings = {
       isShowWordTranscription: true,
       isShowWordImage: true,
       isShowSentenceTranslation: true,
+      isShowDeleteButton: true,
+      isShowHardButton: true,
       isShowAnswerButton: true,
       isShowAnkiButtons: true,
     },
@@ -24,6 +26,8 @@ const labelsForSwitchers = {
   isShowWordTranscription: 'Транскрипция слова',
   isShowWordImage: 'Картинка-ассоциация',
   isShowSentenceTranslation: 'Перевод предложений',
+  isShowDeleteButton: 'Кнопка удалить слово',
+  isShowHardButton: 'Кнопка добавить к сложным словам',
   isShowAnswerButton: 'Кнопка показать ответ',
   isShowAnkiButtons: 'Кнопки оценки сложности слов',
 };
