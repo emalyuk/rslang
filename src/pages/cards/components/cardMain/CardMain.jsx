@@ -26,19 +26,19 @@ const CardMain = ({ cardSettings, cardInfo }) => {
   console.log(cardInfo);
 
   const { wordsPerDay, optional } = cardSettings;
-  const { extraInfoOnCard, mainInfoOnCard } = optional;
+  const { cardExtraInfo, cardMainInfo } = optional;
   const {
     isShowWordTranslation,
     isShowWordMeaning,
     isShowWordExample,
-  } = mainInfoOnCard;
+  } = cardMainInfo;
   const {
     isShowWordImage,
     isShowWordTranscription,
     isShowSentenceTranslation,
     isShowAnswerButton,
     isShowAnkiButtons,
-  } = extraInfoOnCard;
+  } = cardExtraInfo;
 
   return (
     <div className='card__main'>

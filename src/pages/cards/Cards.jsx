@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from 'components/loading/Loading';
+import Button from 'components/button/Button';
+import { userSettingsKey } from 'constants/constants';
 import { getWords } from './CardsSliceReducer';
 
 import CardHeader from './components/cardHeader/CardHeader';
 import CardMain from './components/cardMain/CardMain';
 import CardFooter from './components/cardFooter/CardFooter';
-import Button from '../../components/button/Button';
-
-import { userSettingsDataKey } from '../../constants/constants';
 
 import './Cards.scss';
 
@@ -17,9 +16,9 @@ const Cards = () => {
   const { data } = useSelector((state) => state.cards);
   const currentCardIndex = 0;
 
-  const userSettings = JSON.parse(localStorage[userSettingsDataKey]);
+  const userSettings = JSON.parse(localStorage[userSettingsKey]);
   const { wordsPerDay, optional } = userSettings;
-  const { newCardsPerDay } = optional;
+  const { newWordsPerDay } = optional;
 
   // TODO: Add to settings
   // MockData
