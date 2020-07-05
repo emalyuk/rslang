@@ -4,51 +4,48 @@ import {
   userLoginDataKey,
   responseStatusNotFound,
   responseStatusInvalidToken,
-} from '../../constants/constants';
-import { initialSettings } from '../../constants/cardSettings';
+  usersPath,
+  statsPath,
+  settingsPath,
+} from 'constants/constants';
+
+import { initialSettings } from 'constants/cardSettings';
+import { initialStats } from 'constants/cardStats';
 
 const authOption = JSON.parse(localStorage.getItem(userLoginDataKey));
 const { token, userId } = authOption;
 
-const settingsUrl = `${process.env.REACT_APP_BASE_URL}/users/${userId}/settings`;
-const settingsHeaders = {
-  Accept: 'application/json',
-  Authorization: `Bearer ${token}`,
-  'Content-Type': 'application/json',
+const usersUrl = `${process.env.REACT_APP_BASE_URL}${usersPath}${userId}`;
+
+const config = {
+  baseURL: usersUrl,
+  headers: {
+    Accept: 'application/json',
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  },
 };
 
-const getSettingsData = async () =>
-  axios({
-    url: settingsUrl,
-    method: 'GET',
-    headers: settingsHeaders,
-  });
-
-export const getSettings = async () => {
+const getData = async (path, initialData) => {
   let data;
   try {
-    const response = await getSettingsData();
-    data = {
-      wordsPerDay: response.data.wordsPerDay,
-      optional: response.data.optional,
-    };
-    return data;
+    const response = await axios.get(path, config);
+    return response.data;
   } catch (err) {
     // TODO: 401 Access token is missing or invalid
     if (err.response.status === responseStatusNotFound) {
-      data = initialSettings;
+      data = initialData;
     } else if (err.response.status === responseStatusInvalidToken) {
-      data = initialSettings;
+      data = initialData;
     }
 
     return data;
   }
 };
 
+export const getSettings = async () => getData(settingsPath, initialSettings);
+
+export const getStats = async () => getData(statsPath, initialStats);
+
 export const putSettings = async (settings) =>
-  axios({
-    url: settingsUrl,
-    method: 'PUT',
-    headers: settingsHeaders,
-    data: settings,
-  });
+  axios.put(settingsPath, settings, config);

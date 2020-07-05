@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Loading from 'components/loading/Loading';
 import { settingsLabelName } from 'constants/cardSettings';
 import isPossibilitySwitch from 'utils/isPossibilitySwitch';
-import { getSettings, putSettings } from './HomeApi';
+import { getSettings, putSettings, getStats } from './HomeApi';
 import HomeStatus from './components/homeStatus/HomeStatus';
 import CardSettings from './components/cardSettings/CardSettings';
 
@@ -14,35 +14,43 @@ export const Home = () => {
   const history = useHistory();
 
   const [settings, setSettings] = useState(null);
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    async function getSettingsData() {
-      const data = await getSettings();
+    async function getHomeData() {
+      const receivedSettings = await getSettings();
+      const receivedStats = await getStats();
 
-      if (data) {
-        setSettings(data);
+      if (receivedSettings && receivedStats) {
+        setSettings(receivedSettings);
+        setStats(receivedStats);
       } else {
         history.push('/404');
       }
     }
 
-    getSettingsData();
+    getHomeData();
   }, [history]);
 
   useEffect(() => {
     localStorage.setItem('settings', JSON.stringify(settings));
     if (settings) {
+      const formattedSettings = {
+        optional: {
+          ...settings.optional,
+        },
+        wordsPerDay: settings.wordsPerDay,
+      };
       const timeout = setTimeout(() => {
-        putSettings(JSON.stringify(settings));
+        putSettings(JSON.stringify(formattedSettings));
       }, 3000);
 
       return () => clearTimeout(timeout);
     }
   }, [settings]);
 
-  // TODO: get server stats data, useCallback, useMemo
-  // MockData
-  const wordsCountLearned = 555;
+  console.log('updatepage');
+  // TODO: useCallback, useMemo
 
   const handleOnChangeSelect = (event, tag) => {
     const selectedValue = Number(event.target.value);
@@ -89,12 +97,9 @@ export const Home = () => {
   return (
     <div className='home'>
       <div className='home-container container'>
-        {settings ? (
+        {settings && stats ? (
           <>
-            <HomeStatus
-              wordsCountLearned={wordsCountLearned}
-              totalCardsPerDay={settings.wordsPerDay}
-            />
+            <HomeStatus stats={stats} totalCardsPerDay={settings.wordsPerDay} />
 
             <CardSettings
               settings={settings}

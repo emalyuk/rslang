@@ -1,6 +1,9 @@
 import ROUTS from '../routes';
 
 const imgPath = '/img/';
+const usersPath = '/users/';
+const statsPath = '/statistics';
+const settingsPath = '/settings';
 const githubUserLink = 'https://github.com/';
 const userLoginDataKey = 'JWT';
 const userSettingsKey = 'settings';
@@ -39,4 +42,7 @@ export {
   responseStatusNotFound,
   responseStatusInvalidToken,
   userSettingsKey,
+  usersPath,
+  statsPath,
+  settingsPath,
 };

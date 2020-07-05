@@ -7,21 +7,24 @@ import Progress from '../progress/Progress';
 
 import './HomeStatus.scss';
 
-const HomeStatus = ({ wordsCountLearned, totalCardsPerDay }) => (
+const HomeStatus = ({ stats, totalCardsPerDay }) => (
   <div className='home__status'>
     <Welcome />
-    <TodayStatus totalCardsPerDay={totalCardsPerDay} />
-    <Progress wordsCountLearned={wordsCountLearned} />
+    <TodayStatus stats={stats} totalCardsPerDay={totalCardsPerDay} />
+    <Progress wordsCountLearned={stats.learnedWords} />
   </div>
 );
 
 HomeStatus.propTypes = {
-  wordsCountLearned: PropTypes.number,
+  stats: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.string,
+  ]).isRequired,
   totalCardsPerDay: PropTypes.number,
 };
 
 HomeStatus.defaultProps = {
-  wordsCountLearned: 0,
   totalCardsPerDay: 0,
 };
 

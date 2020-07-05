@@ -7,13 +7,14 @@ import TodayStatsItem from '../todayStatsItem/TodayStatsItem';
 
 import './TodayStatus.scss';
 
-const TodayStatus = ({
-  bestSeries,
-  countRightAnswer,
-  countWrongAnswer,
-  totalCardsPerDay,
-  countSkipedWords,
-}) => {
+const TodayStatus = ({ stats, totalCardsPerDay }) => {
+  const {
+    bestSeries,
+    countRightAnswer,
+    countWrongAnswer,
+    countSkipedWords,
+  } = stats.optional.today;
+
   const todayInfoItems = todayInfoItemsToArr(
     bestSeries,
     countRightAnswer,
@@ -40,19 +41,12 @@ const TodayStatus = ({
 };
 
 TodayStatus.propTypes = {
-  totalCardsPerDay: PropTypes.number,
-  bestSeries: PropTypes.number,
-  countRightAnswer: PropTypes.number,
-  countWrongAnswer: PropTypes.number,
-  countSkipedWords: PropTypes.number,
-};
-
-TodayStatus.defaultProps = {
-  bestSeries: 0,
-  countRightAnswer: 0,
-  countWrongAnswer: 0,
-  totalCardsPerDay: 0,
-  countSkipedWords: 0,
+  totalCardsPerDay: PropTypes.number.isRequired,
+  stats: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.string,
+  ]).isRequired,
 };
 
 export default TodayStatus;

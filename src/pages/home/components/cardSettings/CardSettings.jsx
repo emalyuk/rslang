@@ -26,7 +26,7 @@ const CardSettings = ({
 
   const maxNewCardsArrayOfNumber = arrayOfNumbers(
     minLimitNewCardsPerDay,
-    settings.wordsPerDay + 1,
+    Number(settings.wordsPerDay) + 1,
   );
 
   return (
