@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  minLimitCardsPerDay,
-  maxLimitCardsPerDay,
-  minLimitNewCardsPerDay,
-} from 'constants/constants';
+import { countCardsPerDayStep, numberOfOption } from 'constants/constants';
 import arrayOfNumbers from 'utils/arrayOfNumber';
 import { settingsLabelName } from 'constants/cardSettings';
 
@@ -22,13 +18,13 @@ const CardSettings = ({
   const { cardMainInfo, cardExtraInfo } = settings.optional;
 
   const maxCardsArrayOfNumber = arrayOfNumbers(
-    minLimitCardsPerDay,
-    maxLimitCardsPerDay - minLimitCardsPerDay + 1,
+    countCardsPerDayStep,
+    numberOfOption,
   );
 
   const maxNewCardsArrayOfNumber = arrayOfNumbers(
-    minLimitNewCardsPerDay,
-    Number(settings.wordsPerDay) + 1,
+    countCardsPerDayStep,
+    numberOfOption,
   );
 
   return (

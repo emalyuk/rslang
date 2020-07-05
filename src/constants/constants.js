@@ -10,9 +10,8 @@ const userSettingsKey = 'settings';
 const rsSchoolLink = 'https://rs.school/';
 
 const wordsCountTotal = 3600;
-const maxLimitCardsPerDay = 50;
-const minLimitCardsPerDay = 10;
-const minLimitNewCardsPerDay = 0;
+const countCardsPerDayStep = 10;
+const numberOfOption = 10;
 const responseStatusNotFound = 404;
 const responseStatusInvalidToken = 401;
 
@@ -36,9 +35,8 @@ export {
   userLoginDataKey,
   rsSchoolLink,
   wordsCountTotal,
-  maxLimitCardsPerDay,
-  minLimitCardsPerDay,
-  minLimitNewCardsPerDay,
+  countCardsPerDayStep,
+  numberOfOption,
   responseStatusNotFound,
   responseStatusInvalidToken,
   userSettingsKey,

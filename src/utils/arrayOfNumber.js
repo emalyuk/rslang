@@ -1,6 +1,7 @@
-const arrayOfNumbers = (min, max) => {
-  console.log(min, max);
-  return [...Array(Number(max)).keys()].map((number) => number + Number(min));
+const arrayOfNumbers = (step, quanity) => {
+  return [...Array(Number(quanity)).keys()].map(
+    (number) => (number + 1) * step,
+  );
 };
 
 export default arrayOfNumbers;
