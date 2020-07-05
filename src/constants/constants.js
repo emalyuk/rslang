@@ -7,6 +7,9 @@ const settingsPath = '/settings';
 const githubUserLink = 'https://github.com/';
 const userLoginDataKey = 'JWT';
 const userSettingsKey = 'settings';
+const baseAssetsUrl =
+  'https://raw.githubusercontent.com/abukato/LearnWords/master/';
+const baseWordsUrl = '/words?';
 const rsSchoolLink = 'https://rs.school/';
 
 const wordsCountTotal = 3600;
@@ -43,4 +46,6 @@ export {
   usersPath,
   statsPath,
   settingsPath,
+  baseWordsUrl,
+  baseAssetsUrl,
 };

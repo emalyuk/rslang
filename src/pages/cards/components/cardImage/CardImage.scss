@@ -1,0 +1,15 @@
+.card__main {
+  &__image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
+  }
+
+  &__image {
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+}

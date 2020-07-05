@@ -10,6 +10,7 @@ import './App.scss';
 const Game = lazy(() => import('pages/game/Game'));
 const Savanna = lazy(() => import('../../games/savanna/Savanna'));
 const Home = lazy(() => import('pages/home/Home'));
+const Cards = lazy(() => import('pages/cards/Cards'));
 const Team = lazy(() => import('pages/team/Team'));
 const Login = lazy(() => import('pages/auth/login/Login'));
 const Registration = lazy(() => import('pages/auth/registration/Registration'));
@@ -32,6 +33,7 @@ const App = () => {
             <Route path={routes.games.savanna} component={Savanna} exact />
             <PrivateRoute path={routes.team} component={Team} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
+            <PrivateRoute path={routes.cards} component={Cards} exact />
             <PrivateRoute path={routes.promo} component={Promo} exact />
 
             <Route path={routes.dictionary} component={Dictionary} exact />

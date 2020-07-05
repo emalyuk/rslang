@@ -1,0 +1,14 @@
+.card__input {
+  text-align: center;
+  font-family: monospace;
+  font-size: 32px;
+  color: thistle;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: #17a2b8;
+
+  &__container {
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,12 @@
+.card__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+  &__button {
+    max-width: 200px;
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,10 @@
+.card__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  &__button {
+    font-size: 16px;
+    max-width: 200px;
+  }
+}
