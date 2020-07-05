@@ -3,7 +3,7 @@ import ROUTS from '../routes';
 const imgPath = '/img/';
 const githubUserLink = 'https://github.com/';
 const userLoginDataKey = 'JWT';
-const userSettingsDataKey = 'settings';
+const userSettingsKey = 'settings';
 const rsSchoolLink = 'https://rs.school/';
 
 const wordsCountTotal = 3600;
@@ -26,13 +26,17 @@ const navOptionsUnLoginUser = [
 ];
 
 export {
-  imgPath, githubUserLink, navOptions,
-  navOptionsUnLoginUser, userLoginDataKey,
-  rsSchoolLink, wordsCountTotal,
+  imgPath,
+  githubUserLink,
+  navOptions,
+  navOptionsUnLoginUser,
+  userLoginDataKey,
+  rsSchoolLink,
+  wordsCountTotal,
   maxLimitCardsPerDay,
   minLimitCardsPerDay,
   minLimitNewCardsPerDay,
   responseStatusNotFound,
   responseStatusInvalidToken,
-  userSettingsDataKey,
+  userSettingsKey,
 };

@@ -1,12 +1,12 @@
 const initialSettings = {
   wordsPerDay: 50,
   optional: {
-    mainInfoOnCard: {
+    cardMainInfo: {
       isShowWordTranslation: true,
       isShowWordMeaning: true,
       isShowWordExample: true,
     },
-    extraInfoOnCard: {
+    cardExtraInfo: {
       isShowWordTranscription: true,
       isShowWordImage: true,
       isShowSentenceTranslation: true,
@@ -15,7 +15,8 @@ const initialSettings = {
       isShowAnswerButton: true,
       isShowAnkiButtons: true,
     },
-    newCardsPerDay: 50,
+    isOnlyNewWords: true,
+    newWordsPerDay: 50,
   },
 };
 
@@ -30,24 +31,25 @@ const labelsForSwitchers = {
   isShowHardButton: 'Кнопка добавить к сложным словам',
   isShowAnswerButton: 'Кнопка показать ответ',
   isShowAnkiButtons: 'Кнопки оценки сложности слов',
+  isOnlyNewWords: 'Только новые слова',
 };
 
 const settingsLabelName = {
   settings: 'Настройки',
-  mainInfoOnCard: {
-    en: 'mainInfoOnCard',
+  cardMainInfo: {
+    en: 'cardMainInfo',
     ru: 'Основные (одна из опций обязательна)',
   },
-  extraInfoOnCard: {
-    en: 'extraInfoOnCard',
+  cardExtraInfo: {
+    en: 'cardExtraInfo',
     ru: 'Дополнительные',
   },
-  maxCardsPerDay: {
-    en: 'maxCardsPerDay',
+  maxWordsPerDay: {
+    en: 'maxWordsPerDay',
     ru: 'Максимум в день',
   },
-  newCardsPerDay: {
-    en: 'newCardsPerDay',
+  newWordsPerDay: {
+    en: 'newWordsPerDay',
     ru: 'Новых в день',
   },
   cardsNumber: 'Количество карточек',

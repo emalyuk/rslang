@@ -1,27 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CardSettingsSwitcherBox from '../cardSettingsSwitcherBox/CardSettingsSwitcherBox';
-import CardsCountSelect from '../cardsCountSelect/CardsCountSelect';
-
 import {
   minLimitCardsPerDay,
   maxLimitCardsPerDay,
   minLimitNewCardsPerDay,
-} from '../../../../constants/constants';
-import arrayOfNumbers from '../../../../utils/arrayOfNumber';
-import { settingsLabelName } from '../../../../constants/cardSettingsData';
+} from 'constants/constants';
+import arrayOfNumbers from 'utils/arrayOfNumber';
+import { settingsLabelName } from 'constants/cardSettings';
+
+import CardSettingsSwitcherBox from '../cardSettingsSwitcherBox/CardSettingsSwitcherBox';
+import CardsCountSelect from '../cardsCountSelect/CardsCountSelect';
 
 import './CardSettings.scss';
 
-const CardSettings = ({ settings, handleOnChangeSelect, handleOnChangeSwitcher }) => {
+const CardSettings = ({
+  settings,
+  handleOnChangeSelect,
+  handleOnChangeSwitcher,
+}) => {
   const maxCardsArrayOfNumber = arrayOfNumbers(
     minLimitCardsPerDay,
     maxLimitCardsPerDay - minLimitCardsPerDay + 1,
   );
 
   const maxNewCardsArrayOfNumber = arrayOfNumbers(
-    minLimitNewCardsPerDay, settings.wordsPerDay + 1,
+    minLimitNewCardsPerDay,
+    settings.wordsPerDay + 1,
   );
 
   return (
@@ -30,18 +35,17 @@ const CardSettings = ({ settings, handleOnChangeSelect, handleOnChangeSwitcher }
         {settingsLabelName.settings}
       </h4>
       <div className='home__settings__container'>
-
         <CardSettingsSwitcherBox
-          title={settingsLabelName.mainInfoOnCard.ru}
-          categoryLabel={settingsLabelName.mainInfoOnCard.en}
-          settings={settings.optional.mainInfoOnCard}
+          title={settingsLabelName.cardMainInfo.ru}
+          categoryLabel={settingsLabelName.cardMainInfo.en}
+          settings={settings.optional.cardMainInfo}
           handleChange={handleOnChangeSwitcher}
         />
 
         <CardSettingsSwitcherBox
-          title={settingsLabelName.extraInfoOnCard.ru}
-          categoryLabel={settingsLabelName.extraInfoOnCard.en}
-          settings={settings.optional.extraInfoOnCard}
+          title={settingsLabelName.cardExtraInfo.ru}
+          categoryLabel={settingsLabelName.cardExtraInfo.en}
+          settings={settings.optional.cardExtraInfo}
           handleChange={handleOnChangeSwitcher}
         />
 
@@ -51,17 +55,17 @@ const CardSettings = ({ settings, handleOnChangeSelect, handleOnChangeSwitcher }
           </div>
 
           <CardsCountSelect
-            label={settingsLabelName.maxCardsPerDay.ru}
-            tag={settingsLabelName.maxCardsPerDay.en}
+            label={settingsLabelName.maxWordsPerDay.ru}
+            tag={settingsLabelName.maxWordsPerDay.en}
             selectedOption={settings.wordsPerDay}
             arrayOfNumbers={maxCardsArrayOfNumber}
             handleChangeSelect={handleOnChangeSelect}
           />
 
           <CardsCountSelect
-            label={settingsLabelName.newCardsPerDay.ru}
-            tag={settingsLabelName.newCardsPerDay.en}
-            selectedOption={settings.optional.newCardsPerDay}
+            label={settingsLabelName.newWordsPerDay.ru}
+            tag={settingsLabelName.newWordsPerDay.en}
+            selectedOption={settings.optional.newWordsPerDay}
             arrayOfNumbers={maxNewCardsArrayOfNumber}
             handleChangeSelect={handleOnChangeSelect}
           />
@@ -74,10 +78,8 @@ const CardSettings = ({ settings, handleOnChangeSelect, handleOnChangeSwitcher }
 CardSettings.propTypes = {
   handleOnChangeSelect: PropTypes.func.isRequired,
   handleOnChangeSwitcher: PropTypes.func.isRequired,
-  settings: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.object,
-  ]).isRequired,
+  settings: PropTypes.oneOfType([PropTypes.number, PropTypes.object])
+    .isRequired,
 };
 
 export default CardSettings;

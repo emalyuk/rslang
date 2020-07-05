@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import todayInfoItemsToArr from 'utils/todayInfoItemsToArr';
 import TodayTarget from '../todayTarget/TodayTarget';
 import TodayStatsItem from '../todayStatsItem/TodayStatsItem';
 
@@ -13,12 +14,12 @@ const TodayStatus = ({
   totalCardsPerDay,
   countSkipedWords,
 }) => {
-  const todayInfoItems = [
-    { label: 'Лучшая серия', count: bestSeries },
-    { label: 'Верные ответы', count: countRightAnswer },
-    { label: 'Неверные ответы', count: countWrongAnswer },
-    { label: 'Пропущено слов', count: countSkipedWords },
-  ];
+  const todayInfoItems = todayInfoItemsToArr(
+    bestSeries,
+    countRightAnswer,
+    countWrongAnswer,
+    countSkipedWords,
+  );
 
   return (
     <div className='home__status__today-status home-box'>

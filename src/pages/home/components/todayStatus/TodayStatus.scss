@@ -1,5 +1,5 @@
-@import '../../../../scss/variables.scss';
-@import '../../../../scss/mixins';
+@import 'scss/variables.scss';
+@import 'scss/mixins';
 
 .home__status {
   &__stats {
@@ -7,7 +7,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 20px;
 
-    @include exSm(){
+    @include exSm() {
       grid-template-columns: 1fr;
       justify-content: center;
     }

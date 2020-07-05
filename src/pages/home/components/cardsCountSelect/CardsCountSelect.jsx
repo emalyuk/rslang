@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import './CardsCountSelect.scss';
 
 const CardsCountSelect = ({
-  label, arrayOfNumbers,
-  handleChangeSelect, tag,
+  label,
+  arrayOfNumbers,
+  handleChangeSelect,
+  tag,
   selectedOption,
 }) => {
   return (
@@ -15,20 +17,14 @@ const CardsCountSelect = ({
         className='custom-select custom-select-sm settings__select'
         value={selectedOption}
         onChange={(event) => handleChangeSelect(event, tag)}
-        onBlur={() => { }}
       >
-        {
-          arrayOfNumbers.map((number, index) => {
-            return (
-              <option
-                value={number}
-                key={`${index.toString()}`}
-              >
-                {number}
-              </option>
-            );
-          })
-        }
+        {arrayOfNumbers.map((number, index) => {
+          return (
+            <option value={number} key={`${index.toString()}`}>
+              {number}
+            </option>
+          );
+        })}
       </select>
     </div>
   );

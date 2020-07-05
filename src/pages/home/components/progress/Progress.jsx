@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { wordsCountTotal } from '../../../../constants/constants';
-import { getIntegerPercent } from '../../../../utils/getIntegerPercent';
+import { wordsCountTotal } from 'constants/constants';
+import { getIntegerPercent } from 'utils/getIntegerPercent';
 
 import './Progress.scss';
 

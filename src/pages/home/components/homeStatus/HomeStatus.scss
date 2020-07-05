@@ -1,5 +1,5 @@
-@import '../../../../scss/variables';
-@import '../../../../scss/mixins';
+@import 'scss/variables';
+@import 'scss/mixins';
 
 .home__status {
   &__container {
@@ -8,25 +8,25 @@
     grid-template-rows: 1fr;
     grid-gap: 20px;
 
-    @include lg(){
+    @include lg() {
       grid-template-columns: 1fr;
       grid-template-rows: 1fr 0.8fr;
       justify-content: center;
     }
 
-    @include md(){
+    @include md() {
       grid-template-columns: 1fr;
       grid-template-rows: 1fr 0.8fr;
       justify-content: center;
     }
 
-    @include sm(){
+    @include sm() {
       grid-template-columns: 1fr;
       grid-template-rows: 1fr 0.8fr;
       justify-content: center;
     }
 
-    @include exSm(){
+    @include exSm() {
       grid-template-columns: 1fr;
       grid-template-rows: 1fr 0.3fr;
       justify-content: center;

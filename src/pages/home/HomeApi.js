@@ -5,10 +5,11 @@ import {
   responseStatusNotFound,
   responseStatusInvalidToken,
 } from '../../constants/constants';
-import { initialSettings } from '../../constants/cardSettingsData';
+import { initialSettings } from '../../constants/cardSettings';
 
 const authOption = JSON.parse(localStorage.getItem(userLoginDataKey));
 const { token, userId } = authOption;
+
 const settingsUrl = `${process.env.REACT_APP_BASE_URL}/users/${userId}/settings`;
 const settingsHeaders = {
   Accept: 'application/json',
@@ -16,11 +17,12 @@ const settingsHeaders = {
   'Content-Type': 'application/json',
 };
 
-const getSettingsData = async () => axios({
-  url: settingsUrl,
-  method: 'GET',
-  headers: settingsHeaders,
-});
+const getSettingsData = async () =>
+  axios({
+    url: settingsUrl,
+    method: 'GET',
+    headers: settingsHeaders,
+  });
 
 export const getSettings = async () => {
   let data;
@@ -41,11 +43,12 @@ export const getSettings = async () => {
 
     return data;
   }
-}
+};
 
-export const putSettings = async (settings) => axios({
-  url: settingsUrl,
-  method: 'PUT',
-  headers: settingsHeaders,
-  data: settings,
-});
+export const putSettings = async (settings) =>
+  axios({
+    url: settingsUrl,
+    method: 'PUT',
+    headers: settingsHeaders,
+    data: settings,
+  });

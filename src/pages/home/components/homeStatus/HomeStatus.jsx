@@ -7,15 +7,13 @@ import Progress from '../progress/Progress';
 
 import './HomeStatus.scss';
 
-const HomeStatus = ({ wordsCountLearned, totalCardsPerDay, handleClick }) => {
-  return (
-    <div className='home__status'>
-      <Welcome handleClick={handleClick} />
-      <TodayStatus totalCardsPerDay={totalCardsPerDay} />
-      <Progress wordsCountLearned={wordsCountLearned} />
-    </div>
-  );
-};
+const HomeStatus = ({ wordsCountLearned, totalCardsPerDay }) => (
+  <div className='home__status'>
+    <Welcome />
+    <TodayStatus totalCardsPerDay={totalCardsPerDay} />
+    <Progress wordsCountLearned={wordsCountLearned} />
+  </div>
+);
 
 HomeStatus.propTypes = {
   wordsCountLearned: PropTypes.number,
