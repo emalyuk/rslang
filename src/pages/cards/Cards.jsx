@@ -17,8 +17,8 @@ const Cards = () => {
   const currentCardIndex = 0;
 
   const userSettings = JSON.parse(localStorage[userSettingsKey]);
-  const { wordsPerDay, optional } = userSettings;
-  const { newWordsPerDay } = optional;
+  const { wordsPerDay } = userSettings;
+  const { newWordsPerDay, cardMainIfno, cardExtraInfo } = userSettings.optional;
 
   // TODO: Add to settings
   // MockData
@@ -44,7 +44,7 @@ const Cards = () => {
       {data.length ? (
         <>
           <div className='card shadow'>
-            <CardHeader />
+            <CardHeader settings={cardExtraInfo} />
 
             <CardMain
               cardSettings={userSettings}
