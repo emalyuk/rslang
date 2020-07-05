@@ -18,6 +18,9 @@ const numberOfOption = 10;
 const responseStatusNotFound = 404;
 const responseStatusInvalidToken = 401;
 
+const sentenceRegExpWithChar = /<.*?>(.+)<.*?>(.)/;
+const sentenceRegExp = /<.*?>(.+)<.*?>/;
+
 const navOptions = [
   { route: ROUTS.home, title: 'Home' },
   { route: ROUTS.game, title: 'Game' },
@@ -48,4 +51,6 @@ export {
   settingsPath,
   baseWordsUrl,
   baseAssetsUrl,
+  sentenceRegExp,
+  sentenceRegExpWithChar,
 };

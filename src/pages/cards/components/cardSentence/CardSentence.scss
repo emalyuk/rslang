@@ -1,3 +1,5 @@
+@import '../../../../scss/variables.scss';
+
 .card__main {
   &__sentence {
     display: flex;
@@ -6,38 +8,23 @@
     flex-wrap: wrap;
     font-size: 24px;
     font-weight: bold;
-    color: #17a2b8;
+    color: $baseGray;
     user-select: none;
   }
+}
 
-  &__word {
+.card__setnence__word {
+  &.main {
+    border-bottom: 1px solid $baseGray;
     margin-right: 5px;
-    color: tomato;
-
-    &-container {
-      border-bottom: 1px solid #17a2b8;
-      margin-right: 5px;
-    }
-
-    &.hidden {
-      visibility: hidden;
-    }
-
-    &__input {
-      text-align: center;
-      font-weight: bold;
-      background-color: #ecf0f1;
-      outline: none;
-      border: none;
-      border-radius: 5px;
-    }
-
-    &__sign {
-      margin-left: 5px;
-    }
+    color: $secondColor;
   }
 
-  &__other-word:not(:last-child) {
+  &.visible {
+    color: $rightAnserColor;
+  }
+
+  &:not(:last-child) {
     margin-right: 5px;
   }
 }

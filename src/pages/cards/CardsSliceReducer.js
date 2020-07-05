@@ -4,8 +4,13 @@ import { getWordsData } from './CardsApi';
 
 const initialCardsState = {
   data: [],
+  deletedWordsData: [],
   isLoading: true,
   errors: null,
+  currentCardAction: {
+    isAnswerReceived: false,
+    isCorrectAnswer: false,
+  },
 };
 
 const cardsSlice = createSlice({
@@ -18,8 +23,14 @@ const cardsSlice = createSlice({
     getDataFailure(state, action) {
       state.error = action.payload;
     },
-    resetHomeState(state) {
-      // state = initialHomeState;
+    // resetHomeState(state) {
+    //   state = initialHomeState;
+    // },
+    setIsAnswerReceived(state, action) {
+      state.currentCardAction.isAnswerReceived = action.payload;
+    },
+    setIsCorrectAnswer(state, action) {
+      state.currentCardAction.isCorrectAnswer = action.payload;
     },
   },
 });
@@ -28,6 +39,8 @@ export const {
   getDataSuccess,
   getDataFailure,
   resetHomeState,
+  setIsAnswerReceived,
+  setIsCorrectAnswer,
 } = cardsSlice.actions;
 
 export const cardsSliceReducer = cardsSlice.reducer;
