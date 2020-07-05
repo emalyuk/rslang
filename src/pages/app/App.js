@@ -11,6 +11,7 @@ import './App.scss';
 const Registration = lazy(() => import('pages/auth/registration/Registration'));
 const Login = lazy(() => import('pages/auth/login/Login'));
 const Home = lazy(() => import('pages/home/Home'));
+const Cards = lazy(() => import('pages/cards/Cards'));
 const Team = lazy(() => import('pages/team/Team'));
 const Promo = lazy(() => import('pages/promo/Promo'));
 const Dictionary = lazy(() => import('pages/dictionary/Dictionary'));
@@ -41,6 +42,7 @@ const App = () => {
             <PrivateRoute path={routes.statistic} component={Statistic} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
             <PrivateRoute path={routes.dictionary} component={Dictionary} exact />
+            <PrivateRoute path={routes.cards} component={Cards} exact />
             <Route component={NotFound} />
           </Switch>
         </React.Suspense>

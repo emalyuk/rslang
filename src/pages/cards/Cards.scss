@@ -1,0 +1,29 @@
+.card__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+  width: 1000px;
+}
+
+.card {
+  min-height: 300px;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__submit-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  &__submit-button {
+    width: 55px;
+    border-radius: 50%;
+  }
+}
