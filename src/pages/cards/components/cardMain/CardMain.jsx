@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CardImage from '../cardImage/CardImage';
 import CardSentenceContainer from '../cardSentenceContainer/CardSentenceContainer';
@@ -9,6 +10,10 @@ import CardInput from '../cardInput/CardInput';
 import './CardMain.scss';
 
 const CardMain = ({ cardSettings, cardInfo }) => {
+  const dispatch = useDispatch();
+  const { currentCardAction } = useSelector((state) => state.cards);
+  const { isAnswerReceived, isCorrectAnswer } = currentCardAction;
+
   const {
     image,
     audio,
@@ -62,6 +67,9 @@ const CardMain = ({ cardSettings, cardInfo }) => {
 
         <div className='card__main__word-info'>
           {isShowWordTranslation && <CardWordInfo text={wordTranslate} />}
+          {!isShowWordTranslation && isCorrectAnswer && (
+            <CardWordInfo text={wordTranslate} />
+          )}
 
           {isShowWordTranscription && <CardWordInfo text={transcription} />}
         </div>
