@@ -18,6 +18,9 @@ const numberOfOption = 10;
 const responseStatusNotFound = 404;
 const responseStatusInvalidToken = 401;
 
+const sentenceRegExpWithChar = /<.*?>(.+)<.*?>(.)/;
+const sentenceRegExp = /<.*?>(.+)<.*?>/;
+
 const navOptions = [
   { route: ROUTS.promo, title: 'Promo' },
   { route: ROUTS.home, title: 'Home' },
@@ -65,4 +68,6 @@ export {
   interval,
   baseWordsUrl,
   baseAssetsUrl,
+  sentenceRegExp,
+  sentenceRegExpWithChar,
 };

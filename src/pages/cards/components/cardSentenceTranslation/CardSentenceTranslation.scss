@@ -1,6 +1,8 @@
+@import '../../../../scss/variables.scss';
+
 .card__main__sentence-translation {
   text-align: center;
-  color: green;
+  color: $rightAnserColor;
   font-size: 20px;
   user-select: none;
 }
