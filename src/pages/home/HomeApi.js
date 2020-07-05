@@ -9,10 +9,15 @@ import {
   settingsPath,
 } from 'constants/constants';
 
+<<<<<<< HEAD
 import { getFormattedData } from 'utils/getFormattedData';
 
 import { initialSettings } from 'constants/cardSettings';
 import { initialStats } from 'constants/stats';
+=======
+import { initialSettings } from 'constants/cardSettings';
+import { initialStats } from 'constants/cardStats';
+>>>>>>> 4012bd7... refactor/home-api
 
 const authOption = JSON.parse(localStorage.getItem(userLoginDataKey)) || 'temp';
 const { token, userId } = authOption;
