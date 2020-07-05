@@ -49,9 +49,6 @@ export const Home = () => {
     }
   }, [settings]);
 
-  console.log('updatepage');
-  // TODO: useCallback, useMemo
-
   const handleOnChangeSelect = useCallback(
     (event, tag) => {
       const selectedValue = Number(event.target.value);
