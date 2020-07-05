@@ -19,6 +19,8 @@ const CardSettings = ({
   handleOnChangeSelect,
   handleOnChangeSwitcher,
 }) => {
+  const { cardMainInfo, cardExtraInfo } = settings.optional;
+
   const maxCardsArrayOfNumber = arrayOfNumbers(
     minLimitCardsPerDay,
     maxLimitCardsPerDay - minLimitCardsPerDay + 1,
@@ -38,14 +40,14 @@ const CardSettings = ({
         <CardSettingsSwitcherBox
           title={settingsLabelName.cardMainInfo.ru}
           categoryLabel={settingsLabelName.cardMainInfo.en}
-          settings={settings.optional.cardMainInfo}
+          settings={cardMainInfo}
           handleChange={handleOnChangeSwitcher}
         />
 
         <CardSettingsSwitcherBox
           title={settingsLabelName.cardExtraInfo.ru}
           categoryLabel={settingsLabelName.cardExtraInfo.en}
-          settings={settings.optional.cardExtraInfo}
+          settings={cardExtraInfo}
           handleChange={handleOnChangeSwitcher}
         />
 
@@ -62,13 +64,15 @@ const CardSettings = ({
             handleChangeSelect={handleOnChangeSelect}
           />
 
-          <CardsCountSelect
-            label={settingsLabelName.newWordsPerDay.ru}
-            tag={settingsLabelName.newWordsPerDay.en}
-            selectedOption={settings.optional.newWordsPerDay}
-            arrayOfNumbers={maxNewCardsArrayOfNumber}
-            handleChangeSelect={handleOnChangeSelect}
-          />
+          {!cardExtraInfo.isOnlyNewWords && (
+            <CardsCountSelect
+              label={settingsLabelName.newWordsPerDay.ru}
+              tag={settingsLabelName.newWordsPerDay.en}
+              selectedOption={settings.optional.newWordsPerDay}
+              arrayOfNumbers={maxNewCardsArrayOfNumber}
+              handleChangeSelect={handleOnChangeSelect}
+            />
+          )}
         </div>
       </div>
     </div>

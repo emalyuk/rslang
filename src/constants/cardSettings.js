@@ -14,8 +14,8 @@ const initialSettings = {
       isShowHardButton: true,
       isShowAnswerButton: true,
       isShowAnkiButtons: true,
+      isOnlyNewWords: true,
     },
-    isOnlyNewWords: true,
     newWordsPerDay: 50,
   },
 };
