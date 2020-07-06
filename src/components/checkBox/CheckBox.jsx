@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './CheckBox.scss';
 import PropTypes from 'prop-types';
+import './CheckBox.scss';
 
-const CheckBox = ({ id, click, isAll }) => {
+const CheckBox = ({ id, click, isChecked }) => {
   const boxRef = useRef();
   const iconRef = useRef();
   const [isActive, setIsActive] = useState(false);
