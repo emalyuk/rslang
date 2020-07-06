@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { bgCheckBox } from './data';
 import './CheckBox.scss';
 
 const CheckBox = ({ id, onClick, isChecked }) => {
@@ -42,6 +43,7 @@ const CheckBox = ({ id, onClick, isChecked }) => {
           />
           <span
             className='checkbox_icon'
+            style={{ backgroundImage: `url(${bgCheckBox})` }}
             ref={iconRef}
             data-active={isChecked ? 'true' : 'false'}
             onClick={() => toggleCheckBox()}
