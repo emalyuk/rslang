@@ -1,11 +1,11 @@
 import React from 'react';
-import './DeleteModal.scss';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   updateDeletedWords, updateStudiedWords,
   updateDifficultWords, updateTrash, toggleIsAllSelected, toggleIsSelect,
 } from '../../pages/dictionary/DictionaryReducer';
+import './DeleteModal.scss';
 
 const DeleteModal = ({ hideFunc, tab }) => {
   const dispatch = useDispatch();
