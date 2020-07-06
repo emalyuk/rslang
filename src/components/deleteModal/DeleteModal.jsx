@@ -72,9 +72,7 @@ const DeleteModal = ({ hideFunc, tab }) => {
     hideFunc();
   };
 
-  const cancelDeleteModal = () => {
-    hideFunc();
-  };
+  const cancelDeleteModal = () => hideFunc();
 
   return (
     <div className='delete-wrapper'>
