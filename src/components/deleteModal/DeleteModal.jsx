@@ -45,7 +45,6 @@ const DeleteModal = ({ hideFunc, tab }) => {
         dispatch(updateDifficultWords(newArr));
         dispatch(updateDeletedWords(copyDeletedWords));
         break;
-      default:
     }
 
     dispatch(updateTrash([]));
@@ -68,7 +67,6 @@ const DeleteModal = ({ hideFunc, tab }) => {
         copySectionWords = difficultWords.slice();
         deleteWordsFromTrash('difficultWords', copySectionWords);
         break;
-      default:
     }
 
     hideFunc();
