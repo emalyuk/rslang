@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './CheckBox.scss';
 
-const CheckBox = ({ id, click, isChecked }) => {
+const CheckBox = ({ id, onClick, isChecked }) => {
   const boxRef = useRef();
   const iconRef = useRef();
   const [isActive, setIsActive] = useState(false);
@@ -12,12 +12,12 @@ const CheckBox = ({ id, click, isChecked }) => {
       boxRef.current.dataset.active = 'false';
       iconRef.current.dataset.active = 'false';
       setIsActive(false);
-      click(id);
+      onClick(id);
     } else {
       boxRef.current.dataset.active = 'true';
       iconRef.current.dataset.active = 'true';
       setIsActive(true);
-      click(id);
+      onClick(id);
     }
   };
 
@@ -54,7 +54,7 @@ const CheckBox = ({ id, click, isChecked }) => {
 
 CheckBox.propTypes = {
   id: PropTypes.string.isRequired,
-  click: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   isChecked: PropTypes.bool.isRequired,
 };
 
