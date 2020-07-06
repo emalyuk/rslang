@@ -13,7 +13,7 @@ const TodayStatus = ({ stats, totalCardsPerDay }) => {
     countRightAnswer,
     countWrongAnswer,
     countSkipedWords,
-  } = stats.optional.today;
+  } = stats.optional.cardStats;
 
   const todayInfoItems = todayInfoItemsToArr(
     bestSeries,

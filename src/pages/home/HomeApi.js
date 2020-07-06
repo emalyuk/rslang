@@ -9,8 +9,10 @@ import {
   settingsPath,
 } from 'constants/constants';
 
+import { getFormattedData } from 'utils/getFormattedData';
+
 import { initialSettings } from 'constants/cardSettings';
-import { initialStats } from 'constants/cardStats';
+import { initialStats } from 'constants/stats';
 
 const authOption = JSON.parse(localStorage.getItem(userLoginDataKey));
 const { token, userId } = authOption;
@@ -30,7 +32,7 @@ const getData = async (path, initialData) => {
   let data;
   try {
     const response = await axios.get(path, config);
-    return response.data;
+    return getFormattedData(response.data);
   } catch (err) {
     // TODO: 401 Access token is missing or invalid
     if (err.response.status === responseStatusNotFound) {
@@ -47,5 +49,10 @@ export const getSettings = async () => getData(settingsPath, initialSettings);
 
 export const getStats = async () => getData(statsPath, initialStats);
 
-export const putSettings = async (settings) =>
-  axios.put(settingsPath, settings, config);
+export const putSettings = async (settings) => {
+  axios.put(settingsPath, JSON.stringify(settings), config);
+};
+
+export const putStats = async (stats) => {
+  axios.put(statsPath, JSON.stringify(stats), config);
+};

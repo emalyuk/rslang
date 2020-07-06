@@ -35,14 +35,8 @@ export const Home = () => {
   useEffect(() => {
     localStorage.setItem('settings', JSON.stringify(settings));
     if (settings) {
-      const formattedSettings = {
-        optional: {
-          ...settings.optional,
-        },
-        wordsPerDay: settings.wordsPerDay,
-      };
       const timeout = setTimeout(() => {
-        putSettings(JSON.stringify(formattedSettings));
+        putSettings(settings);
       }, 3000);
 
       return () => clearTimeout(timeout);
