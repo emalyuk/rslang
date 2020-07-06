@@ -37,7 +37,7 @@ export const Home = () => {
     if (settings) {
       const timeout = setTimeout(() => {
         putSettings(settings);
-      }, 3000);
+      }, 2000);
 
       return () => clearTimeout(timeout);
     }
