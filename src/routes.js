@@ -6,6 +6,7 @@ export default {
   forgotPassword: '/forgot-password',
   promo: '/promo',
   game: '/game',
+  gameSprint: '/game/sprint',
   team: '/team',
   dictionary: '/dictionary',
   games: {
