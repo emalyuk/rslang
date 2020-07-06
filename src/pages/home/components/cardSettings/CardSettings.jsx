@@ -24,7 +24,7 @@ const CardSettings = ({
 
   const maxNewCardsArrayOfNumber = arrayOfNumbers(
     countCardsPerDayStep,
-    numberOfOption,
+    Number(settings.wordsPerDay) / numberOfOption,
   );
 
   return (
