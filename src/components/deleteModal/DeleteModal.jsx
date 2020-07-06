@@ -25,13 +25,13 @@ const DeleteModal = ({ hideFunc, tab }) => {
       })
     })
 
-    for (let i = 0; i < copyWords.length; i += 1) {
-      if (!deleteIndex.includes(i)) {
-        newArr.push(copyWords[i]);
+    copyWords.forEach((item, index) => {
+      if (!deleteIndex.includes(index)) {
+        newArr.push(copyWords[index]);
       } else {
-        copyDeletedWords.push(copyWords[i]);
+        copyDeletedWords.push(copyWords[index]);
       }
-    }
+    })
 
     switch (section) {
       case 'deletedWords':
