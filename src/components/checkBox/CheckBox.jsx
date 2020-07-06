@@ -22,12 +22,12 @@ const CheckBox = ({ id, click, isChecked }) => {
   };
 
   useEffect(() => {
-    if (isAll) {
+    if (isChecked) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
-  }, [isAll]);
+  }, [isChecked]);
 
   return (
     <div className='checkbox-wrapper'>
@@ -37,13 +37,13 @@ const CheckBox = ({ id, click, isChecked }) => {
           <span
             className='checkbox_box'
             ref={boxRef}
-            data-active={isAll ? 'true' : 'false'}
+            data-active={isChecked ? 'true' : 'false'}
             onClick={() => toggleCheckBox()}
           />
           <span
             className='checkbox_icon'
             ref={iconRef}
-            data-active={isAll ? 'true' : 'false'}
+            data-active={isChecked ? 'true' : 'false'}
             onClick={() => toggleCheckBox()}
           />
         </label>
@@ -55,7 +55,7 @@ const CheckBox = ({ id, click, isChecked }) => {
 CheckBox.propTypes = {
   id: PropTypes.string.isRequired,
   click: PropTypes.func.isRequired,
-  isAll: PropTypes.bool.isRequired,
+  isChecked: PropTypes.bool.isRequired,
 };
 
 export default CheckBox;
