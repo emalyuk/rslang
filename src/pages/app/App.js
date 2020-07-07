@@ -7,12 +7,13 @@ import routes from '../../routes';
 
 import './App.scss';
 
-const Home = lazy(() => import('pages/home/Home'));
+// const Home = lazy(() => import('pages/home/Home'));
 const Team = lazy(() => import('pages/team/Team'));
 const Login = lazy(() => import('pages/auth/login/Login'));
 const Registration = lazy(() => import('pages/auth/registration/Registration'));
 const NotFound = lazy(() => import('pages/notFound/NotFound'));
 const Promo = lazy(() => import('pages/promo/Promo'));
+const Games = lazy(() => import('pages/game/Game'));
 
 const App = () => {
   return (
@@ -23,9 +24,10 @@ const App = () => {
           <Switch>
             <Route path={routes.login} component={Login} exact />
             <Route path={routes.registration} component={Registration} exact />
+            <Route path={routes.game} component={Games} exact />
 
             <PrivateRoute path={routes.team} component={Team} exact />
-            <PrivateRoute path={routes.home} component={Home} exact />
+            {/* <PrivateRoute path={routes.home} component={Home} exact /> */}
             <PrivateRoute path={routes.promo} component={Promo} exact />
 
             <Route component={NotFound} />
