@@ -11,7 +11,7 @@ const Footer = () => {
 
   return (
     <footer className='footer'>
-      <div className='container footer__container'>
+      <div className='footer__container'>
         <a href={rsSchoolLink} className='footer__link'>Rs school</a>
         {!isTeamPage && (
           <button

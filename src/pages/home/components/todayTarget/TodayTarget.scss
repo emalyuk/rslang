@@ -1,0 +1,12 @@
+@import 'scss/variables.scss';
+
+.home__status__target {
+  text-align: center;
+
+  &--title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}

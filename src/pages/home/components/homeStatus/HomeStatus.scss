@@ -1,0 +1,35 @@
+@import 'scss/variables';
+@import 'scss/mixins';
+
+.home__status {
+  &__container {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    grid-template-rows: 1fr;
+    grid-gap: 20px;
+
+    @include lg() {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 0.8fr;
+      justify-content: center;
+    }
+
+    @include md() {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 0.8fr;
+      justify-content: center;
+    }
+
+    @include sm() {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 0.8fr;
+      justify-content: center;
+    }
+
+    @include exSm() {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 0.3fr;
+      justify-content: center;
+    }
+  }
+}

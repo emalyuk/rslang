@@ -1,0 +1,124 @@
+@import '../../scss/variables';
+@import '../../scss/mixins';
+/*-----styles------*/
+.container{
+  max-width: 1020px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+.Promo{
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  .hero{
+    width: 100%;
+    height: calc(100vh - 100px);
+    background: linear-gradient(0deg, #3ea7ff 0%, #42d1ff 100%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    &-section{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &-description{
+      max-width: 50%;
+      width: 100%;
+      color: $white;
+      & h1{
+        font-size: 3rem;
+      }
+      & p{
+        font-size: 1.2rem;
+      }
+    }
+    &-image{
+      width: 40%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      & img{
+        width: 100%;
+      }
+    }
+  }
+  .services{
+    width: 100%;
+    padding: 100px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: stretch;
+    flex-wrap: wrap;
+    &-section{
+      background-color: $gray;
+    }
+  }
+  .features{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 100px 15px;
+    & .title{
+      text-align: center;
+      font-size: 2.5rem;
+      color: $black;
+    }
+    &-description{
+      text-align: center;
+      max-width: 800px;
+      color: $black;
+      font-size: 1.2rem;
+    }
+    &-items{
+      margin-top: 80px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+  }
+  .faq{
+    width: 100%;
+    padding: 80px 0;
+    background-color: $gray;
+    &-content{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: flex-start;
+    }
+    &-title{
+      font-size: 2.5rem;
+      color: $black;
+    }
+    &-description{
+      text-align: center;
+      max-width: 800px;
+      color: $black;
+      font-size: 1.2rem;
+    }
+    &-items{
+      width: 100%;
+      margin-top: 50px;
+    }
+  }
+}
+
+/*------adaptive----*/
+@media screen and (max-width:$smBreak){
+  .Promo .hero-image{
+    display: none;
+  }
+  .Promo .hero-description{
+    max-width: 100%;
+  }
+}

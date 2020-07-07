@@ -1,0 +1,13 @@
+@import 'scss/variables.scss';
+
+.home__status__stats--item {
+  text-align: center;
+
+  &__label {
+    margin-bottom: 4px;
+  }
+
+  &__count {
+    font-size: 22px;
+  }
+}

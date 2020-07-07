@@ -1,0 +1,17 @@
+@import '../../scss/variables.scss';
+
+.header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 50px;
+
+  &__container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    font-size: 24px;
+    color: $baseGray;
+    padding-top: 10px;
+  }
+}

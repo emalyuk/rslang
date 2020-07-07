@@ -1,14 +1,29 @@
+//width
 $exSmBreak: 320px;
 $smBreak: 575px;
 $mdBreak: 768px;
 $lgBreak: 992px;
 $exLgBreak: 1200px;
 
+// fonts
+$teamFont: 'San Francisco';
 
-$teamFont: "San Francisco";
-
-
+//base color
 $firstColor: #000000;
 $secondColor: #ffffff;
+
 $thirdColor: #032a45;
 $fourthColor: #cccccc;
+$baseGray: #717171;
+$lightPink: #faebd7;
+
+$mainHomeColor: #a8dadc;
+
+//urlls
+$baseBgImage: url('./assets/img/auth-page-bg.jpg');
+
+/*----promo page colors---*/
+$blue: #342d9b;
+$white: #ffffff;
+$gray: #efefea;
+$black: #515656;

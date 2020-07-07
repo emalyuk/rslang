@@ -1,0 +1,65 @@
+@import '../../../../scss/variables';
+@import '../../../../scss/mixins';
+
+.faqItem{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-bottom: 1px solid $black;
+  &.isActive{
+    & .faqItem-answer{
+      max-height: 1200px;
+    }
+    & .faqItem-openBtn::before{
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    & .faqItem-question{
+      color: #000000;
+    }
+  }
+  &-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  &-openBtn{
+    pointer-events: none;
+    margin-right: 30px;
+    position: relative;
+    width: 35px;
+    height: 35px;
+    background-color: $blue;
+    border-radius: 50%;
+    &::after, &::before{
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 15px;
+      height: 1px;
+      background-color: $white;
+      transition: all 0.5s ease;
+    }
+    &::before{
+      transform: translate(-50%, -50%) rotate(-90deg);
+    }
+  }
+  &-question{
+    pointer-events: none;
+    color: $black;
+  }
+  &-answer{
+    display: flex;
+    padding-left: 65px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    color: $black;
+    text-align: justify;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

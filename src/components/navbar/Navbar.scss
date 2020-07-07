@@ -1,9 +1,78 @@
-.navbar {
-  width: 100%;
+@import '../../scss/variables.scss';
 
-  span {
-    margin: 0 10px;
-    padding: 10px;
-    font-size: 20px;
+.nav {
+  display: flex;
+  transition: .7s;
+
+  button {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+
+    @media screen and (max-width: $mdBreak) {
+      text-align: left;
+    }
+  }
+
+  &__list {
+    display: flex;
+    cursor: pointer;
+
+    @media screen and (max-width: $mdBreak) {
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      padding: 0 0 0 50px;
+    }
+  }
+
+  &__item {
+    position: relative;
+    list-style-type: none;
+    padding: 0 12px;
+  }
+
+  &__item:last-child {
+    padding-right: 0;
+  }
+
+  &__link {
+    position: relative;
+    color: $baseGray;
+    text-decoration: none;
+  }
+
+  &__link:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    border-bottom: 2px solid $baseGray;
+    transition: 0.5s;
+  }
+
+  .nav__item:hover .nav__link:before {
+    width: 100%;
+  }
+
+  @media screen and (max-width: $mdBreak) {
+    width: 50%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    background: $lightPink;
+    z-index: 9;
+    justify-content: center;
+  }
+}
+
+.nav.active {
+  left: -20px;
+
+  @media screen and (max-width: $smBreak) {
+    width: calc(100% + 40px);
   }
 }
