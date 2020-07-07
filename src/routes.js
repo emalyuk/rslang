@@ -7,5 +7,4 @@ export default {
   promo: '/promo',
   game: '/game',
   team: '/team',
-  promo: '/promo',
 };
