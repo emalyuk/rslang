@@ -1,3 +1,84 @@
 .gamecard-wrapper {
-  
+  cursor: pointer;
+
+  .gamecard-bg-image {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-position: 100% 100%;
+    background-size: 80%;
+    background-repeat: no-repeat;
+  }
+
+  .gamecard-bg-color {
+    position: absolute;
+    height: 100%;
+  }
+
+  &[data-id='0'] {
+    .gamecard-bg-image {
+      background-image: url('../../../assets/images/game/leo-sprint.svg');
+    }
+
+    .gamecard-bg-color {
+      background-color: rgb(88, 97, 135);
+    }
+  }
+
+  .gamecard-bg-wrapper {
+    height: 100%;
+  }
+
+  .gamecard-text {
+    position: absolute;
+    top: 0;
+    padding: 10px 0 0 10px;
+
+    .gamecard-name {
+      font-size: 15px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.25;
+      letter-spacing: normal;
+      margin-bottom: 4px;
+      color: white;
+    }
+
+    .gamecard-words {
+      opacity: .8;
+      font-size: 14px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.29;
+      letter-spacing: normal;
+      color: #fff;
+      margin-top: 2px;
+    }
+  }
+
+  .woah {
+    position: absolute;
+    width: 40%;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+
+    .woah-icon {
+      height: 30px;
+      width: 30px;
+      padding: 10px 10px 0 0;
+      background-repeat: no-repeat;
+      background-image: url('../../../assets/images/game/woah.svg');
+      cursor: pointer;
+    }
+  }
+
+  .description {
+    position: absolute;
+    top: 0;
+    font-size: 30px;
+    color: white;
+  }
 }
