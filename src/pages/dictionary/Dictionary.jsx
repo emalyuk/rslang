@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Dictionary.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import CheckBox from '../../components';
-import LeoFaw from '../../components';
+import { CheckBox, LeoFaw } from '../../components';
 import { toggleIsAllSelected, changeShowDeleteModal, updateAllWords, updateTrash } from './DictionaryReducer';
 import DictionaryTabs from './DictionaryTabs/DictionaryTabs';
 
