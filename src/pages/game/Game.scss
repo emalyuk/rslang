@@ -1,17 +1,8 @@
-.game {
-  .game-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 30px;
-
-    .link-game {
-      padding: 10px 20px;
-      font-size: 20px;
-      background-color: red;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-    }
-  }
+.game-wrapper {
+  width: 100%;
+  height: 100%;
+  flex: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }

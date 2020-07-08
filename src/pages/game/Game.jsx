@@ -1,24 +1,12 @@
 import React from 'react';
-import './Game.scss';
-import { useHistory } from 'react-router-dom';
 import { games } from './data';
+import './Game.scss';
+import GameCard from './gameCard/GameCard';
 
 const Game = () => {
-  const history = useHistory();
-
   return (
-    <div className='game'>
-      <div className='game-wrapper'>
-        {games.map((game) => (
-          <div
-            key={game}
-            className='link-game'
-            onClick={() => history.push(`/game/${game}`)}
-          >
-            {game}
-          </div>
-        ))}
-      </div>
+    <div className='game-wrapper'>
+      {games.map((game, index) => <GameCard {...game} key={game.name} id={index} />)}
     </div>
   );
 };
