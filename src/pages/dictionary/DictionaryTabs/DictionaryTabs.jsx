@@ -24,13 +24,6 @@ const DictionaryTabs = ({ words, currentTab, difficultWords, studiedWords, delet
   return (
     <div className='dictionary-tabs-wrapper'>
       {showDeleteModal && <ModalWindow><DeleteModal tab={currentTab} hideFunc={() => dispatch(changeShowDeleteModal(false))} /></ModalWindow>}
-      {currentTab === 'all' && (
-        <div className='dictionary-all'>
-          {words && words.map((word) => (
-            <DictionaryWord {...word} key={word.id} isAll={isAllSelected} />
-          ))}
-        </div>
-      )}
 
       {currentTab === 'studied' && (
         <div className='dictionary-studied'>
