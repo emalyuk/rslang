@@ -18,7 +18,7 @@
   }
 
   .audio-icon {
-    background-image: url('../../../../assets/images/audio.svg');
+    background-image: url('../../../../assets/images/dictionary/audio.svg');
     background-size: 20px 18px;
     background-position: 50%;
     background-repeat: no-repeat;
@@ -38,13 +38,13 @@
   .trash-icon {
     width: 32px;
     height: 32px;
-    background-image: url('../../../../assets/images/trash.svg');
+    background-image: url('../../../../assets/images/dictionary/trash.svg');
     background-size: 24px 24px;
     background-repeat: no-repeat;
     background-position: 50%;
 
     &:hover {
-      background-image: url('../../../../assets/images/hover-trash.svg');
+      background-image: url('../../../../assets/images/dictionary/hover-trash.svg');
     }
   }
 }
