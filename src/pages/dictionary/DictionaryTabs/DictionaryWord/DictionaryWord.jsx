@@ -47,7 +47,7 @@ const DictionaryWord = ({ word, translate, image, audio, id, isAll, color }) => 
 
   return (
     <div className='dictionary-word'>
-      <CheckBox id={id} click={() => toggleWordInTrash(id, false)} isAll={isAll} />
+      <CheckBox id={id} onClick={() => toggleWordInTrash(id, false)} isChecked={isAll} />
       <div className='audio-icon' onClick={() => playAudio(linkRaw, audio)} />
       <div className='my-words'>
         <div className='word'>{word}</div>
