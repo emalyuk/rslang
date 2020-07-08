@@ -54,7 +54,7 @@ const ResultsModal = ({ results }) => {
           Игра окончена
         </div>
         <div className='results-slider'>
-          {showDeleteModal ? <ModalWindow><DeleteModal /></ModalWindow> : null}
+          {showDeleteModal ? <ModalWindow><DeleteModal hideFunc={() => dispatch(changeShowDeleteModal(false))} /></ModalWindow> : null}
           {score ? (
             <div className='results-score'>
               <div className='results-satiety'>
