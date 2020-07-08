@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import './DictionaryTabs.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import DictionaryWord from './DictionaryWord/DictionaryWord';
-import DeleteModal from '../../../components/deleteModal/DeleteModal';
-import ModalWindow from '../../../components/modalWindow/ModalWindow';
+import { DeleteModal, ModalWindow } from '../../../components'
 import { changeShowDeleteModal, updateTrash, toggleIsSelect } from '../DictionaryReducer';
 
 const DictionaryTabs = ({ words, currentTab, difficultWords, studiedWords, deletedWords }) => {
