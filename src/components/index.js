@@ -6,4 +6,3 @@ export { default as CheckBox } from './checkBox/CheckBox';
 export { default as DeleteModal } from './deleteModal/DeleteModal';
 export { default as ModalWindow } from './modalWindow/ModalWindow';
 export { default as LeoFaw } from './leoFaw/LeoFaw';
-export { default as ModalWindow } from './modalWindow/ModalWindow';
