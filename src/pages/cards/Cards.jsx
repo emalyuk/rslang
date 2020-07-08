@@ -13,12 +13,14 @@ import './Cards.scss';
 
 const Cards = () => {
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.cards);
+  const { data, currentCardAction } = useSelector((state) => state.cards);
+  const { isCorrectAnswer } = currentCardAction;
   const currentCardIndex = 0;
 
   const userSettings = JSON.parse(localStorage[userSettingsKey]);
   const { wordsPerDay } = userSettings;
-  const { newWordsPerDay, cardMainIfno, cardExtraInfo } = userSettings.optional;
+  const { newWordsPerDay, cardMainInfo, cardExtraInfo } = userSettings.optional;
+  const { isShowWordMeaning, isShowWordExample } = cardMainInfo;
 
   // TODO: Add to settings
   // MockData
@@ -36,8 +38,6 @@ const Cards = () => {
   useEffect(() => {
     console.log('DATA ARR UPDATE!');
   }, [data]);
-
-  console.log(data);
 
   return (
     <div className='card__container container'>

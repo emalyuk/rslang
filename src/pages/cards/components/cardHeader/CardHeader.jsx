@@ -33,8 +33,7 @@ const CardHeader = ({ settings }) => {
 };
 
 CardHeader.propTypes = {
-  isShowDeleteButton: PropTypes.bool.isRequired,
-  isShowHardButton: PropTypes.bool.isRequired,
+  settings: PropTypes.objectOf(PropTypes.bool).isRequired,
 };
 
 export default CardHeader;

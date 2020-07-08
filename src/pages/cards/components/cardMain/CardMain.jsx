@@ -16,21 +16,15 @@ const CardMain = ({ cardSettings, cardInfo }) => {
 
   const {
     image,
-    audio,
-    audioExample,
-    audioMeaning,
     textExample,
     textExampleTranslate,
     textMeaning,
     textMeaningTranslate,
     transcription,
     wordTranslate,
-    word,
   } = cardInfo;
 
-  console.log(cardInfo);
-
-  const { wordsPerDay, optional } = cardSettings;
+  const { optional } = cardSettings;
   const { cardExtraInfo, cardMainInfo } = optional;
   const {
     isShowWordTranslation,
@@ -75,9 +69,9 @@ const CardMain = ({ cardSettings, cardInfo }) => {
         </div>
 
         <CardInput
-          word={word}
-          // handleCheckAnswer={handleCheckAnswer}
-          // setInputValue={setInputValue}
+          cardInfo={cardInfo}
+          isShowWordMeaning={isShowWordMeaning}
+          isShowWordExample={isShowWordExample}
         />
       </div>
     </div>
