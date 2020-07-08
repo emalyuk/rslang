@@ -1,0 +1,149 @@
+.savanna-wrapper {
+  width: 100%;
+  height: 100vh;
+  background-position-x: center;
+  background-position-y: 100%;
+  background-image: url('../../assets/images/bg-savanna.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all 0.5s ease;
+
+  .savanna-game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .answer-wrapper {
+      position: fixed;
+      left: 0;
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 300;
+      white-space: nowrap;
+      color: #fff;
+      letter-spacing: 1px;
+      height: 100%;
+      width: 100%;
+      transform: translate(0);
+      transition: transform 5s ease -in;
+
+      .answer-true {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        transform: translate(0);
+        transition: transform 5s ease-in;
+        user-select: none;
+
+        &[data-state=end] {
+          transition: all 0s linear;
+          transform: translateY(0);
+        }
+
+        &[data-state=start] {
+          transition: all 5s linear;
+          transform: translateY(50%);
+        }
+
+        .answer-element {
+          position: absolute;
+          transform-origin: 50% bottom;
+          transition: all .3s ease;
+          transform: translate(-50%);
+          display: inline-block;
+          left: 50%;
+        }
+      }
+
+      .savanna-ui {
+        height: 50px;
+        display: flex;
+        align-items: center;
+
+        .hearts {
+          position: absolute;
+          right: 50px;
+          display: flex;
+
+          .heart {
+            width: 20px;
+            height: 20px;
+            margin-left: 3px;
+            transition: all .15s ease;
+            background-image: url('../../assets/images/heart.svg');
+            background-repeat: no-repeat;
+            &[data-live=true] {
+              opacity: 1;
+            }
+            &[data-live=false] {
+              opacity: 0.6;
+            }
+          }
+        }
+
+        .close-game, .toggle-sound {
+          width: 30px;
+          height: 30px;
+          position: absolute;
+          background-position: center;
+          background-size: 23px;
+          background-repeat: no-repeat;
+          cursor: pointer;
+        }
+
+        .close-game {
+          right: 10px;
+          background-image: url('../../assets/images/close.svg');
+        }
+
+        .toggle-sound {
+          left: 10px;
+          background-image: url('../../assets/images/sound-on.svg');
+
+          &[data-sound=false] {
+            background-image: url('../../assets/images/sound-off.svg');
+          }
+        }
+      }
+    }
+
+    .answer-choice {
+      display: flex;
+      z-index: 1;
+
+      .answer {
+        font-size: 24px;
+        line-height: 30px;
+        font-weight: 300;
+        max-width: 270px;
+        padding: 20px 15px 20px 30px;
+        color: #fff;
+        transition: all .15s ease;
+        border-radius: 2px;
+        margin: 0 20px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        cursor: pointer;
+
+        &:hover {
+          background: hsla(0,0%,100%,.1);
+        }
+      }
+    }
+  }
+}
+
+.fall-animation {
+  transition: all 5s linear !important;
+  transform: translateY(50%) !important;
+}
+
+.static-word {
+  transition: all 0s linear !important;
+  transform: translateY(0) !important;
+}
