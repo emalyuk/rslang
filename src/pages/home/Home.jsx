@@ -8,11 +8,6 @@ import { getSettings, putSettings, getStats } from './HomeApi';
 import HomeStatus from './components/homeStatus/HomeStatus';
 import CardSettings from './components/cardSettings/CardSettings';
 
-import {
-  initialSettings,
-  settingsLabelName,
-} from '../../constants/cardSettingsData';
-
 import './Home.scss';
 
 export const Home = () => {

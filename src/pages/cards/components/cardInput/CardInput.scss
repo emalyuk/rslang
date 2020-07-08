@@ -1,3 +1,5 @@
+@import 'scss/variables.scss';
+
 .card__input {
   text-align: center;
   font-family: monospace;
@@ -7,8 +9,38 @@
   border: none;
   border-radius: 5px;
   background-color: #17a2b8;
+  position: relative;
+  z-index: 2;
 
   &__container {
     margin: 0 auto;
+    position: relative;
+  }
+}
+
+
+.card__result {
+  font-family: monospace;
+  font-size: 32px;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  z-index: 4;
+  user-select: none;
+
+  &__letter {
+    color: $rightAnswerColor;
+
+    &.wrong {
+      color: $wrongAnswerColor;
+    }
+
+    &.wrongest {
+      color: $wrongestAnswerColor;
+    }
+  }
+
+  &.visible {
+    z-index: 3;
   }
 }
