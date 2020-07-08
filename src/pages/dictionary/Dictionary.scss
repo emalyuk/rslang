@@ -1,0 +1,141 @@
+.dictionary-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  .dictionary-header {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .dictionary-title {
+      font-size: 20px;
+      font-weight: 700;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: .4px;
+      color: #37383c;
+      text-transform: uppercase;
+    }
+
+    .dictionary-header-buttons {
+      display: flex;
+
+      .button-wrapper:nth-child(1) {
+        button {
+          position: relative;
+          cursor: pointer;
+          text-align: center;
+          font-family: Open Sans,sans-serif;
+          font-weight: 600;
+          font-size: 14px;
+          padding: 8px 16px;
+          text-transform: uppercase;
+          border: 2px solid transparent;
+          border-radius: 4px;
+          transition: all .3s ease-out;
+          box-shadow: 0 2px 4px rgba(34,41,67,.14);
+          box-sizing: border-box;
+          background-color: rgba(126,145,159,.08)!important;
+          border-color: transparent!important;
+          color: rgba(126,145,159,.8)!important;
+        }
+
+        margin-right: 10px;
+      }
+
+      .button-wrapper:nth-child(2) {
+        button {
+          position: relative;
+          cursor: pointer;
+          text-align: center;
+          font-family: Open Sans,sans-serif;
+          font-weight: 600;
+          font-size: 14px;
+          padding: 8px 16px;
+          text-transform: uppercase;
+          border: 2px solid transparent;
+          border-radius: 4px;
+          transition: all .3s ease-out;
+          box-shadow: 0 2px 4px rgba(34,41,67,.14);
+          box-sizing: border-box;
+          background-color: rgba(37,130,231,.08)!important;
+          border-color: transparent!important;
+          color: #2582e7!important;
+        }
+      }
+    }
+  }
+
+  .dictionary-control {
+    max-width: 900px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 40px;
+    margin: 0 auto;
+    padding: 20px 0;
+
+    .toggle-tabs {
+      display: flex;
+
+      .toggle-option {
+        position: relative;
+        display: flex;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -ms-flex-align: center;
+        align-items: center;
+        background-color: #fff;
+        border: 2px solid rgba(55,56,60,.16);
+        border-right-width: 0;
+        box-sizing: border-box;
+        padding: 0 10px;
+        line-height: 0;
+        height: 40px;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 14px;
+        color: #37383c;
+        transition: all .3s ease-in;
+
+        &[data-id='4'] {
+          border-radius: 0 4px 4px 0;
+          border-right-width: 2px;
+        }
+
+        &[data-select='true'] {
+          background-color: #ebf3fd;
+          border-color: rgba(37,130,231,.4);
+        }
+      }
+    }
+
+      .trash-icon {
+        width: 32px;
+        height: 32px;
+        background-image: url('../../assets/images/dictionary/trash.svg');
+        background-size: 24px 24px;
+        background-repeat: no-repeat;
+        background-position: 50%;
+
+      &:hover {
+        background-image: url('../../assets/images/dictionary/hover-trash.svg');
+      }
+    }
+  }
+
+  .dictionary-content {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+  }
+}

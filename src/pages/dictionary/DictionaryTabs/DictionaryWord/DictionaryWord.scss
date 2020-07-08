@@ -1,0 +1,50 @@
+.dictionary-word {
+  width: 100%;
+  display: flex;
+  padding: 5px 0;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e9ee;
+
+  .my-words {
+    max-width: 200px;
+    width: 100%;
+    overflow: hidden;
+
+    .word {
+      color: #2582e7;
+      font-weight: 600;
+    }
+  }
+
+  .audio-icon {
+    background-image: url('../../../../assets/images/dictionary/audio.svg');
+    background-size: 20px 18px;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+
+  .word-image {
+    height: 40px;
+    width: 40px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .trash-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url('../../../../assets/images/dictionary/trash.svg');
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+
+    &:hover {
+      background-image: url('../../../../assets/images/dictionary/hover-trash.svg');
+    }
+  }
+}
