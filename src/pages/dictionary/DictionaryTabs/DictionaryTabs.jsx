@@ -5,14 +5,26 @@ import DictionaryWord from './DictionaryWord/DictionaryWord';
 import { DeleteModal, ModalWindow } from '../../../components'
 import { changeShowDeleteModal, updateTrash, toggleIsSelect } from '../DictionaryReducer';
 
-const DictionaryTabs = ({ words, currentTab, difficultWords, studiedWords, deletedWords }) => {
+const DictionaryTabs = ({ currentTab, difficultWords, studiedWords, deletedWords }) => {
   const showDeleteModal = useSelector((state) => state.dictionary.showDeleteModal);
   const isAllSelected = useSelector((state) => state.dictionary.isAllSelected);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (isAllSelected) {
-      const copyIdWords = words.map((item) => item.id);
+      let copyIdWords;
+      switch (currentTab) {
+        case 'studied':
+          copyIdWords = studiedWords.map((item) => item.id);
+          break;
+        case 'deleted':
+          copyIdWords = deletedWords.map((item) => item.id);
+          break;
+        case 'difficult':
+          copyIdWords = difficultWords.map((item) => item.id);
+          break;
+      }
+
       dispatch(updateTrash(copyIdWords));
       dispatch(toggleIsSelect(true));
     } else {
