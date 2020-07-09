@@ -1,18 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import './SpeakIt.scss';
+import React, {
+  useEffect,
+  useState,
+} from 'react'
 import Card from './components/card/Card'
 import ViewBox from './components/viewBox/ViewBox'
-import { finished } from 'stream';
+import './SpeakIt.scss'
+
+export const request = async (url, config = {}) => {
+  try {
+    const response = await fetch(url, config);
+    return response.json()
+  } catch (e) {
+    console.log(e.message)
+  }
+}
 
 const maxCountWord = 20
+const activeInit = {
+  id: false,
+  img: '',
+  wordTranslate: ''
+}
 
 const Team = () => {
-  const [words, setWords] = useState([])
-  const [activeId, setActiveId] = useState(false)
-  const [activeImg, setActiveImg] = useState('')
-  const [activeAudio, setActiveAudio] = useState('')
-  const [wordTranslate, setWordTranslate] = useState('')
   const audio = document.querySelector('audio')
+
+  const [words, setWords] = useState([])
+  const [active, setActive] = useState(activeInit)
+  const [activeAudio, setActiveAudio] = useState('')
   const [isGameMod, setIsGameMod] = useState(false)
   const [gameWordNum, setGameWordNum] = useState(18)
   const [speakWord, setSpeakWord] = useState(null)
@@ -20,11 +35,12 @@ const Team = () => {
   function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  async function getData(page, group) {
+  const getData = async (page, group) => {
     const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
+
     try {
-      const response = await fetch(url);
-      const data = await response.json();
+      const data = await request(url)
+
       data.map((item) => {
         item.isGuessed = false;
         item.isNotGuessed = false;
@@ -43,9 +59,14 @@ const Team = () => {
   }
   function showPendingWord(i) {
     if (words && words[i] && Object.keys(words[i]).length > 0) {
-      setActiveId(words[i].id)
-      setActiveImg(words[i].image)
-      setWordTranslate(words[i].wordTranslate)
+      const newActive = { ...active }
+      const { id, image, wordTranslate } = words[i]
+
+      newActive.id = id
+      newActive.img =image
+      newActive.wordTranslate =wordTranslate
+
+      setActive(newActive)
     }
   }
   function finishedGame() {
@@ -110,7 +131,10 @@ const Team = () => {
   }
   function startGame() {
     setIsGameMod(true)
-    setActiveId(false)
+    setActive({
+      ...active,
+      id: false
+    })
     setWords(shuffle(words))
     showPendingWord(gameWordNum)
     startRecording()
@@ -123,17 +147,15 @@ const Team = () => {
       <h1>Speak IT</h1>
       <button onClick={startGame}>начать игру</button>
       <button onClick={showWords}>показать слова</button>
-      <ViewBox activeImg={activeImg} activeAudio={activeAudio} wordTranslate={wordTranslate} />
+      <ViewBox activeImg={active.img} activeAudio={activeAudio} wordTranslate={active.wordTranslate} />
       {
         words.map((item) => (
           <Card
             {...item}
             key={item.id}
-            activeId={activeId}
-            setActiveId={setActiveId}
-            setActiveImg={setActiveImg}
+            active={active}
+            setActive={setActive}
             setActiveAudio={setActiveAudio}
-            setWordTranslate={setWordTranslate}
             audioPlayer={audio}
             isGameMod={isGameMod}
           />

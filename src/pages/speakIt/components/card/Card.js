@@ -2,21 +2,24 @@ import React from 'react';
 import './Card.scss';
 
 const Card = ({
-  word, transcription, activeId, setActiveId,
-  id, setActiveImg, image, setActiveAudio,
-  audio, setWordTranslate, wordTranslate,
+  word, transcription, active, setActive,
+  id, image, setActiveAudio,
+  audio, wordTranslate,
   audioPlayer, isGameMod, isGuessed, isNotGuessed
 }) => {
-  const isActive = activeId === id;
+  const isActive = active.id === id;
 
-  function setCurrendItem(id, image, setActiveImg, setActiveId) {
+  function setCurrentItem(id, image, setActive) {
     if (isActive) {
       audioPlayer.play()
     } else {
-      setActiveId(id);
-      setActiveImg(image)
+      setActive({
+        id,
+        img: image,
+        wordTranslate
+      })
+
       setActiveAudio(audio)
-      setWordTranslate(wordTranslate)
     }
 
   }
@@ -31,7 +34,7 @@ const Card = ({
           isGuessed ? 'isGuessed' : '',
           isNotGuessed ? "isNotGuessed" : ''
         ].join(' ')}
-         onClick={() => setCurrendItem(id, image, setActiveImg, setActiveId)}
+         onClick={() => setCurrentItem(id, image, setActive)}
     >
       <p>{word}</p>
       <p>{wordTranslate}</p>
