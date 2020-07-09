@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './SpeakIt.scss';
 import Card from './components/card/Card'
 import ViewBox from './components/viewBox/ViewBox'
+import { finished } from 'stream';
 
 const Team = () => {
   const [words, setWords] = useState([])
@@ -11,8 +12,8 @@ const Team = () => {
   const [wordTranslate, setWordTranslate] = useState('')
   const audio = document.querySelector('audio')
   const [isGameMod, setIsGameMod] = useState(false)
-  const [spokenWord, setSpokenWord] = useState('')
   const [gameWordNum, setGameWordNum] = useState(0)
+  const [speakWord, setSpeakWord] = useState(null)
 
   function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -22,11 +23,40 @@ const Team = () => {
     try {
       const responce = await fetch(url);
       const data = await responce.json();
+      data.map((item) => {
+        item['isGuessed'] = false;
+        item['isNotGuessed'] = false;
+      })
       setWords(data)
     } catch (e) {
       console.log(e.message)
     }
   }
+  function checkWord(word) {
+    if (word.toLowerCase() === words[gameWordNum].wordTranslate) {
+      words[gameWordNum].isGuessed = true;
+    } else {
+      words[gameWordNum].isNotGuessed = true;
+    }
+  }
+  function showPendingWord(i) {
+    setActiveId(words[i].id)
+    setActiveImg(words[i].image)
+    setWordTranslate(words[i].wordTranslate)
+  }
+  function finishedGame() {
+    console.log('ok')
+  }
+  useEffect(() => {
+    if (gameWordNum < 20) {
+      if (speakWord == null) {
+      } else {
+        checkWord(speakWord)
+        setGameWordNum(gameWordNum + 1)
+        showPendingWord(gameWordNum + 1)
+      }
+    }
+  }, [speakWord])
 
   // начальная загрузка данных
   async function init() {
@@ -43,21 +73,50 @@ const Team = () => {
     }
     return array
   }
-  function showPendingWord() {
-    setActiveId(words[gameWordNum].id)
-    setActiveImg(words[gameWordNum].image)
-    setWordTranslate(words[gameWordNum].wordTranslate)
+
+
+
+  function startRecording() {
+    // eslint-disable-next-line no-undef
+    const recognizer = new webkitSpeechRecognition();
+
+    // Ставим опцию, чтобы распознавание началось ещё до того, как пользователь закончит говорить
+    recognizer.interimResults = true;
+
+    // Какой язык будем распознавать?
+    recognizer.lang = 'ru-Ru';
+
+    // Используем колбек для обработки результатов
+    recognizer.onresult = function (event) {
+      const result = event.results[event.resultIndex];
+      if (result.isFinal) {
+        console.log('Вы сказали: ' + result[0].transcript);
+        setSpeakWord(result[0].transcript)
+      } else {
+        console.log('Промежуточный результат: ', result[0].transcript);
+      }
+    };
+    recognizer.onend = function () {
+      recognizer.start();
+    }
+    // Начинаем слушать микрофон и распознавать голос
+    recognizer.start();
   }
   function startGame() {
     setIsGameMod(true)
     setActiveId(false)
     setWords(shuffle(words))
-    showPendingWord()
+    showPendingWord(gameWordNum)
+    startRecording()
+  }
+  function showWords() {
+    console.log(words)
   }
   return (
     <div className='SpeakIt container'>
       <h1>Speak IT</h1>
       <button onClick={startGame}>начать игру</button>
+      <button onClick={showWords}>показать слова</button>
       <ViewBox activeImg={activeImg} activeAudio={activeAudio} wordTranslate={wordTranslate}></ViewBox>
       {
         words.map((item) => (

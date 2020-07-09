@@ -20,6 +20,12 @@
   &.isGame {
     pointer-events: none;
   }
+  &.isGuessed {
+    background-color: green;
+  }
+  &.isNotGuessed {
+    background-color: red;
+  }
   & p {
     margin: 0;
   }
