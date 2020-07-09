@@ -4,6 +4,7 @@ import React, {
 } from 'react'
 import Card from './components/card/Card'
 import ViewBox from './components/viewBox/ViewBox'
+import ResultGame from './components/resultGame/ResultGame'
 import './SpeakIt.scss'
 
 export const request = async (url, config = {}) => {
@@ -19,17 +20,20 @@ const maxCountWord = 20
 const activeInit = {
   id: false,
   img: '',
-  wordTranslate: ''
+  wordTranslate: '',
 }
 
 const Team = () => {
   const audio = document.querySelector('audio')
 
+  // eslint-disable-next-line no-undef
+  const recognizer = new webkitSpeechRecognition();
+  const [isFinish, setIsFinish] = useState(false)
   const [words, setWords] = useState([])
   const [active, setActive] = useState(activeInit)
   const [activeAudio, setActiveAudio] = useState('')
   const [isGameMod, setIsGameMod] = useState(false)
-  const [gameWordNum, setGameWordNum] = useState(18)
+  const [gameWordNum, setGameWordNum] = useState(0)
   const [speakWord, setSpeakWord] = useState(null)
 
   function getRandomNum(min, max) {
@@ -63,14 +67,16 @@ const Team = () => {
       const { id, image, wordTranslate } = words[i]
 
       newActive.id = id
-      newActive.img =image
-      newActive.wordTranslate =wordTranslate
+      newActive.img = image
+      newActive.wordTranslate = wordTranslate
 
       setActive(newActive)
     }
   }
   function finishedGame() {
     console.log('ok')
+    setIsFinish(true)
+    recognizer.stop()
   }
   useEffect(() => {
     if (speakWord !== null && gameWordNum < maxCountWord) {
@@ -104,8 +110,6 @@ const Team = () => {
   }
 
   function startRecording() {
-    // eslint-disable-next-line no-undef
-    const recognizer = new webkitSpeechRecognition();
 
     // Ставим опцию, чтобы распознавание началось ещё до того, как пользователь закончит говорить
     recognizer.interimResults = true;
@@ -160,6 +164,14 @@ const Team = () => {
             isGameMod={isGameMod}
           />
         ))
+      }
+      {
+        isFinish ?
+          <ResultGame
+            words={words}
+            setIsFinish={setIsFinish}
+          />
+          : ''
       }
     </div >
   )
