@@ -4,6 +4,8 @@ import Card from './components/card/Card'
 import ViewBox from './components/viewBox/ViewBox'
 import { finished } from 'stream';
 
+const maxCountWord = 20
+
 const Team = () => {
   const [words, setWords] = useState([])
   const [activeId, setActiveId] = useState(false)
@@ -12,7 +14,7 @@ const Team = () => {
   const [wordTranslate, setWordTranslate] = useState('')
   const audio = document.querySelector('audio')
   const [isGameMod, setIsGameMod] = useState(false)
-  const [gameWordNum, setGameWordNum] = useState(0)
+  const [gameWordNum, setGameWordNum] = useState(18)
   const [speakWord, setSpeakWord] = useState(null)
 
   function getRandomNum(min, max) {
@@ -21,11 +23,11 @@ const Team = () => {
   async function getData(page, group) {
     const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
     try {
-      const responce = await fetch(url);
-      const data = await responce.json();
+      const response = await fetch(url);
+      const data = await response.json();
       data.map((item) => {
-        item['isGuessed'] = false;
-        item['isNotGuessed'] = false;
+        item.isGuessed = false;
+        item.isNotGuessed = false;
       })
       setWords(data)
     } catch (e) {
@@ -40,23 +42,29 @@ const Team = () => {
     }
   }
   function showPendingWord(i) {
-    setActiveId(words[i].id)
-    setActiveImg(words[i].image)
-    setWordTranslate(words[i].wordTranslate)
+    if (words && words[i] && Object.keys(words[i]).length > 0) {
+      setActiveId(words[i].id)
+      setActiveImg(words[i].image)
+      setWordTranslate(words[i].wordTranslate)
+    }
   }
   function finishedGame() {
     console.log('ok')
   }
   useEffect(() => {
-    if (gameWordNum < 20) {
-      if (speakWord == null) {
-      } else {
-        checkWord(speakWord)
-        setGameWordNum(gameWordNum + 1)
-        showPendingWord(gameWordNum + 1)
-      }
+    if (speakWord !== null && gameWordNum < maxCountWord) {
+      checkWord(speakWord)
+      setGameWordNum(gameWordNum + 1)
     }
   }, [speakWord])
+
+  useEffect(() => {
+    showPendingWord(gameWordNum)
+
+    if (gameWordNum === maxCountWord) {
+      finishedGame()
+    }
+  }, [gameWordNum])
 
   // начальная загрузка данных
   async function init() {
@@ -73,8 +81,6 @@ const Team = () => {
     }
     return array
   }
-
-
 
   function startRecording() {
     // eslint-disable-next-line no-undef
@@ -117,7 +123,7 @@ const Team = () => {
       <h1>Speak IT</h1>
       <button onClick={startGame}>начать игру</button>
       <button onClick={showWords}>показать слова</button>
-      <ViewBox activeImg={activeImg} activeAudio={activeAudio} wordTranslate={wordTranslate}></ViewBox>
+      <ViewBox activeImg={activeImg} activeAudio={activeAudio} wordTranslate={wordTranslate} />
       {
         words.map((item) => (
           <Card

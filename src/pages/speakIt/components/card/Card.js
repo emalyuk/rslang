@@ -2,7 +2,10 @@ import React from 'react';
 import './Card.scss';
 
 const Card = ({
-  word, transcription, activeId, setActiveId, id, setActiveImg, image, setActiveAudio, audio, setWordTranslate, wordTranslate, audioPlayer, isGameMod, isGuessed, isNotGuessed
+  word, transcription, activeId, setActiveId,
+  id, setActiveImg, image, setActiveAudio,
+  audio, setWordTranslate, wordTranslate,
+  audioPlayer, isGameMod, isGuessed, isNotGuessed
 }) => {
   const isActive = activeId === id;
 
@@ -18,7 +21,18 @@ const Card = ({
 
   }
   return (
-    <div className={['Card ', isActive ? 'isActive' : '', id, isGameMod ? 'isGame' : '', isGuessed ? 'isGuessed' : '', isNotGuessed ? "isNotGuessed" : ''].join(' ')} onClick={() => setCurrendItem(id, image, setActiveImg, setActiveId)}>
+    <div
+        className={
+        [
+          'Card ',
+          isActive ? 'isActive' : '',
+          id,
+          isGameMod ? 'isGame' : '',
+          isGuessed ? 'isGuessed' : '',
+          isNotGuessed ? "isNotGuessed" : ''
+        ].join(' ')}
+         onClick={() => setCurrendItem(id, image, setActiveImg, setActiveId)}
+    >
       <p>{word}</p>
       <p>{wordTranslate}</p>
       <p>{transcription}</p>
