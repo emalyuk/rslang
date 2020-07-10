@@ -185,13 +185,12 @@ export const {
   resetWords,
 } = englishPuzzleSlice.actions;
 
-export const englishPuzzleSliceReducer = englishPuzzleSlice.reducer;
+export const englishPuzzleReducer = englishPuzzleSlice.reducer;
 
 export const initState = (width, height) => async (dispatch) => {
-
-  console.log(sortCurrentRow)
   try {
     const data = await getData(width, height);
+    console.log(data)
     if (data) {
       const rows = createRows(data);
       dispatch(init({ data, rows }));

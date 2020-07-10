@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toGuessingRow, sortGuessingRow } from '../EnglishPuzzleReducer';
-import { Word } from '.';
+import { toGuessingRow, sortGuessingRow } from '../../EnglishPuzzleReducer';
+import { Word } from '..';
 
 const Shuffled = ({ image }) => {
   const { shuffled, width, height } = useSelector((state) => state.englishPuzzle);

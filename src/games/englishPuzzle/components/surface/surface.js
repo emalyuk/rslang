@@ -1,7 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toCurrentRow, sortCurrentRow, resetWords } from '../EnglishPuzzleReducer';
-import { Word } from '.';
+import { toCurrentRow, sortCurrentRow, resetWords } from '../../EnglishPuzzleReducer';
+import { Word } from '..';
 
 const Surface = ({ image }) => {
   const { rows, width, height } = useSelector((state) => state.englishPuzzle);

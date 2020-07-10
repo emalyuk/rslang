@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   dontKnow, switchWord, changeActionType, check,
   resetWords,
-} from '../EnglishPuzzleReducer'
-import { Button } from '.';
+} from '../../EnglishPuzzleReducer'
+import { Button } from '..';
 
 const Actions = () => {
   const {

@@ -136,9 +136,9 @@ export class CanvasApi {
   }
 
   drawImage() {
-    // this.ctx.drawImage(
-    //   this.image, this.xOffset, this.yOffset, this.width, this.height, 0, 0, this.width, this.height
-    // );
+    this.ctx.drawImage(
+      this.image, this.xOffset, this.yOffset, this.width, this.height, 0, 0, this.width, this.height
+    );
   }
 
   drawUnmarked() {
