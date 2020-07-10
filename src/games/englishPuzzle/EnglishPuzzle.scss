@@ -1,0 +1,95 @@
+.englishPuzzle{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.englishPuzzle__wrapper{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.englishPuzzle__controls{
+  background-color: bisque;
+}
+
+.englishPuzzle__surface{
+  background-color: darkcyan;
+  max-width: 690px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 45px auto 45px;
+  margin-bottom: auto;
+}
+
+.englishPuzzle__row-number{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.englishPuzzle__row-sentence{
+  display:flex;
+  justify-content: flex-start;
+  overflow: hidden;
+
+  &--disabled{
+    pointer-events: none;
+  }
+}
+
+.englishPuzzle__result{
+  &--wrong{
+    background-color: red;
+  }
+
+  &--right{
+    background-color: white;
+  }
+}
+
+.englishPuzzle__shuffled{
+  background-color: gainsboro;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.englishPuzzle__canvas{
+  display: block;
+  cursor: move;
+  &:hover{
+    outline: 1px solid yellow;
+  }
+
+  &--left{
+    transform: translateX(-20px)
+  }
+
+  &--right{
+    transform: translateX(20px)
+  }
+}
+
+.englishPuzzle__img{
+  position: fixed;
+  left: -1000%;
+  opacity: 0;
+}
+
+.englishPuzzle__actions{
+  display: flex;
+  justify-content: center;
+}
+
+.englishPuzzle__button{
+  margin:10px 0;
+  align-self: center;
+
+  &--next{
+    margin-right: 10px;
+  }
+}
+
