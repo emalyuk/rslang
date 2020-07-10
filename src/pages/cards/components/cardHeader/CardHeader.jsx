@@ -11,11 +11,11 @@ const CardHeader = ({ settings }) => {
       {isShowDeleteButton && (
         <Button
           type='button'
-          className='button card__header__button'
+          className='button card__header__button--del'
           disabled={false}
           onClick={() => console.log('DEL')}
         >
-          Удалить слово
+          &#10006;
         </Button>
       )}
       {isShowHardButton && (

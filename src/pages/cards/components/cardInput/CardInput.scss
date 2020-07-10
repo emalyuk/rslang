@@ -4,43 +4,21 @@
   text-align: center;
   font-family: monospace;
   font-size: 32px;
-  color: thistle;
+  color: gray;
   outline: none;
   border: none;
   border-radius: 5px;
-  background-color: #17a2b8;
+  background-color: $mainHomeColor;
   position: relative;
+  padding: 0;
   z-index: 2;
+
+  &.hidden {
+    color: $mainHomeColor;
+  }
 
   &__container {
     margin: 0 auto;
     position: relative;
-  }
-}
-
-
-.card__result {
-  font-family: monospace;
-  font-size: 32px;
-  position: absolute;
-  top: 0;
-  left: 10px;
-  z-index: 4;
-  user-select: none;
-
-  &__letter {
-    color: $rightAnswerColor;
-
-    &.wrong {
-      color: $wrongAnswerColor;
-    }
-
-    &.wrongest {
-      color: $wrongestAnswerColor;
-    }
-  }
-
-  &.visible {
-    z-index: 3;
   }
 }

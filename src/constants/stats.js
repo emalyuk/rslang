@@ -2,6 +2,8 @@ const initialStats = {
   learnedWords: 0,
   optional: {
     cardStats: {
+      date: null,
+      todayWordLearned: 0,
       bestSeries: 0,
       countRightAnswer: 0,
       countWrongAnswer: 0,

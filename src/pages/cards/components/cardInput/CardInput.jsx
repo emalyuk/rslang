@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,89 +10,78 @@ import {
   setIsCorrectAnswer,
   getNextWord,
 } from 'pages/cards/CardsSliceReducer';
-import { baseAssetsUrl } from 'constants/constants';
+import { playAudioArr } from 'utils/playAudioArr';
+
+import CardHintAnswer from '../cardHintAnswer/CardHintAnswer';
 
 import './CardInput.scss';
 
 const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
-  const {
-    id, word, audio,
-    audioMeaning, audioExample,
-  } = cardInfo;
+  const { word, audio, audioMeaning, audioExample } = cardInfo;
   const dispatch = useDispatch();
-  const {
-    isCorrectAnswer,
-    isAnswerRecived,
-  } = useSelector((state) => state.cards.currentCardAction);
-
-  const wordLength = word.length;
-  const wordArr = word.split('');
-
-  const resultRef = useRef();
+  const { isCorrectAnswer, isAnswerReceived, isSkippedWord } = useSelector(
+    (state) => state.cards.currentCardAction,
+  );
 
   const [inputValue, setInputValue] = useState('');
 
+  const inputEl = useRef(null);
+
+  const wordLength = word.length;
+  const wordArr = word.toLowerCase().split('');
   const inputValueArr = inputValue.split('');
 
-  const rightAnswer = () => {
-    const audioArr = [`${baseAssetsUrl}${audio}`];
+  useEffect(() => {
+    setInputValue('');
+    inputEl.current.focus();
+  }, [word]);
 
-    if (isShowWordMeaning) {
-      audioArr.push(`${baseAssetsUrl}${audioMeaning}`);
-    }
-
-    if (isShowWordExample) {
-      audioArr.push(`${baseAssetsUrl}${audioExample}`);
-    }
-
-    const playAudioArr = (audioArray) => {
-      const sound = new Audio();
-      let index = 1;
-
-      [sound.src] = audioArr;
-      sound.play();
-
-      sound.onended = () => {
-        if (index < audioArray.length) {
-          sound.src = audioArray[index];
-          sound.play();
-          index += 1;
-        } else {
-          dispatch(setIsAnswerReceived(false));
-          dispatch(setIsCorrectAnswer(false));
-          setInputValue('');
-          dispatch(getNextWord(id));
-        }
-      };
-    };
-
-    playAudioArr(audioArr);
+  const updateCard = () => {
+    setTimeout(() => {
+      dispatch(getNextWord());
+    }, 1000);
   };
 
   const handleCheckAnswer = (event) => {
     event.preventDefault();
 
-    console.log(inputValue);
-
     if (inputValue.trim()) {
       dispatch(setIsAnswerReceived(true));
       if (inputValue.toLowerCase() === word.toLowerCase()) {
         dispatch(setIsCorrectAnswer(true));
-        rightAnswer();
+        playAudioArr(
+          audio,
+          audioMeaning,
+          audioExample,
+          isShowWordMeaning,
+          isShowWordExample,
+          updateCard,
+        );
       } else {
-        setInputValue('')
         dispatch(setIsCorrectAnswer(false));
       }
+    } else {
+      // TODO: hint tooltip
+      alert('Введите слово!');
     }
   };
 
-  console.log(wordArr);
-  console.log(inputValueArr);
+  const handleOnChangeAnswer = () => {
+    dispatch(setIsAnswerReceived(false));
+    setInputValue('');
+    inputEl.current.focus();
+  };
+
+  let inputClass = 'card__input';
+
+  if (isAnswerReceived) {
+    inputClass += ' hidden';
+  }
 
   return (
     <form className='card__input__container' onSubmit={handleCheckAnswer}>
       <input
-        className='card__input'
+        className={inputClass}
         type='text'
         value={inputValue}
         size={wordLength}
@@ -98,19 +89,16 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
         autoFocus
         disabled={isCorrectAnswer}
         onChange={(event) => setInputValue(event.target.value)}
-        onClick={() => console.log('!!!!!!!!')}
+        ref={inputEl}
       />
-      <div className='card__result' ref={resultRef}>
-        { isAnswerRecived
-        && (
-          wordArr.map((letter, index) => {
-            let clazz = 'card__result__letter visible';
-            if (letter !== inputValueArr[index]) {
-              clazz += ' wrong';
-            }
-
-            return <span className={clazz} key={index.toString()}>{letter}</span>
-          })
+      <div className='card__result'>
+        {(isAnswerReceived || isSkippedWord) && (
+          <CardHintAnswer
+            wordLength={wordLength}
+            wordArr={wordArr}
+            inputValueArr={inputValueArr}
+            handleOnChangeAnswer={handleOnChangeAnswer}
+          />
         )}
       </div>
     </form>
@@ -118,10 +106,9 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
 };
 
 CardInput.propTypes = {
-  cardInfo: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ])).isRequired,
+  cardInfo: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ).isRequired,
   isShowWordMeaning: PropTypes.bool.isRequired,
   isShowWordExample: PropTypes.bool.isRequired,
 };

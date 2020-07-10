@@ -2,7 +2,11 @@
 
 .card__main__sentence-translation {
   text-align: center;
-  color: $rightAnswerColor;
+  color: $secondColor;
   font-size: 20px;
   user-select: none;
+
+  &.visible {
+    color: $rightAnswerColor;
+  }
 }

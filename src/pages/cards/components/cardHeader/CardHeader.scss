@@ -8,5 +8,12 @@
   &__button {
     max-width: 200px;
     font-size: 16px;
+
+    &--del {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 26px;
+    }
   }
 }
