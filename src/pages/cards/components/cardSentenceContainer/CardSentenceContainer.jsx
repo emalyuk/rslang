@@ -17,8 +17,11 @@ const CardMainSentenceContainer = ({
   return (
     <div className='card__main__sentence-container'>
       <CardSentence text={text} />
-      {isShowSentenceTranslation && isCorrectAnswer && (
-        <CardSentenceTranslation text={textTranslation} />
+      {isShowSentenceTranslation && (
+        <CardSentenceTranslation
+          text={textTranslation}
+          isCorrectAnswer={isCorrectAnswer}
+        />
       )}
     </div>
   );

@@ -2,8 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from 'components/loading/Loading';
 import Button from 'components/button/Button';
-import { userSettingsKey } from 'constants/constants';
-import { getWords } from './CardsSliceReducer';
+import {
+  userStatsKey,
+  userSettingsKey,
+  wordsInGroup,
+} from 'constants/constants';
+import { getWords, resetData } from './CardsSliceReducer';
 
 import CardHeader from './components/cardHeader/CardHeader';
 import CardMain from './components/cardMain/CardMain';
@@ -13,30 +17,29 @@ import './Cards.scss';
 
 const Cards = () => {
   const dispatch = useDispatch();
-  const { data, currentCardAction } = useSelector((state) => state.cards);
-  const { isCorrectAnswer } = currentCardAction;
+  const { data } = useSelector((state) => state.cards);
   const currentCardIndex = 0;
 
+  const userStats = JSON.parse(localStorage[userStatsKey]);
   const userSettings = JSON.parse(localStorage[userSettingsKey]);
+  const { cardExtraInfo, cardMainInfo } = userSettings.optional;
   const { wordsPerDay } = userSettings;
-  const { newWordsPerDay, cardMainInfo, cardExtraInfo } = userSettings.optional;
-  const { isShowWordMeaning, isShowWordExample } = cardMainInfo;
+  const { learnedWords } = userStats;
+  let group;
 
-  // TODO: Add to settings
-  // MockData
-
-  const page = 0;
-  const group = 0;
-
-  // End MockData
+  if (learnedWords <= wordsInGroup) {
+    group = 0;
+  }
 
   useEffect(() => {
-    dispatch(getWords(page, group));
+    dispatch(getWords(learnedWords, group, wordsPerDay));
     console.log('GET FIRST DATA');
-  }, [dispatch, page, group]);
+    return () => dispatch(resetData());
+  }, [dispatch, learnedWords, group, wordsPerDay]);
 
   useEffect(() => {
     console.log('DATA ARR UPDATE!');
+    console.log(data);
   }, [data]);
 
   return (
@@ -51,16 +54,21 @@ const Cards = () => {
               cardInfo={data[currentCardIndex]}
             />
 
-            <CardFooter />
+            <CardFooter
+              cardMainInfo={cardMainInfo}
+              data={data[currentCardIndex]}
+            />
           </div>
           <div className='card__submit-container'>
             <Button
               type='submit'
               className='card__submit-button'
               disabled={false}
-              onClick={() => console.log('next word!')}
+              onClick={() => {
+                console.log('NEXT');
+              }}
             >
-              n
+              &#8594;
             </Button>
           </div>
         </>

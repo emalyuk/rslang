@@ -8,7 +8,7 @@ import './CardSentence.scss';
 
 const CardMainSentence = ({ text }) => {
   const { currentCardAction } = useSelector((state) => state.cards);
-  const { isCorrectAnswer } = currentCardAction;
+  const { isCorrectAnswer, isSkippedWord } = currentCardAction;
   const { textArr, mainWord } = getFormattedSentence(text);
 
   return (
@@ -18,7 +18,7 @@ const CardMainSentence = ({ text }) => {
 
         if (el === mainWord) {
           clazz += ' main';
-          if (isCorrectAnswer) {
+          if (isCorrectAnswer || isSkippedWord) {
             clazz += ' visible';
           }
         }

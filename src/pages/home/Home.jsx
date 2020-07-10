@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import Loading from 'components/loading/Loading';
 import { settingsLabelName } from 'constants/cardSettings';
+import { userStatsKey, userSettingsKey } from 'constants/constants';
 import isPossibilitySwitch from 'utils/isPossibilitySwitch';
 import { getSettings, putSettings, getStats } from './HomeApi';
 import HomeStatus from './components/homeStatus/HomeStatus';
@@ -33,7 +34,8 @@ export const Home = () => {
   }, [history]);
 
   useEffect(() => {
-    localStorage.setItem('settings', JSON.stringify(settings));
+    localStorage.setItem(userSettingsKey, JSON.stringify(settings));
+    localStorage.setItem(userStatsKey, JSON.stringify(stats));
     if (settings) {
       const timeout = setTimeout(() => {
         putSettings(settings);
@@ -41,7 +43,7 @@ export const Home = () => {
 
       return () => clearTimeout(timeout);
     }
-  }, [settings]);
+  }, [settings, stats]);
 
   const handleOnChangeSelect = useCallback(
     (event, tag) => {
