@@ -1,12 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import './GameCard.scss';
 
-const GameCard = ({ name, description, path, id }) => {
+const GameCard = React.forwardRef(({ name, description, path, id, heightDescription }, ref) => {
   const [isShowDescription, setIsShowDescription] = useState(false);
   const refDescription = useRef();
-  const refGameCardWrapper = useRef();
-  const [heightDescription, setHeightDescription] = useState();
   const history = useHistory();
 
   const toggleHidden = () => {
@@ -24,17 +22,12 @@ const GameCard = ({ name, description, path, id }) => {
     setIsShowDescription(!isShowDescription);
   };
 
-  useEffect(() => {
-    window.addEventListener('resize', () => setHeightDescription(refGameCardWrapper.current.clientHeight));
-    setHeightDescription(refGameCardWrapper.current.clientHeight);
-  }, []);
-
   return (
     <div
+      ref={ref}
       className='gamecard-wrapper'
       data-id={id}
       onClick={() => history.push(path)}
-      ref={refGameCardWrapper}
     >
       <div className='gamecard-text'>
         <div className='gamecard-name'>
@@ -70,6 +63,6 @@ const GameCard = ({ name, description, path, id }) => {
       </div>
     </div>
   );
-};
+});
 
 export default GameCard;
