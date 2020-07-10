@@ -17,6 +17,7 @@ const NotFound = lazy(() => import('pages/notFound/NotFound'));
 const Promo = lazy(() => import('pages/promo/Promo'));
 const Games = lazy(() => import('pages/game/Game'));
 const Dictionary = lazy(() => import('pages/dictionary/Dictionary'));
+const Statistic = lazy(() => import('pages/statistic/Statistic'));
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
             <Route path={routes.registration} component={Registration} exact />
             <Route path={routes.game} component={Games} exact />
             <Route path={routes.games.savanna} component={Savanna} exact />
+            <Route path={routes.statistic} component={Statistic} exact />
             <PrivateRoute path={routes.team} component={Team} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
             <PrivateRoute path={routes.promo} component={Promo} exact />
