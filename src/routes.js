@@ -7,4 +7,8 @@ export default {
   promo: '/promo',
   game: '/game',
   team: '/team',
+  dictionary: '/dictionary',
+  games: {
+    savanna: '/game/savanna',
+  },
 };
