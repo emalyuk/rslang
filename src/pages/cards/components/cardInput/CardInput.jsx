@@ -11,19 +11,29 @@ import {
   getNextWord,
 } from 'pages/cards/CardsSliceReducer';
 import { playAudioArr } from 'utils/playAudioArr';
+import { prepareWordToFetch } from 'utils/prepareWordToFetch';
 
+import { putStats, getStats } from 'pages/home/HomeApi';
 import CardHintAnswer from '../cardHintAnswer/CardHintAnswer';
 
 import './CardInput.scss';
 
 const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
-  const { word, audio, audioMeaning, audioExample } = cardInfo;
+  const { id, word, audio, audioMeaning, audioExample } = cardInfo;
   const dispatch = useDispatch();
   const { isCorrectAnswer, isAnswerReceived, isSkippedWord } = useSelector(
     (state) => state.cards.currentCardAction,
   );
+  const initialStats = useSelector(
+    (state) => state.cards.todayStats,
+  );
 
   const [inputValue, setInputValue] = useState('');
+  const [stats, setStats] = useState(initialStats);
+  const [incorrectAnswerCount, setIncorrectAnswerCount] = useState(0);
+  const [bestSeries, setBestSeries] = useState(0);
+
+  console.log(stats);
 
   const inputEl = useRef(null);
 
@@ -32,13 +42,29 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
   const inputValueArr = inputValue.split('');
 
   useEffect(() => {
+    const oldStats = getStats();
+    console.log(oldStats);
+    const newStats = {
+      ...oldStats,
+      optional: {
+        cardStats: stats,
+      },
+    };
+    putStats(newStats);
+  }, [stats]);
+
+  useEffect(() => {
     setInputValue('');
     inputEl.current.focus();
   }, [word]);
 
   const updateCard = () => {
+    const diff = incorrectAnswerCount > 0 ? 'strong' : 'weak';
+    const isRepeat = incorrectAnswerCount > 0;
+    const userWord = prepareWordToFetch(diff, isRepeat);
+    setIncorrectAnswerCount(0);
     setTimeout(() => {
-      dispatch(getNextWord());
+      dispatch(getNextWord(id, userWord));
     }, 1000);
   };
 
@@ -49,6 +75,15 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
       dispatch(setIsAnswerReceived(true));
       if (inputValue.toLowerCase() === word.toLowerCase()) {
         dispatch(setIsCorrectAnswer(true));
+        setBestSeries(bestSeries + 1);
+        setStats(() => {
+          return {
+            ...stats,
+            date: (new Date(Date.now())).toLocaleDateString(),
+            todayWordLearned: stats.todayWordLearned + 1,
+            countRightAnswers: stats.countRightAnswers + 1,
+          };
+        });
         playAudioArr(
           audio,
           audioMeaning,
@@ -59,6 +94,18 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
         );
       } else {
         dispatch(setIsCorrectAnswer(false));
+        setIncorrectAnswerCount(() => {
+          return incorrectAnswerCount + 1;
+        });
+        setStats(() => {
+          return {
+            ...stats,
+            bestSeries: stats.bestSeries < bestSeries ? bestSeries : stats.bestSeries,
+            countWrongAnswers: stats.countWrongAnswers + 1,
+          };
+        });
+
+        setBestSeries(0);
       }
     } else {
       // TODO: hint tooltip

@@ -8,6 +8,7 @@ import {
   wordsInGroup,
 } from 'constants/constants';
 import { getWords, resetData } from './CardsSliceReducer';
+import { getUserWords } from './CardsApi';
 
 import CardHeader from './components/cardHeader/CardHeader';
 import CardMain from './components/cardMain/CardMain';
@@ -33,6 +34,7 @@ const Cards = () => {
 
   useEffect(() => {
     dispatch(getWords(learnedWords, group, wordsPerDay));
+    getUserWords();
     console.log('GET FIRST DATA');
     return () => dispatch(resetData());
   }, [dispatch, learnedWords, group, wordsPerDay]);
