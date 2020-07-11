@@ -9,16 +9,19 @@ import './TodayStatus.scss';
 
 const TodayStatus = ({ stats, totalCardsPerDay }) => {
   const {
+    todayWordLearned,
     bestSeries,
-    countRightAnswer,
-    countWrongAnswer,
+    countRightAnswers,
+    countWrongAnswers,
     countSkipedWords,
   } = stats.optional.cardStats;
 
+  console.log(todayWordLearned);
+
   const todayInfoItems = todayInfoItemsToArr(
     bestSeries,
-    countRightAnswer,
-    countWrongAnswer,
+    countRightAnswers,
+    countWrongAnswers,
     countSkipedWords,
   );
 
@@ -32,8 +35,8 @@ const TodayStatus = ({ stats, totalCardsPerDay }) => {
           })}
         </div>
         <TodayTarget
+          todayWordLearned={todayWordLearned}
           totalCards={totalCardsPerDay}
-          completedCards={countRightAnswer}
         />
       </div>
     </div>

@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { getWordsData, createUserWord } from './CardsApi';
-import { getStats, putStats } from '../home/HomeApi';
 
 const initialCardsState = {
   data: [],

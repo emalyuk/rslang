@@ -5,14 +5,12 @@ import {
   wordsPerExampleSentencePath,
   wordsPerPagePath,
   userLoginDataKey,
-  responseStatusNotFound,
-  responseStatusInvalidToken,
   usersPath,
   wordsPath,
   wordsPathEnding,
 } from 'constants/constants';
 
-const authOption = JSON.parse(localStorage.getItem(userLoginDataKey));
+const authOption = JSON.parse(localStorage.getItem(userLoginDataKey)) || 'temp';
 const { token, userId } = authOption;
 
 const usersUrl = `${process.env.REACT_APP_BASE_URL}${usersPath}${userId}`;
@@ -26,16 +24,6 @@ const getWordsConfig = {
 
 const getUserWordsConfig = {
   baseURL: usersUrl,
-  headers: {
-    Accept: 'application/json',
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',
-  },
-};
-
-const putUserWordConfig = {
-  baseURL: usersUrl,
-  withCredentials: true,
   headers: {
     Accept: 'application/json',
     Authorization: `Bearer ${token}`,
