@@ -5,6 +5,7 @@ import './GameCard.scss';
 const GameCard = React.forwardRef(({ name, description, path, id, heightDescription }, ref) => {
   const [isShowDescription, setIsShowDescription] = useState(false);
   const refDescription = useRef();
+
   const history = useHistory();
 
   const toggleHidden = () => {
