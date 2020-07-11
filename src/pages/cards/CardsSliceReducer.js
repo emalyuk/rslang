@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { getWordsData, createUserWord } from './CardsApi';
+import { getStats, putStats } from '../home/HomeApi';
 
 const initialCardsState = {
   data: [],
@@ -8,14 +9,13 @@ const initialCardsState = {
     date: null,
     todayWordLearned: 0,
     bestSeries: 0,
-    countRightAnswer: 0,
-    countWrongAnswer: 0,
+    countRightAnswers: 0,
+    countWrongAnswers: 0,
     countSkipedWords: 0,
   },
   currentCardAction: {
     isAnswerReceived: false,
     isCorrectAnswer: false,
-    incorrectAnswers: 0,
     isSkippedWord: false,
   },
 };
@@ -45,6 +45,9 @@ const cardsSlice = createSlice({
     showNextCard(state) {
       state.data = [...state.data.slice(1)];
     },
+    setTodayStats(state, action) {
+      state.todayStats = action.payload;
+    },
   },
 });
 
@@ -57,14 +60,16 @@ export const {
   setIsCorrectAnswer,
   showNextCard,
   setIsSkipAnswer,
+  setTodayStats,
 } = cardsSlice.actions;
 
 export const cardsSliceReducer = cardsSlice.reducer;
 
-export const getNextWord = () => (dispatch) => {
+export const getNextWord = (id, userWord) => (dispatch) => {
   dispatch(setIsAnswerReceived(false));
   dispatch(setIsCorrectAnswer(false));
   dispatch(setIsSkipAnswer(false));
+  createUserWord(id, userWord);
   dispatch(showNextCard());
 };
 

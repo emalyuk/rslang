@@ -6,6 +6,7 @@ const wordsPath = '/words/';
 const statsPath = '/statistics';
 const settingsPath = '/settings';
 const groupPath = 'page=';
+const wordsPathEnding = '/words';
 const wordsPerExampleSentencePath = '&wordsPerExampleSentenceLTE=20';
 const wordsPerPagePath = '&wordsPerPage=600';
 const githubUserLink = 'https://github.com/';
@@ -82,4 +83,5 @@ export {
   wordsPerExampleSentencePath,
   wordsPerPagePath,
   wordsInGroup,
+  wordsPathEnding,
 };
