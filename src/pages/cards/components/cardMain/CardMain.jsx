@@ -9,7 +9,7 @@ import CardInput from '../cardInput/CardInput';
 
 import './CardMain.scss';
 
-const CardMain = ({ cardSettings, cardInfo }) => {
+const CardMain = ({ cardSettings, cardInfo, stats }) => {
   const dispatch = useDispatch();
   const { currentCardAction } = useSelector((state) => state.cards);
   const { isAnswerReceived, isCorrectAnswer } = currentCardAction;
@@ -72,6 +72,7 @@ const CardMain = ({ cardSettings, cardInfo }) => {
           cardInfo={cardInfo}
           isShowWordMeaning={isShowWordMeaning}
           isShowWordExample={isShowWordExample}
+          userStats={stats}
         />
       </div>
     </div>

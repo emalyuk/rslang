@@ -7,6 +7,7 @@ import {
   userSettingsKey,
   wordsInGroup,
 } from 'constants/constants';
+import { putStats, getStats } from 'pages/home/HomeApi';
 import { getWords, resetData } from './CardsSliceReducer';
 import { getUserWords } from './CardsApi';
 
@@ -54,6 +55,7 @@ const Cards = () => {
             <CardMain
               cardSettings={userSettings}
               cardInfo={data[currentCardIndex]}
+              stats={userStats}
             />
 
             <CardFooter

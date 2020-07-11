@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import './TodayTarget.scss';
 
-const TodayTarget = ({ comletedCards, totalCards }) => {
-  const cardsLeft = totalCards - comletedCards;
+const TodayTarget = ({ todayWordLearned, totalCards }) => {
+  const cardsLeft = totalCards - todayWordLearned;
   const totalCardsMessage = `Завершить ${totalCards} карточек.`;
-  const resultCardsMessage = `Сегодня вы выполнили ${comletedCards} карточек. Для достижения цели завершите ${cardsLeft} карточек.`;
+  const resultCardsMessage = `Сегодня вы выполнили ${todayWordLearned} карточек. Для достижения цели завершите ${cardsLeft} карточек.`;
 
   return (
     <div className='home__status__target home-box-inner'>
@@ -19,11 +19,7 @@ const TodayTarget = ({ comletedCards, totalCards }) => {
 
 TodayTarget.propTypes = {
   totalCards: PropTypes.number.isRequired,
-  comletedCards: PropTypes.number,
-};
-
-TodayTarget.defaultProps = {
-  comletedCards: 0,
+  todayWordLearned: PropTypes.number.isRequired,
 };
 
 export default TodayTarget;

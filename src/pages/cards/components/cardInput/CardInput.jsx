@@ -12,24 +12,20 @@ import {
 } from 'pages/cards/CardsSliceReducer';
 import { playAudioArr } from 'utils/playAudioArr';
 import { prepareWordToFetch } from 'utils/prepareWordToFetch';
-
 import { putStats, getStats } from 'pages/home/HomeApi';
 import CardHintAnswer from '../cardHintAnswer/CardHintAnswer';
 
 import './CardInput.scss';
 
-const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
+const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample, userStats }) => {
   const { id, word, audio, audioMeaning, audioExample } = cardInfo;
   const dispatch = useDispatch();
   const { isCorrectAnswer, isAnswerReceived, isSkippedWord } = useSelector(
     (state) => state.cards.currentCardAction,
   );
-  const initialStats = useSelector(
-    (state) => state.cards.todayStats,
-  );
 
   const [inputValue, setInputValue] = useState('');
-  const [stats, setStats] = useState(initialStats);
+  const [stats, setStats] = useState(userStats);
   const [incorrectAnswerCount, setIncorrectAnswerCount] = useState(0);
   const [bestSeries, setBestSeries] = useState(0);
 
@@ -42,15 +38,7 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
   const inputValueArr = inputValue.split('');
 
   useEffect(() => {
-    const oldStats = getStats();
-    console.log(oldStats);
-    const newStats = {
-      ...oldStats,
-      optional: {
-        cardStats: stats,
-      },
-    };
-    putStats(newStats);
+    putStats(stats);
   }, [stats]);
 
   useEffect(() => {
@@ -78,10 +66,16 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
         setBestSeries(bestSeries + 1);
         setStats(() => {
           return {
-            ...stats,
-            date: (new Date(Date.now())).toLocaleDateString(),
-            todayWordLearned: stats.todayWordLearned + 1,
-            countRightAnswers: stats.countRightAnswers + 1,
+            learnedWords: stats.learnedWords + 1,
+            optional: {
+              ...stats.optional,
+              cardStats: {
+                ...stats.optional.cardStats,
+                date: (new Date(Date.now())).toLocaleDateString(),
+                todayWordLearned: stats.optional.cardStats.todayWordLearned + 1,
+                countRightAnswers: stats.optional.cardStats.countRightAnswers + 1,
+              },
+            },
           };
         });
         playAudioArr(
@@ -100,8 +94,14 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample }) => {
         setStats(() => {
           return {
             ...stats,
-            bestSeries: stats.bestSeries < bestSeries ? bestSeries : stats.bestSeries,
-            countWrongAnswers: stats.countWrongAnswers + 1,
+            optional: {
+              ...stats.optional,
+              cardStats: {
+                ...stats.optional.cardStats,
+                bestSeries: stats.optional.cardStats.bestSeries < bestSeries ? bestSeries : stats.optional.cardStats.bestSeries,
+                countWrongAnswers: stats.optional.cardStats.countWrongAnswers + 1,
+              },
+            },
           };
         });
 
