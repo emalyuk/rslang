@@ -17,6 +17,6 @@ export const games = [
   {
     name: 'Произношение',
     description: 'Улучшает восприятие английской речи на слух, а также навыки написания английских слов.',
-    path: '/game/speak-it',
+    path: '/game/speakIt',
   },
 ];

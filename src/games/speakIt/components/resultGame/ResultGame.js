@@ -2,20 +2,22 @@ import React from 'react';
 import './ResultGame.scss';
 import Word from './Word'
 
-const ResultGame = ({ words, setIsFinish }) => {
+const ResultGame = ({ words, setIsFinish, setWords }) => {
+  const newWords = words.sort(sortFunction)
   function sortFunction(a, b) {
     if (a.isGuessed < b.isGuessed) {
       return 1;
     }
     return -1;
   }
-  const newWords = words.sort(sortFunction)
   const closeResult = () => {
-    setIsFinish(false)
+    setIsFinish(false);
+    window.location.reload()
   }
   return (
     <div className='ResultGame'>
-      <div>
+      <div className='speakIt-modal'>
+        <div className='close' onClick={closeResult}></div>
         {
           newWords.map((item) => (
             <Word

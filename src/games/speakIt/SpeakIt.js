@@ -28,6 +28,22 @@ const Team = () => {
 
   // eslint-disable-next-line no-undef
   const recognizer = new webkitSpeechRecognition();
+  // Ставим опцию, чтобы распознавание началось ещё до того, как пользователь закончит говорить
+  recognizer.interimResults = true;
+  // Какой язык будем распознавать?
+  recognizer.lang = 'ru-Ru';
+  // Используем колбек для обработки результатов
+  recognizer.onresult = function (event) {
+    const result = event.results[event.resultIndex];
+    if (result.isFinal) {
+      console.log('Вы сказали: ' + result[0].transcript);
+      setSpeakWord(result[0].transcript)
+    } else {
+      console.log('Промежуточный результат: ', result[0].transcript);
+    }
+  };
+  recognizer.addEventListener('end', startRecording)
+
   const [isFinish, setIsFinish] = useState(false)
   const [words, setWords] = useState([])
   const [active, setActive] = useState(activeInit)
@@ -35,6 +51,7 @@ const Team = () => {
   const [isGameMod, setIsGameMod] = useState(false)
   const [gameWordNum, setGameWordNum] = useState(0)
   const [speakWord, setSpeakWord] = useState(null)
+  const [gameDifficulty, setGameDifficulty] = useState(0)
 
   function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -65,7 +82,6 @@ const Team = () => {
     if (words && words[i] && Object.keys(words[i]).length > 0) {
       const newActive = { ...active }
       const { id, image, wordTranslate } = words[i]
-
       newActive.id = id
       newActive.img = image
       newActive.wordTranslate = wordTranslate
@@ -74,7 +90,6 @@ const Team = () => {
     }
   }
   function finishedGame() {
-    console.log('ok')
     setIsFinish(true)
     recognizer.stop()
   }
@@ -93,12 +108,16 @@ const Team = () => {
     }
   }, [gameWordNum])
 
-  // начальная загрузка данных
-  async function init() {
-    await getData(getRandomNum(0, 29), 0);
+  useEffect(() => {
+    init(gameDifficulty)
+    console.log(words)
+  }, [gameDifficulty])
+
+  async function init(level) {
+    await getData(getRandomNum(0, 29), level);
   }
   useEffect(() => {
-    init()
+    init(gameDifficulty)
   }, [])
 
   function shuffle(array) {
@@ -108,29 +127,7 @@ const Team = () => {
     }
     return array
   }
-
   function startRecording() {
-
-    // Ставим опцию, чтобы распознавание началось ещё до того, как пользователь закончит говорить
-    recognizer.interimResults = true;
-
-    // Какой язык будем распознавать?
-    recognizer.lang = 'ru-Ru';
-
-    // Используем колбек для обработки результатов
-    recognizer.onresult = function (event) {
-      const result = event.results[event.resultIndex];
-      if (result.isFinal) {
-        console.log('Вы сказали: ' + result[0].transcript);
-        setSpeakWord(result[0].transcript)
-      } else {
-        console.log('Промежуточный результат: ', result[0].transcript);
-      }
-    };
-    recognizer.onend = function () {
-      recognizer.start();
-    }
-    // Начинаем слушать микрофон и распознавать голос
     recognizer.start();
   }
   function startGame() {
@@ -143,36 +140,56 @@ const Team = () => {
     showPendingWord(gameWordNum)
     startRecording()
   }
-  function showWords() {
-    console.log(words)
+  const stopRecording = () => {
+    recognizer.removeEventListener('end', startRecording)
+    recognizer.stop()
+    recognizer.abort()
   }
   return (
-    <div className='SpeakIt container'>
-      <h1>Speak IT</h1>
-      <button onClick={startGame}>начать игру</button>
-      <button onClick={showWords}>показать слова</button>
-      <ViewBox activeImg={active.img} activeAudio={activeAudio} wordTranslate={active.wordTranslate} />
-      {
-        words.map((item) => (
-          <Card
-            {...item}
-            key={item.id}
-            active={active}
-            setActive={setActive}
-            setActiveAudio={setActiveAudio}
-            audioPlayer={audio}
-            isGameMod={isGameMod}
-          />
-        ))
-      }
-      {
-        isFinish ?
-          <ResultGame
-            words={words}
-            setIsFinish={setIsFinish}
-          />
-          : ''
-      }
+    <div className='SpeakIt'>
+      <div className='container'>
+        <ViewBox activeImg={active.img} activeAudio={activeAudio} wordTranslate={active.wordTranslate} />
+        {
+          isGameMod ? '' : <button onClick={startGame}>начать игру</button>
+        }
+        {
+          isGameMod ? <button onClick={finishedGame}>закончить игру</button> : ''
+        }
+        <button onClick={stopRecording}>стоп запись</button>
+        <div className='levels'>
+          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(0) }}>1</button>
+          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(1) }}>2</button>
+          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(2) }}>3</button>
+          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(3) }}>4</button>
+          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(4) }}>5</button>
+          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(5) }}>6</button>
+        </div>
+        <div className='cards'>
+          {
+            words.map((item) => (
+              <Card
+                {...item}
+                key={item.id}
+                active={active}
+                setActive={setActive}
+                setActiveAudio={setActiveAudio}
+                audioPlayer={audio}
+                isGameMod={isGameMod}
+              />
+            ))
+          }
+        </div>
+        {
+          isFinish ?
+            <ResultGame
+              words={words}
+              setIsFinish={setIsFinish}
+              setWords={setWords}
+            />
+            : ''
+        }
+      </div>
+
     </div >
   )
 };
