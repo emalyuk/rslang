@@ -1,4 +1,4 @@
-function setUniqueId() {
+export function setUniqueId() {
   return `_${Math.random().toString(36).substr(2, 9)}`;
 }
 
@@ -32,16 +32,21 @@ function createWord(item, index, a, offsets, width, height) {
   return result
 }
 
-function wordWithCanvasData(item, i, arr, offsets, width, numberOfSymbols, height, index) {
-  const canvasWidth = Math.round((width / numberOfSymbols) * item.length);
-  const res = createWord(item, i, arr, offsets, canvasWidth, height);
+function wordWithCanvasData(
+  item, i, arr, offsets, width, numberOfSymbols, height, index, wordsNum,
+) {
+  const offsetsObj = offsets;
+  const extraWidth = 20;
+  const spaceForSymbols = width - extraWidth * wordsNum;
+  const canvasWidth = Math.round((spaceForSymbols / numberOfSymbols) * item.length + extraWidth);
+  const res = createWord(item, i, arr, offsetsObj, canvasWidth, height);
 
   if (i === arr.length - 1) {
-    offsets.x = 0;
+    offsetsObj.x = 0;
   } else {
-    offsets.x += canvasWidth;
+    offsetsObj.x += canvasWidth;
   }
-  offsets.y = height * index;
+  offsetsObj.y = height * index;
   return res;
 }
 
@@ -56,8 +61,11 @@ function processItem(objItem, width, height, index) {
   const example = textExample.replace(/(<\/*b>)/g, '');
   const wordsArr = example.split(' ');
   const numberOfSymbols = wordsArr.reduce((acc, wordItem) => acc + wordItem.length, 0);
+  const numberOfWords = wordsArr.length;
   const transformed = wordsArr.map((item, i, arr) => {
-    return wordWithCanvasData(item, i, arr, offsets, width, numberOfSymbols, height, index);
+    return wordWithCanvasData(
+      item, i, arr, offsets, width, numberOfSymbols, height, index, numberOfWords,
+    );
   });
   const shuffled = shuffle(transformed);
   return {
@@ -76,9 +84,9 @@ function processItem(objItem, width, height, index) {
 
 export function transform(arr, width, height) {
   const numOfMaxElements = 10;
-  const filtered = arr.filter((item) => item.wordsPerExampleSentence <= 10);
+  const filtered = arr.filter((item) => item.wordsPerExampleSentence <= 11);
   const shuffled = shuffle(filtered);
-  const sliced = shuffled.slice(numOfMaxElements);
+  const sliced = shuffled.slice(0, numOfMaxElements);
   const res = sliced.map((wordItem, index) => processItem(wordItem, width, height, index));
   return res;
 }
@@ -101,6 +109,11 @@ export function createRows(arr) {
   })
 }
 
+export function createArrWithElems(arrLength) {
+  const arr = new Array(arrLength).fill(true);
+  return arr.map((item, ind) => ind);
+}
+
 export function resizeImage(image, width, height) {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d');
@@ -115,46 +128,101 @@ export class CanvasApi {
     Object.assign(this, dataObj)
     this.fontSize = 18;
     this.image = image;
-    this.xCoord = Math.round(this.width / 2);
     this.yCoord = Math.round((this.height - this.fontSize) / 2);
     this.colorRight = 'rgba(0, 209, 59, 0.54)';
     this.colorWrong = 'rgba(209, 35, 0, 0.54)';
+    this.strokeStyle = 'rgb(0,255,250)';
+    this.widthOfLine = 3;
+    this.radius = 8;
+    this.middleY = this.height / 2;
   }
 
   updateCtx(canvas) {
     this.ctx = canvas.getContext('2d');
+    if (this.isFirst) {
+      this.ctx.canvas.width = this.width;
+    } else {
+      this.ctx.canvas.width = this.width + this.radius;
+    }
     this.ctx.canvas.height = this.height;
-    this.ctx.canvas.width = this.width;
   }
 
   drawText() {
-    this.ctx.font = `${this.fontSize}px Arial`;
+    this.ctx.font = `${this.fontSize}px verdana`;
+    this.ctx.fillText(`${this.word}`, 0, -100);
+    const physicalTextSize = this.ctx.measureText(this.word).width
     this.ctx.textBaseline = 'hanging';
-    this.ctx.fillStyle = 'aqua';
-    this.ctx.textAlign = 'center';
-    this.ctx.fillText(`${this.word}`, this.xCoord, this.yCoord);
+    this.ctx.fillStyle = this.strokeStyle;
+    const xCoord = (this.width - physicalTextSize) / 2;
+    this.ctx.shadowColor = 'black';
+    this.ctx.shadowOffsetX = 1;
+    this.ctx.shadowOffsetY = 1;
+    this.ctx.shadowBlur = 1;
+    this.ctx.fillText(`${this.word}`, xCoord, this.yCoord);
   }
 
-  drawImage() {
-    this.ctx.drawImage(
-      this.image, this.xOffset, this.yOffset, this.width, this.height, 0, 0, this.width, this.height
+  drawFirstPuzzle() {
+    this.ctx.lineTo(this.width - this.radius, 0);
+    this.ctx.arc(
+      this.width - this.radius, this.middleY, this.radius, Math.PI * 1.5, Math.PI * 0.5, false
     );
+    this.ctx.lineTo(this.width - this.radius, this.height);
+    this.ctx.lineTo(0, this.height);
+  }
+
+  drawLastPuzzle() {
+    this.ctx.lineTo(this.width + this.radius, 0);
+    this.ctx.lineTo(this.width + this.radius, this.height);
+    this.ctx.lineTo(0, this.height);
+    this.ctx.arc(0, this.middleY, this.radius, Math.PI * 0.5, Math.PI * 1.5, true);
+  }
+
+  drawMiddlePuzzle() {
+    this.ctx.lineTo(this.width, 0);
+    this.ctx.arc(this.width, this.middleY, this.radius, Math.PI * 1.5, Math.PI * 0.5, false);
+    this.ctx.lineTo(this.width, this.height);
+    this.ctx.lineTo(0, this.height);
+    this.ctx.arc(0, this.middleY, this.radius, Math.PI * 0.5, Math.PI * 1.5, true);
+  }
+
+  draw() {
+    this.ctx.lineWidth = this.widthOfLine;
+    this.ctx.beginPath();
+    this.ctx.moveTo(0, 0);
+
+    if (this.isFirst) this.drawFirstPuzzle();
+    if (this.isLast) this.drawLastPuzzle();
+    if (!this.isFirst && !this.isLast) this.drawMiddlePuzzle();
+
+    this.ctx.lineTo(0, 0);
+    this.ctx.clip();
+
+    if (!this.isFirst) {
+      this.ctx.drawImage(
+        this.image, this.xOffset - this.radius, this.yOffset, this.width + this.radius,
+        this.height, 0, 0, this.width + this.radius, this.height,
+      );
+    }
+    if (this.isFirst) {
+      this.ctx.drawImage(
+        this.image, this.xOffset, this.yOffset, this.width, this.height, 0, 0,
+        this.width, this.height,
+      );
+    }
+
+    this.ctx.globalCompositeOperation = 'destination-put';
+    this.ctx.stroke()
   }
 
   drawUnmarked() {
     this.ctx.clearRect(0, 0, this.width, this.height);
-    this.drawImage();
-    this.drawText();
-  }
-
-  drawWithoutImage() {
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.draw();
     this.drawText();
   }
 
   drawMarked(state) {
     this.ctx.clearRect(0, 0, this.width, this.height);
-    this.drawImage();
+    this.draw();
     if (state) {
       this.markCanvas(this.colorRight)
     } else {
@@ -165,6 +233,6 @@ export class CanvasApi {
 
   markCanvas(color) {
     this.ctx.fillStyle = color;
-    this.ctx.fillRect(0, 0, this.width, this.height)
+    this.ctx.fillRect(0, 0, this.width + this.radius, this.height)
   }
 }

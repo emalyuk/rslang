@@ -8,7 +8,11 @@ const initialEnglishPuzzleState = {
   data: [],
   isDataLoaded: false,
   isImgLoaded: false,
+  isTextHint: false,
+  isImgShow: true,
   index: 0,
+  page: 0,
+  group: 0,
   isEnd: false,
   width: 600,
   height: 45,
@@ -30,8 +34,10 @@ const englishPuzzleSlice = createSlice({
       state.data = data;
       state.rows = rows;
       state.isEnd = false;
+      state.index = 0;
       state.isDataLoaded = true;
       state.shuffled = state.data[state.index].shuffled;
+      state.translated = state.data[state.index].textExampleTranslate;
       state.pictureLink = '/img/test.jpg';
     },
     imageLoaded(state, action) {
@@ -116,20 +122,20 @@ const englishPuzzleSlice = createSlice({
     },
     switchWord(state, action) {
       state.rows[state.index].isCurrent = false;
-      console.log('....')
       const newIndex = state.index + 1;
       if (newIndex > state.rows.length - 1) {
         state.isEnd = true;
+        state.isTextHint = false;
       } else {
         state.index = newIndex;
         state.shuffled = state.data[state.index].shuffled;
+        state.translated = state.data[state.index].textExampleTranslate
         state.rows[state.index].isVisible = true;
         state.rows[state.index].isCurrent = true;
       }
     },
     changeActionType(state, action) {
-      const { type } = action.payload;
-      state.actionsType = type;
+      state.actionsType = action.payload.type;
     },
     check(state, action) {
       let sentence = state.rows[state.index].sentence.slice();
@@ -168,6 +174,15 @@ const englishPuzzleSlice = createSlice({
       })
       state.rows[state.index].sentence = sentence;
     },
+    changeTextHintState(state, action) {
+      state.isTextHint = !state.isTextHint;
+    },
+    changePage(state, action) {
+      state.page = action.payload.page;
+    },
+    changeGroup(state, action) {
+      state.group = action.payload.group;
+    },
   },
 });
 
@@ -183,17 +198,21 @@ export const {
   changeActionType,
   check,
   resetWords,
+  changeTextHintState,
+  changeGroup,
+  changePage,
 } = englishPuzzleSlice.actions;
 
 export const englishPuzzleReducer = englishPuzzleSlice.reducer;
 
-export const initState = (width, height) => async (dispatch) => {
+export const initState = (page, group) => async (dispatch, getState) => {
+  const { englishPuzzle: { width, height }, englishPuzzle } = getState();
   try {
-    const data = await getData(width, height);
-    console.log(data)
+    const data = await getData(width, height, page, group);
     if (data) {
       const rows = createRows(data);
       dispatch(init({ data, rows }));
+      console.log(englishPuzzle)
     } else {
       console.log('no data');
     }

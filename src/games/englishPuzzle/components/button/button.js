@@ -15,7 +15,7 @@ const Button = ({ text, className, clickHandler }) => {
 export default Button
 
 Button.defaultProps = {
-  text: 'Button',
+  text: '',
   className: '',
   clickHandler: () => { },
 }

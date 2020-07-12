@@ -4,3 +4,5 @@ export { default as Surface } from './surface/surface';
 export { default as Word } from './word/word';
 export { default as Actions } from './actions/actions';
 export { default as Button } from './button/button';
+export { default as Popup } from './popup/Popup';
+export { default as Level } from './level/Level';

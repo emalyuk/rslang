@@ -4,7 +4,7 @@ import { toGuessingRow, sortGuessingRow } from '../../EnglishPuzzleReducer';
 import { Word } from '..';
 
 const Shuffled = ({ image }) => {
-  const { shuffled, width, height } = useSelector((state) => state.englishPuzzle);
+  const { shuffled, width, height, isImgShow } = useSelector((state) => state.englishPuzzle);
   const dispatch = useDispatch();
   const parent = useRef(null);
 
@@ -64,7 +64,7 @@ const Shuffled = ({ image }) => {
     e.dataTransfer.setData('text/shuffled', index)
   }
 
-  const dragEnd = (e) => {
+  const dragEnd = () => {
     targetIndex = null;
     startOfElem = null;
     endOfElem = null;
@@ -115,6 +115,7 @@ const Shuffled = ({ image }) => {
             index={index}
             data={obj}
             image={image}
+            imgFlag={isImgShow}
             clickHandler={clickHandler}
             dragStart={dragStart}
             dragEnter={dragEnter}
