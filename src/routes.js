@@ -11,4 +11,5 @@ export default {
   games: {
     savanna: '/game/savanna',
   },
+  statistic: '/statistic',
 };
