@@ -21,10 +21,17 @@
       h1 {
         margin-left: 30px;
       }
+
+      p {
+        display: inline-block;
+        margin-left: 30px;
+        color: red;
+        border-bottom: 2px solid red;
+      }
     }
 
     &:not(:last-child) {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
   }
 }
