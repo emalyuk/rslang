@@ -1,5 +1,5 @@
 export const options = {
   showArea: true,
-  high: 50,
+  high: 100,
   low: 0,
 };
