@@ -2,6 +2,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import Card from './components/card/Card'
 import ViewBox from './components/viewBox/ViewBox'
 import ResultGame from './components/resultGame/ResultGame'
@@ -26,23 +27,23 @@ const activeInit = {
 const Team = () => {
   const audio = document.querySelector('audio')
 
-  // eslint-disable-next-line no-undef
-  const recognizer = new webkitSpeechRecognition();
-  // Ставим опцию, чтобы распознавание началось ещё до того, как пользователь закончит говорить
-  recognizer.interimResults = true;
-  // Какой язык будем распознавать?
-  recognizer.lang = 'ru-Ru';
-  // Используем колбек для обработки результатов
-  recognizer.onresult = function (event) {
-    const result = event.results[event.resultIndex];
-    if (result.isFinal) {
-      console.log('Вы сказали: ' + result[0].transcript);
-      setSpeakWord(result[0].transcript)
-    } else {
-      console.log('Промежуточный результат: ', result[0].transcript);
-    }
-  };
-  recognizer.addEventListener('end', startRecording)
+  // // eslint-disable-next-line no-undef
+  // const recognizer = new webkitSpeechRecognition();
+  // // Ставим опцию, чтобы распознавание началось ещё до того, как пользователь закончит говорить
+  // recognizer.interimResults = true;
+  // // Какой язык будем распознавать?
+  // recognizer.lang = 'ru-Ru';
+  // // Используем колбек для обработки результатов
+  // recognizer.onresult = function (event) {
+  //   const result = event.results[event.resultIndex];
+  //   if (result.isFinal) {
+  //     console.log('Вы сказали: ' + result[0].transcript);
+  //     setSpeakWord(result[0].transcript)
+  //   } else {
+  //     console.log('Промежуточный результат: ', result[0].transcript);
+  //   }
+  // };
+  // recognizer.addEventListener('end', startRecording)
 
   const [isFinish, setIsFinish] = useState(false)
   const [words, setWords] = useState([])
@@ -52,9 +53,17 @@ const Team = () => {
   const [gameWordNum, setGameWordNum] = useState(0)
   const [speakWord, setSpeakWord] = useState(null)
   const [gameDifficulty, setGameDifficulty] = useState(0)
+  const { finalTranscript, resetTranscript } = useSpeechRecognition()
 
   function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array
   }
   const getData = async (page, group) => {
     const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${group}`;
@@ -77,6 +86,7 @@ const Team = () => {
     } else {
       words[gameWordNum].isNotGuessed = true;
     }
+    resetTranscript()
   }
   function showPendingWord(i) {
     if (words && words[i] && Object.keys(words[i]).length > 0) {
@@ -89,9 +99,31 @@ const Team = () => {
       setActive(newActive)
     }
   }
+  function startRecording() {
+    // recognizer.start();
+    SpeechRecognition.startListening({ continuous: true })
+  }
+  function startGame() {
+    setIsGameMod(true)
+    setActive({
+      ...active,
+      id: false
+    })
+    setWords(shuffle(words))
+    showPendingWord(gameWordNum)
+    startRecording()
+  }
+  const stopRecording = () => {
+    SpeechRecognition.stopListening()
+    SpeechRecognition.abortListening()
+    // recognizer.removeEventListener('end', startRecording)
+    // recognizer.stop()
+    // recognizer.abort()
+    console.log(words)
+  }
   function finishedGame() {
     setIsFinish(true)
-    recognizer.stop()
+    stopRecording()
   }
   useEffect(() => {
     if (speakWord !== null && gameWordNum < maxCountWord) {
@@ -109,8 +141,8 @@ const Team = () => {
   }, [gameWordNum])
 
   useEffect(() => {
-    init(gameDifficulty)
-    console.log(words)
+    const level = gameDifficulty
+    init(level)
   }, [gameDifficulty])
 
   async function init(level) {
@@ -119,32 +151,12 @@ const Team = () => {
   useEffect(() => {
     init(gameDifficulty)
   }, [])
-
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+  useEffect(() => {
+    if (finalTranscript !== '') {
+      console.log('распознанное слово: ' + finalTranscript)
+      setSpeakWord(finalTranscript)
     }
-    return array
-  }
-  function startRecording() {
-    recognizer.start();
-  }
-  function startGame() {
-    setIsGameMod(true)
-    setActive({
-      ...active,
-      id: false
-    })
-    setWords(shuffle(words))
-    showPendingWord(gameWordNum)
-    startRecording()
-  }
-  const stopRecording = () => {
-    recognizer.removeEventListener('end', startRecording)
-    recognizer.stop()
-    recognizer.abort()
-  }
+  }, [finalTranscript])
   return (
     <div className='SpeakIt'>
       <div className='container'>
@@ -155,7 +167,7 @@ const Team = () => {
         {
           isGameMod ? <button onClick={finishedGame}>закончить игру</button> : ''
         }
-        <button onClick={stopRecording}>стоп запись</button>
+        <p>{finalTranscript}</p>
         <div className='levels'>
           <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(0) }}>1</button>
           <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(1) }}>2</button>
@@ -185,6 +197,7 @@ const Team = () => {
               words={words}
               setIsFinish={setIsFinish}
               setWords={setWords}
+              init={init}
             />
             : ''
         }

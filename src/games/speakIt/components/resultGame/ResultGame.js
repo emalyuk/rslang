@@ -2,7 +2,7 @@ import React from 'react';
 import './ResultGame.scss';
 import Word from './Word'
 
-const ResultGame = ({ words, setIsFinish, setWords }) => {
+const ResultGame = ({ words, setIsFinish, init }) => {
   const newWords = words.sort(sortFunction)
   function sortFunction(a, b) {
     if (a.isGuessed < b.isGuessed) {
@@ -22,6 +22,7 @@ const ResultGame = ({ words, setIsFinish, setWords }) => {
           newWords.map((item) => (
             <Word
               {...item}
+              key={item.id}
             />
           ))
         }
