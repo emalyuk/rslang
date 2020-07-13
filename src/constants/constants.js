@@ -33,7 +33,7 @@ const CORRECT_WORD_CHANCE = 50; // in %
 const GUESS_FROM_QUANTITY = 100 / CORRECT_WORD_CHANCE;
 
 const convertMsToSeconds = (ms) => (ms / 1000).toFixed(0);
-const initialTime = 3 * 1000;
+const initialTime = 60 * 1000;
 const interval = 1000;
 
 export {

@@ -34,17 +34,17 @@ export const Registration = () => {
 
   const formSubmition = async (e) => {
     e.preventDefault();
-    const validation = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})');
-    const found = password.match(validation)
+    // const validation = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})');
+    // const validationSimbolFound = password.match(validation);
 
-    if (found !== null && found.input === confirmPassword) {
-      if (!isLoading && !error.langth) {
-        await getRegistrationInfo({ email, password })(dispatch);
-        // history.push(ROUTER.login);
-      } else console.log(error)
-    } else {
-      alert('Что-то не так, проверьте вводимые данные!');
+    // if (validationSimbolFound !== null && validationSimbolFound.input === confirmPassword) {
+    if (!isLoading && !error.langth) {
+      await getRegistrationInfo({ email, password })(dispatch);
+      // alert(error)
     }
+    // } else {
+    //   alert('Что-то не так, проверьте вводимые данные!');
+    // }
   }
   //TODO:
   // const { error } = useSelector((state) => state.regist);
@@ -87,6 +87,8 @@ export const Registration = () => {
           className='password'
           placeholder='Confirm Password'
         />
+
+        {error.map((i) => (<div className='unvalid-data'>{i}</div>))}
 
         <Button type='submit' onClick={() => {}} className='' disabled={isLoading}>
           Sign Up

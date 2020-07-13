@@ -1,25 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-
-// const useKeyPress = (targetKey) => {
-//   const [keyPressed] = useState();
-
-//   const upHandler = ({ key }) => {
-//     if (key === targetKey) {
-//       // что делаем
-//       console.log('нажали на < или >');
-//     }
-//   };
-
-//   useEffect(() => {
-//     window.addEventListener('keyup', upHandler);
-//     return () => {
-//       window.removeEventListener('keyup', upHandler);
-//     };
-//   }, [upHandler]);
-
-//   return keyPressed;
-// }
-
 export function getRandom(arr, n) {
   const result = new Array(n);
   let len = arr.length;

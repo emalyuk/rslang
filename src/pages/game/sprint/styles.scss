@@ -1,3 +1,5 @@
+@import '../../../scss/variables.scss';
+
 .game-sprint {
   display: flex;
   justify-content: center;
@@ -9,8 +11,7 @@
 
   &__counetr {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
 
     width: 100%;
     max-width: 700px;
@@ -24,7 +25,7 @@
 
     font-size: 25px;
 
-    background: #ffffff;
+    background: $mainHomeColor;
   }
 
   &__playground {
@@ -45,7 +46,7 @@
     padding: 15px;
     margin-bottom: 25px;
 
-    background: #ffffff;
+    background: $mainHomeColor;
   }
 
   .start-game-controller {
@@ -62,6 +63,48 @@
       flex-direction: column;
       justify-content: space-around;
     }
+  }
+
+  .play-game-controller {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      max-width: 200px;
+    }
+  }
+
+  #leavels {
+    width: 100%;
+    max-width: 200px;
+    font-size: 22px;
+    font-weight: 600;
+    color: $secondColor;
+    cursor: pointer;
+    margin: 0;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 5px;
+    transition: all .4s ease-in-out;
+    background-image: linear-gradient(135deg,  #4481eb, #25aae1, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+
+    option {
+      background: #25aae1;
+    }
+  }
+
+  .counter-box {
+    width: 100%;
+    max-width: 200px;
+    display: flex;
+    justify-content: space-around;
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
   }
 
   .game-logo {
@@ -101,23 +144,37 @@
 
 .timer {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  // top: px;
+  right: 40%;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   border-radius: 50%;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
 
   max-width: 60px;
   max-height: 60px;
 
   padding: 20px;
 
-  background: #fff;
+  background: hotpink;
+  color: #fff;
 
   font-size: 25px;
   text-shadow: red($color: #000000);
+}
+
+.statistics {
+  width: 100%;
+  max-width: 200px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 10px 15px;
+  border-radius: 5px;
+  background: #fff;
 }

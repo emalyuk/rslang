@@ -23,7 +23,7 @@ const loginSlice = createSlice({
       state.isUserLoggedIn = true;
     },
     getLoginDataFailure(state, action) {
-      state.error = action.payload;
+      state.error = [action.payload.response.data];
       state.isLoading = false;
     },
     resetLoginState(state) {
@@ -52,5 +52,6 @@ export const getLoginInfo = (data) => async (dispatch) => {
     dispatch(getLoginDataSuccess(response.data));
   } catch (err) {
     dispatch(getLoginDataFailure(err));
+    console.log(err.response.data);
   }
 };

@@ -34,11 +34,7 @@ const Timer = (props) => {
   //   start(newTime);
   // }, [start]);
 
-  return (
-    <>
-      <div className='timer'>{convertMsToSeconds(timeLeft)}</div>
-    </>
-  );
+  return (`Время: ${convertMsToSeconds(timeLeft)}`);
 };
 
 export default Timer;

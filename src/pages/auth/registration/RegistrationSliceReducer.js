@@ -20,7 +20,12 @@ const RegistrationSlice = createSlice({
       state.isLoading = false;
     },
     getRegistrationDataFailure(state, action) {
-      state.error = action.payload;
+      if (typeof action.payload.response.data === 'string') {
+        state.error = [action.payload.response.data];
+      } else {
+        state.error = action.payload.response.data.error.errors.map((item) => item.message);
+      }
+
       state.isLoading = false;
     },
     resetRegistrationState(state) {

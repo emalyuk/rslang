@@ -246,7 +246,15 @@ const GameSprint = () => {
         Sprint 🥵
       </h2>
 
-      <div className='game-sprint__counetr'>{score}</div>
+      <div className='game-sprint__counetr'>
+        <div className='counter-box'>
+         {`Счет: ${score}`}
+        </div>
+
+        <div className='counter-box'>
+          <Timer isTimerRun={isPlay} onTimeLeft={handleTimeLeft} />
+        </div>
+      </div>
 
       <div className='game-sprint__playground'>
         <div className='word-paly'>
@@ -261,8 +269,6 @@ const GameSprint = () => {
         </div>
 
         {renderControllersOnPlay()}
-
-        <Timer isTimerRun={isPlay} onTimeLeft={handleTimeLeft} />
       </div>
     </div>
   );
