@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRegistrationInfo } from './RegistrationSliceReducer';
@@ -9,10 +9,12 @@ import Button from '../../../components/button/Button';
 import Form from '../../../components/form/Form';
 import Subtitle from '../../../components/subtitle/subtitle';
 
+import '../auth.scss';
+
 export const Registration = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isLoading } = useSelector((state) => state.login);
+  const { isLoading, error } = useSelector((state) => state.registration);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,16 +34,21 @@ export const Registration = () => {
 
   const formSubmition = async (e) => {
     e.preventDefault();
+    const validation = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})');
+    const found = password.match(validation)
 
-    if (password === confirmPassword) {
-      if (!isLoading) {
+    if (found !== null && found.input === confirmPassword) {
+      if (!isLoading && !error.langth) {
         await getRegistrationInfo({ email, password })(dispatch);
-        history.push(ROUTER.login);
-      }
+        // history.push(ROUTER.login);
+      } else console.log(error)
     } else {
-      alert('Password and confirm password are not equale!');
+      alert('Что-то не так, проверьте вводимые данные!');
     }
   }
+  //TODO:
+  // const { error } = useSelector((state) => state.regist);
+  //TODO: редирек только при удачнйо регистрации (флаг когда регистрация true);
 
   return (
     <div className='auth-wrapper'>
@@ -61,6 +68,8 @@ export const Registration = () => {
           placeholder='Email'
         />
 
+        <span className='password-input-reglament'>{' Пароль должен содержать не менее 8-ми символов, '}</span>
+        <span className='password-input-reglament'>{'заглавную букву(A-Z), символ: +-_@$!%*?&#.,;:[]'}</span>
         <Input
           required
           value={password}

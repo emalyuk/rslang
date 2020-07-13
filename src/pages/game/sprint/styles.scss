@@ -48,13 +48,19 @@
     background: #ffffff;
   }
 
-  .play-game-controller {
+  .start-game-controller {
     width: 100%;
     display: flex;
     justify-content: space-around;
 
     button {
-      max-width: 150px;
+      max-width: 200px;
+    }
+
+    .repeat-game-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
   }
 

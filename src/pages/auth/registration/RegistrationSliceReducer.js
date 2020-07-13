@@ -4,12 +4,12 @@ import createUser from './RegistrationApi';
 
 const initialRegistrationState = {
   data: [],
-  error: null,
+  error: [],
   isLoading: false,
 };
 
 const RegistrationSlice = createSlice({
-  name: 'Registration',
+  name: 'registration',
   initialState: { ...initialRegistrationState },
   reducers: {
     getRegistrationDataRequest(state) {
@@ -36,7 +36,7 @@ export const {
   getRegistrationDataRequest,
 } = RegistrationSlice.actions;
 
-export const RegistrationSliceReducer = RegistrationSlice.reducer;
+export const registrationSliceReducer = RegistrationSlice.reducer;
 
 export const getRegistrationInfo = (data) => async (dispatch) => {
   try {

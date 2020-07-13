@@ -1,181 +1,271 @@
 import React, { useEffect, useState } from 'react';
-import './styles.scss';
 
 import { getWords } from './sprintApi';
-// import useKeyPress from './function';
+import { GUESS_FROM_QUANTITY } from '../../../constants/constants';
+import { getRandom } from './helpers';
+
 import Button from '../../../components/button/Button';
-import Timer from './timer';
+import StartGameControls from './StartGameControls';
+
+import Timer from './Timer';
+import LevelSelect from './LevelSelect';
+
+import './styles.scss';
 
 const GameSprint = () => {
+
+  //TODO: в редакс все если время будет (words - обязатьельн);
+  const [isPlay, setIsPlay] = useState(false);
+  const [isPlayAndNewRaund, setIsPlayAndNewRaund] = useState(false);
   const [score, setScore] = useState(0);
-  const [combo, setCombo] = useState(1);
-  const [isAnswer, setAnswer] = useState(false);
+  const [clickAnswerCounter, setClickAnswerCounter] = useState({
+    correctAnswer: 0,
+    unCorrectAnswer: 0,
+  });
 
-  const [word, setWord] = useState('');
-  const [wordTranslate, setWordTranslate] = useState('');
+  const [arrayStatisticAllGames, setarrayStatisticAllGames] = useState([]);
+  const [leavels, setLeavels] = useState(0);
 
-  const points = 10;
-  const someArr = [];
+  const newRound = (words) => {
+    const gameRoundWords = getRandom(words, GUESS_FROM_QUANTITY);
+    return gameRoundWords;
+  };
 
-  const scorCounter = () => {
-    if (isAnswer === true && combo !== 4) {
-      setCombo(combo => combo + 1)
+  const [words, setWords] = useState([]);
+  const [currentWord, setCurrentWord] = useState();
+  const [combo, setCombo] = useState(0);
+
+  const getNextWord = () => {
+    if (words.length) {
+      const roundWords = newRound(words);
+
+      const enWord = roundWords[0].word;
+      const ruWord = getRandom(roundWords, 1)[0].wordTranslate;
+
+      setCurrentWord({ enWord, ruWord });
+    }
+  };
+
+  const handlerToStart = async () => {
+    function randomInteger(min, max) {
+      const rand = min + Math.random() * (max + 1 - min);
+      return Math.floor(rand);
     }
 
-    if (isAnswer === true && combo === 4) {
-      setCombo(4)
+    const group = leavels; // сложность
+    const page = randomInteger(1, 30); // от 1...30 страниц
+
+    const response = await getWords(group, page);
+
+    setWords(response.data);
+    setClickAnswerCounter({
+      correctAnswer: 0,
+      unCorrectAnswer: 0,
+    });
+    setScore(0);
+    setIsPlayAndNewRaund(true);
+    setIsPlay(!isPlay);
+  };
+
+  const isCurrentTranslateCorrect = () => {
+    if (words.length) {
+      const findWord = words.find((item) => {
+        return item.word === currentWord.enWord;
+      });
+
+      if (findWord) {
+        return findWord.wordTranslate === currentWord.ruWord;
+      }
+    }
+  };
+
+  const handlerLeavelChanche = (e) => {
+    setLeavels(e.target.value);
+  };
+
+  const scorCounter = (answer) => {
+    const isCorrectAnswer = isCurrentTranslateCorrect() === answer;
+
+    let kkkkombo = 0;
+
+    if (isCorrectAnswer) {
+      setClickAnswerCounter({
+        ...clickAnswerCounter,
+        correctAnswer: clickAnswerCounter.correctAnswer + 1,
+      });
+      if (combo < 4) {
+        kkkkombo = combo + 1;
+      }
+      if (combo === 4) {
+        kkkkombo = combo;
+      }
+    } else {
+      setClickAnswerCounter({
+        ...clickAnswerCounter,
+        unCorrectAnswer: clickAnswerCounter.unCorrectAnswer + 1,
+      });
     }
 
-    if (isAnswer === false) {
-      setCombo(0)
+    setCombo(kkkkombo);
+
+    switch (kkkkombo) {
+      case 1:
+        setScore(score + 10);
+        break;
+
+      case 2:
+        setScore(score + 20);
+        break;
+
+      case 3:
+        setScore(score + 40);
+        break;
+
+      case 4:
+        setScore(score + 80);
+        break;
+
+      default:
+        break;
     }
+  };
 
-    setScore(score => score + points * combo)
-  }
+  const handleSelect = (isCorrect) => {
+    scorCounter(isCorrect);
+    getNextWord();
+  };
 
-  const upHandler = ({ key }) => {
+  const handleKeyPress = ({ key }) => {
     if (key === 'ArrowLeft') {
-      scorCounter();
+      handleSelect(false);
     }
 
     if (key === 'ArrowRight') {
-      scorCounter();
+      handleSelect(true);
     }
   };
 
-  useEffect(() => {
-    window.addEventListener('keyup', upHandler);
-    return () => {
-      window.removeEventListener('keyup', upHandler);
-    };
-  }, []);
+  const UserControllerAnswer = () => {
+    return (
+      <div className='controllers'>
+        <Button
+          disabled={false}
+          onClick={() => handleSelect(false)}
+          className='uncorrect-button'
+          type='button'
+        >
+          Не верно
+        </Button>
 
-  const handlerToStart = async (e) => {
-    e.preventDefault();
-    const group = 0; // сложность
-    const page = 0; // от 1...30 страниц
-
-    const response = await getWords(group, page);
-    const wordsArray = response.data;
-
-    wordsArray.map((item) => {
-      return someArr.push([item.word, item.wordTranslate]);
-    });
-
-    const procents = 100;
-    const n = someArr.length;
-    const j = 25;
-    const k = (n * j) / procents;
-    const q = procents / j;
-
-    console.log(k, q);
-
-    // k - коофициент деления массива, (то число на которе я делю массив) k = (n * j) / 100
-    // q = n / k (q - это сколько элеменов в массиве на основании процента)
-    // n - общее кол-во слов,
-    // j - % правильного слова в игре,
-
-    // console.log(someArr)
-
-    setWord(someArr[0][0]);
-    setWordTranslate(someArr[0][1]);
+        <Button
+          disabled={false}
+          onClick={() => handleSelect(true)}
+          className='currect-button'
+          type='button'
+        >
+          Верно
+        </Button>
+      </div>
+    );
   };
+
+  const RepeatGameControllers = () => {
+    const currectAnswer = clickAnswerCounter.correctAnswer;
+    const unCurrectAnswer = clickAnswerCounter.unCorrectAnswer;
+    const allAnswer = clickAnswerCounter.correctAnswer + clickAnswerCounter.unCorrectAnswer
+
+    return (
+      <div className='start-game-controller'>
+        <div className='repeat-game-menu'>
+          <Button
+            disabled={false}
+            onClick={handlerToStart}
+            className='button-to-start'
+            type='button'
+          >
+            Повторить
+          </Button>
+
+          <LevelSelect onSelect={handlerLeavelChanche} value={leavels} />
+        </div>
+
+        <div className='statistics'>
+          <p>{`Всего: ${allAnswer}`}</p>
+          <p>{`Правильные: ${currectAnswer}`}</p>
+          <p>{`Не верно: ${unCurrectAnswer}`}</p>
+          <p>
+            {`Верных ответов:
+            ${(allAnswer !== 0)
+              ? Math.floor((currectAnswer / allAnswer) * 100)
+              : 0
+            }%`}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
+  const renderControllersOnPlay = () => {
+    if (isPlay) {
+      return <UserControllerAnswer />;
+    }
+    return isPlayAndNewRaund ? (
+      <RepeatGameControllers />
+    ) : (
+      <StartGameControls
+        onStart={handlerToStart}
+        onLeavelSelect={handlerLeavelChanche}
+        leavels={leavels}
+      />
+    );
+  };
+
+  const handleTimeLeft = () => {
+    setIsPlay(false);
+    setarrayStatisticAllGames(
+      arrayStatisticAllGames,
+      arrayStatisticAllGames.push(clickAnswerCounter),
+    );
+    setCurrentWord();
+  }
+
+  useEffect(() => {
+    window.addEventListener('keyup', handleKeyPress);
+    return () => {
+      window.removeEventListener('keyup', handleKeyPress);
+    };
+  });
+
+  useEffect(() => {
+    getNextWord();
+  }, [words]);
 
   return (
     <div className='game-sprint'>
+      <h2 role='img' className='game-logo'>
+        Sprint 🥵
+      </h2>
+
       <div className='game-sprint__counetr'>{score}</div>
+
       <div className='game-sprint__playground'>
-        <div role='img' className='game-logo'>
-          Sprint 🥵
-        </div>
-
         <div className='word-paly'>
-          <div className='word-paly__english-word'>
-            <span>{word}</span>
-          </div>
-          <div className='word-paly__russian-word'>
-            <span>{wordTranslate}</span>
+          <div className='word-paly__words'>
+            {currentWord && (
+              <>
+                <p>{currentWord.enWord}</p>
+                <p>{currentWord.ruWord}</p>
+              </>
+            )}
           </div>
         </div>
 
-        <div className='controllers'>
-          <Button
-            disabled={false}
-            onClick={scorCounter}
-            className='uncorrect-button'
-            type='button'
-            children='Не верно'
-          />
-          <Button
-            disabled={false}
-            onClick={scorCounter}
-            className='currect-button'
-            type='button'
-            children='Верно'
-          />
-        </div>
+        {renderControllersOnPlay()}
 
-        <Timer className='timer' />
-      </div>
-
-      <div className='play-game-controller'>
-        <Button
-          disabled={false}
-          onClick={handlerToStart}
-          className='button-to-start'
-          type='button'
-          children='Начать'
-        />
-        <Button
-          disabled={false}
-          onClick={() => {}}
-          className='button-to-speack'
-          type='button'
-          children='Звук'
-        />
+        <Timer isTimerRun={isPlay} onTimeLeft={handleTimeLeft} />
       </div>
     </div>
   );
 };
 
 export default GameSprint;
-
-// Usage
-// const GameSprint = () => {
-//   // Call our hook for each key that we'd like to monitor
-//   // const ArrowRight = useKeyPress('ArrowRight');
-//   // const ArrowLeft = useKeyPress('ArrowLeft');
-
-//   return (
-//     <div>
-//       <div>{'< >'}</div>
-//       <div>
-//         <button onKeyUp={ArrowRight}>right</button>
-//         <button onKeyUp={ArrowLeft}>left</button>
-//       </div>
-//     </div>
-//   );
-// }
-
-// Hook
-// const useKeyPress = (targetKey) => {
-//   const [keyPressed] = useState();
-
-//   const upHandler = ({ key }) => {
-//     if (key === targetKey) {
-//       // что делаем
-//       console.log('нажали на < или >');
-//     }
-//   };
-
-//   useEffect(() => {
-//     window.addEventListener('keyup', upHandler);
-//     return () => {
-//       window.removeEventListener('keyup', upHandler);
-//     };
-//   }, []);
-
-//   return keyPressed;
-// }
-
-// export default GameSprint;

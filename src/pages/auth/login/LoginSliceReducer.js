@@ -5,7 +5,7 @@ import { userLoginDataKey } from '../../../constants/constants';
 
 const initialLoginState = {
   data: [],
-  error: null,
+  error: [],
   isLoading: false,
   isUserLoggedIn: Boolean(global.localStorage.getItem(userLoginDataKey)),
 };
@@ -14,7 +14,7 @@ const loginSlice = createSlice({
   name: 'login',
   initialState: { ...initialLoginState },
   reducers: {
-    getLoginDataRequest(state) {
+    loginDataRequest(state) {
       state.isLoading = true;
     },
     getLoginDataSuccess(state, action) {
@@ -36,14 +36,14 @@ export const {
   getLoginDataSuccess,
   getLoginDataFailure,
   resetLoginState,
-  getLoginDataRequest,
+  loginDataRequest,
 } = loginSlice.actions;
 
 export const loginSliceReducer = loginSlice.reducer;
 
 export const getLoginInfo = (data) => async (dispatch) => {
   try {
-    dispatch(getLoginDataRequest());
+    dispatch(loginDataRequest());
 
     const response = await signInUser(data);
     const signInUserData = JSON.stringify(response.data);
