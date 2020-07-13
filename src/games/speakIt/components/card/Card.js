@@ -5,13 +5,14 @@ const Card = ({
   word, transcription, active, setActive,
   id, image, setActiveAudio,
   audio, wordTranslate,
-  audioPlayer, isGameMod, isGuessed, isNotGuessed
+  isGameMod, isGuessed, isNotGuessed,
+  activeAudio
 }) => {
   const isActive = active.id === id;
 
   function setCurrentItem(id, image, setActive) {
     if (isActive) {
-      audioPlayer.play()
+      document.querySelector('audio').play()
     } else {
       setActive({
         id,
@@ -25,7 +26,7 @@ const Card = ({
   }
   return (
     <div
-        className={
+      className={
         [
           'Card ',
           isActive ? 'isActive' : '',
@@ -34,7 +35,7 @@ const Card = ({
           isGuessed ? 'isGuessed' : '',
           isNotGuessed ? "isNotGuessed" : ''
         ].join(' ')}
-         onClick={() => setCurrentItem(id, image, setActive)}
+      onClick={() => setCurrentItem(id, image, setActive)}
     >
       <p>{word}</p>
       <p>{wordTranslate}</p>

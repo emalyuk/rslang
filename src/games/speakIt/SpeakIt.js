@@ -27,24 +27,6 @@ const activeInit = {
 const Team = () => {
   const audio = document.querySelector('audio')
 
-  // // eslint-disable-next-line no-undef
-  // const recognizer = new webkitSpeechRecognition();
-  // // Ставим опцию, чтобы распознавание началось ещё до того, как пользователь закончит говорить
-  // recognizer.interimResults = true;
-  // // Какой язык будем распознавать?
-  // recognizer.lang = 'ru-Ru';
-  // // Используем колбек для обработки результатов
-  // recognizer.onresult = function (event) {
-  //   const result = event.results[event.resultIndex];
-  //   if (result.isFinal) {
-  //     console.log('Вы сказали: ' + result[0].transcript);
-  //     setSpeakWord(result[0].transcript)
-  //   } else {
-  //     console.log('Промежуточный результат: ', result[0].transcript);
-  //   }
-  // };
-  // recognizer.addEventListener('end', startRecording)
-
   const [isFinish, setIsFinish] = useState(false)
   const [words, setWords] = useState([])
   const [active, setActive] = useState(activeInit)
@@ -100,7 +82,6 @@ const Team = () => {
     }
   }
   function startRecording() {
-    // recognizer.start();
     SpeechRecognition.startListening({ continuous: true })
   }
   function startGame() {
@@ -116,13 +97,10 @@ const Team = () => {
   const stopRecording = () => {
     SpeechRecognition.stopListening()
     SpeechRecognition.abortListening()
-    // recognizer.removeEventListener('end', startRecording)
-    // recognizer.stop()
-    // recognizer.abort()
-    console.log(words)
   }
   function finishedGame() {
     setIsFinish(true)
+    setIsGameMod(false)
     stopRecording()
   }
   useEffect(() => {
@@ -141,19 +119,17 @@ const Team = () => {
   }, [gameWordNum])
 
   useEffect(() => {
-    const level = gameDifficulty
-    init(level)
+    init()
   }, [gameDifficulty])
 
-  async function init(level) {
-    await getData(getRandomNum(0, 29), level);
+  async function init() {
+    await getData(getRandomNum(0, 29), gameDifficulty);
   }
   useEffect(() => {
-    init(gameDifficulty)
+    init()
   }, [])
   useEffect(() => {
     if (finalTranscript !== '') {
-      console.log('распознанное слово: ' + finalTranscript)
       setSpeakWord(finalTranscript)
     }
   }, [finalTranscript])
@@ -167,7 +143,6 @@ const Team = () => {
         {
           isGameMod ? <button onClick={finishedGame}>закончить игру</button> : ''
         }
-        <p>{finalTranscript}</p>
         <div className='levels'>
           <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(0) }}>1</button>
           <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(1) }}>2</button>
@@ -185,8 +160,8 @@ const Team = () => {
                 active={active}
                 setActive={setActive}
                 setActiveAudio={setActiveAudio}
-                audioPlayer={audio}
                 isGameMod={isGameMod}
+                activeAudio={activeAudio}
               />
             ))
           }
@@ -195,9 +170,11 @@ const Team = () => {
           isFinish ?
             <ResultGame
               words={words}
+              setWords={setWords}
               setIsFinish={setIsFinish}
               setWords={setWords}
               init={init}
+              setGameWordNum={setGameWordNum}
             />
             : ''
         }

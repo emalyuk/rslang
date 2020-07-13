@@ -2,7 +2,7 @@ import React from 'react';
 import './ResultGame.scss';
 import Word from './Word'
 
-const ResultGame = ({ words, setIsFinish, init }) => {
+const ResultGame = ({ words, setWords, setIsFinish, setGameWordNum, init }) => {
   const newWords = words.sort(sortFunction)
   function sortFunction(a, b) {
     if (a.isGuessed < b.isGuessed) {
@@ -12,7 +12,11 @@ const ResultGame = ({ words, setIsFinish, init }) => {
   }
   const closeResult = () => {
     setIsFinish(false);
-    window.location.reload()
+    setGameWordNum(0)
+    words.map((item) => {
+      item.isGuessed = false;
+      item.isNotGuessed = false;
+    })
   }
   return (
     <div className='ResultGame'>
