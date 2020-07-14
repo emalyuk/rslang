@@ -7,6 +7,7 @@ import Card from './components/card/Card'
 import ViewBox from './components/viewBox/ViewBox'
 import ResultGame from './components/resultGame/ResultGame'
 import './SpeakIt.scss'
+import { getStats, putStats } from '../../pages/home/HomeApi'
 
 export const request = async (url, config = {}) => {
   try {
@@ -35,6 +36,9 @@ const Team = () => {
   const [gameWordNum, setGameWordNum] = useState(0)
   const [speakWord, setSpeakWord] = useState(null)
   const [gameDifficulty, setGameDifficulty] = useState(0)
+  const [numGuessedWords, setNumGuessedWords] = useState(0)
+  const [numWords, setNumWords] = useState(0)
+  const [statistics, setStatistics] = useState({})
   const { finalTranscript, resetTranscript } = useSpeechRecognition()
 
   function getRandomNum(min, max) {
@@ -57,6 +61,7 @@ const Team = () => {
         item.isGuessed = false;
         item.isNotGuessed = false;
       })
+      setNumWords(data.length)
       setWords(data)
     } catch (e) {
       console.log(e.message)
@@ -65,6 +70,7 @@ const Team = () => {
   function checkWord(word) {
     if (word.toLowerCase() === words[gameWordNum].wordTranslate) {
       words[gameWordNum].isGuessed = true;
+      setNumGuessedWords(numGuessedWords + 1)
     } else {
       words[gameWordNum].isNotGuessed = true;
     }
@@ -98,10 +104,30 @@ const Team = () => {
     SpeechRecognition.stopListening()
     SpeechRecognition.abortListening()
   }
+  const showResult = async () => {
+    const date = new Date().toLocaleDateString()
+    const time = new Date().toLocaleTimeString()
+    const curentGameStats = {
+      [date]: {
+        [time]: {
+          wrong: numWords - numGuessedWords,
+          right: numGuessedWords,
+        }
+      }
+    };
+    let stat = await getStats()
+    stat.optional.speakit = curentGameStats
+    console.log(curentGameStats)
+    console.log(stat)
+    console.log(statistics)
+    console.log(`угадано слов: ${numGuessedWords}`)
+    console.log(`не угадано слов: ${numWords - numGuessedWords}`)
+  }
   function finishedGame() {
     setIsFinish(true)
     setIsGameMod(false)
     stopRecording()
+    showResult()
   }
   useEffect(() => {
     if (speakWord !== null && gameWordNum < maxCountWord) {
@@ -133,9 +159,22 @@ const Team = () => {
       setSpeakWord(finalTranscript)
     }
   }, [finalTranscript])
+
+
+
+
+
+
+
+
+  async function show() {
+    const a = await getStats('https://afternoon-falls-25894.herokuapp.com/users/5f0768fa5f4f84001790b5b4/statistics')
+    console.log(a)
+  }
   return (
     <div className='SpeakIt'>
       <div className='container'>
+        <button onClick={show}>asdfasdf</button>
         <ViewBox activeImg={active.img} activeAudio={activeAudio} wordTranslate={active.wordTranslate} />
         {
           isGameMod ? '' : <button onClick={startGame}>начать игру</button>
