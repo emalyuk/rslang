@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeShowStart, changeDifficulity, changePage } from '../../SavannaReducer';
 import './StartModal.scss';
-import { useDispatch } from 'react-redux';
-import { changeShowStart } from '../../SavannaReducer';
 
 const StartModal = () => {
   const dispatch = useDispatch();
-  const start = () => {
-    dispatch(changeShowStart(false));
+  const { isUserLoggedIn } = useSelector((state) => state.login);
+  const { showChangeDifficulity } = useSelector((state) => state.savanna);
+  const [currentLevel, setCurrentLevel] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const start = () => dispatch(changeShowStart(false));
+
+  const renderRounds = () => {
+    const rounds = []
+    for (let i = 0; i < 30; i += 1) {
+      rounds.push(
+        <div
+          className='dif-round'
+          data-active={i === currentPage ? 'true' : 'false'}
+          onClick={() => {
+            setCurrentPage(i);
+            dispatch(changePage(i));
+          }}
+          key={i}
+        >
+          <div className='dif-round-content'>
+            {i + 1}
+          </div>
+        </div>,
+      );
+    }
+    return rounds;
   };
 
   return (
