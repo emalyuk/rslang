@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import './ResultsModal.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { DeleteModal, ModalWindow } from '../../../../components';
-import { changeShowDeleteModal, changeShowResultsModal, changeIsRefresh } from '../../SavannaReducer';
+import { changeShowResultsModal, changeIsRefresh } from '../../SavannaReducer';
+import './ResultsModal.scss';
 
 const ResultsModal = ({ results }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const showDeleteModal = useSelector((state) => state.savanna.showDeleteModal);
   const wordsLength = useSelector((state) => state.savanna.words.length);
 
   const playAudio = (src) => {
@@ -30,7 +28,6 @@ const ResultsModal = ({ results }) => {
         <div className='invalid-word'>{inv.word}</div>
         <div className='tr'>   —   </div>
         <div className='invalid-translate'>{inv.translate}</div>
-        <div className='trash-icon' onClick={() => dispatch(changeShowDeleteModal(true))} />
       </div>
     ))
   );
@@ -42,7 +39,6 @@ const ResultsModal = ({ results }) => {
         <div className='valid-word'>{val.word}</div>
         <div className='tr'>   —   </div>
         <div className='valid-translate'>{val.translate}</div>
-        <div className='trash-icon' onClick={() => dispatch(changeShowDeleteModal(true))} />
       </div>
     ))
   );
@@ -54,7 +50,6 @@ const ResultsModal = ({ results }) => {
           Игра окончена
         </div>
         <div className='results-slider'>
-          {showDeleteModal ? <ModalWindow><DeleteModal hideFunc={() => dispatch(changeShowDeleteModal(false))} /></ModalWindow> : null}
           {score ? (
             <div className='results-score'>
               <div className='results-satiety'>
