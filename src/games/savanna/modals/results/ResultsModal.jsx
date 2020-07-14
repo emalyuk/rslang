@@ -9,6 +9,7 @@ const ResultsModal = ({ results }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const wordsLength = useSelector((state) => state.savanna.words.length);
+  const { isUserLoggedIn } = useSelector((state) => state.login);
 
   const playAudio = (src) => {
     const link = `https://raw.githubusercontent.com/himimetsu/rslang-data/master/${src}`;
@@ -83,7 +84,9 @@ const ResultsModal = ({ results }) => {
   };
 
   useEffect(() => {
-    postStatistic();
+    if (isUserLoggedIn) {
+      postStatistic();
+    }
   }, [results]);
 
   return (
