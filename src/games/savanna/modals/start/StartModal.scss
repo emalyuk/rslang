@@ -34,6 +34,90 @@
       opacity: .8;
     }
 
+    .difficulity {
+      width: 100%;
+
+      .title-level {
+        width: 100%;
+        font-size: 30px;
+        font-weight: 300;
+        line-height: 1;
+        color: #6cffde;
+        opacity: .8;
+        text-transform: uppercase;
+        -webkit-font-smoothing: antialiased;
+        user-select: none;
+      }
+
+      .dif-levels {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+
+        .dif-level {
+          height: 40px;
+          width: 40px;
+          margin: 5px;
+          display: flex;
+          color: white;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid white;
+          border-radius: 10%;
+          cursor: pointer;
+
+          &[data-active='true'] {
+            color: red;
+            border-color: red;
+          }
+
+          &:hover {
+            background-color: royalblue;;
+          }
+        }
+      }
+
+      .title-round {
+        width: 100%;  
+        font-size: 30px;
+        font-weight: 300;
+        line-height: 1;
+        color: #6cffde;
+        opacity: .8;
+        text-transform: uppercase;
+        -webkit-font-smoothing: antialiased;
+        user-select: none;
+      }
+
+      .dif-rounds {
+        max-width: 400px;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto 10px;
+
+        .dif-round {
+          width: 7%;
+          display: flex;
+          margin: 5px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 10%;
+          border: 2px solid white;
+          color: white;
+          cursor: pointer;
+
+          &[data-active='true'] {
+            color: red;
+            border-color: red;
+          }
+
+          &:hover {
+            background-color: royalblue;
+          }
+        }
+      }
+    }
+
     .start-button {
       width: 100%;
       button {
