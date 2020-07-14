@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { getStats, putStats } from 'pages/home/HomeApi';
 import { changeShowResultsModal, changeIsRefresh } from '../../SavannaReducer';
 import './ResultsModal.scss';
 
@@ -42,6 +43,48 @@ const ResultsModal = ({ results }) => {
       </div>
     ))
   );
+
+  const postStatistic = async () => {
+    const stats = await getStats();
+
+    const currentGameStats = {
+      date: new Date().toLocaleDateString(),
+      right: results.valid.length,
+      wrong: results.invalid.length,
+    };
+
+    let newStats;
+
+    if (stats.optional === undefined) {
+      newStats = {
+        ...stats,
+        optional: {
+          ...stats.optional,
+          savanna: {
+            statistics: [currentGameStats],
+          },
+        },
+      };
+    } else {
+      if (stats.optional.savanna !== 'undefined') {
+        newStats = {
+          ...stats,
+          optional: {
+            ...stats.optional,
+            savanna: {
+              statistics: [...stats.optional.savanna.statistics, currentGameStats],
+            },
+          },
+        }
+      }
+    }
+
+    putStats(newStats);
+  };
+
+  useEffect(() => {
+    postStatistic();
+  }, [results]);
 
   return (
     <div className='results-wrapper'>
