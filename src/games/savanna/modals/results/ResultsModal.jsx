@@ -67,7 +67,7 @@ const ResultsModal = ({ results }) => {
         },
       };
     } else {
-      if (stats.optional.savanna !== 'undefined') {
+      if (stats.optional.savanna !== undefined) {
         newStats = {
           ...stats,
           optional: {
