@@ -14,7 +14,7 @@ import { getFormattedData } from 'utils/getFormattedData';
 import { initialSettings } from 'constants/cardSettings';
 import { initialStats } from 'constants/stats';
 
-const authOption = JSON.parse(localStorage.getItem(userLoginDataKey));
+const authOption = JSON.parse(localStorage.getItem(userLoginDataKey)) || 'temp';
 const { token, userId } = authOption;
 
 const usersUrl = `${process.env.REACT_APP_BASE_URL}${usersPath}${userId}`;
