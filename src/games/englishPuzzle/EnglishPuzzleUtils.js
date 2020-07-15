@@ -1,5 +1,11 @@
+import { gallery } from '../../constants'
+
 export function setUniqueId() {
   return `_${Math.random().toString(36).substr(2, 9)}`;
+}
+
+export function getImgData(group, page) {
+  return gallery[page][group];
 }
 
 function shuffle(arr) {
@@ -84,7 +90,7 @@ function processItem(objItem, width, height, index) {
 
 export function transform(arr, width, height) {
   const numOfMaxElements = 10;
-  const filtered = arr.filter((item) => item.wordsPerExampleSentence <= 11);
+  const filtered = arr.filter((item) => item.wordsPerExampleSentence <= 10);
   const shuffled = shuffle(filtered);
   const sliced = shuffled.slice(0, numOfMaxElements);
   const res = sliced.map((wordItem, index) => processItem(wordItem, width, height, index));
@@ -126,7 +132,7 @@ export function resizeImage(image, width, height) {
 export class CanvasApi {
   constructor(image, dataObj) {
     Object.assign(this, dataObj)
-    this.fontSize = 18;
+    this.fontSize = 16;
     this.image = image;
     this.yCoord = Math.round((this.height - this.fontSize) / 2);
     this.colorRight = 'rgba(0, 209, 59, 0.54)';
@@ -235,4 +241,14 @@ export class CanvasApi {
     this.ctx.fillStyle = color;
     this.ctx.fillRect(0, 0, this.width + this.radius, this.height)
   }
+}
+
+export function setLocalStorage(key, value) {
+  window.localStorage.setItem(key, JSON.stringify(value))
+}
+
+export function getLocalStorage(key) {
+  const item = window.localStorage.getItem(key)
+  const result = JSON.parse(item);
+  return result;
 }

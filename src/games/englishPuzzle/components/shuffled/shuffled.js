@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toGuessingRow, sortGuessingRow } from '../../EnglishPuzzleReducer';
+import { toGuessingRow, sort } from '../../EnglishPuzzleReducer';
 import { Word } from '..';
 
 const Shuffled = ({ image }) => {
@@ -44,17 +44,9 @@ const Shuffled = ({ image }) => {
     });
 
     if (dataFromAnotherNode || dataFromAnotherNode === 0) {
-      dispatch(sortGuessingRow({
-        indexFromAnotherNode: dataFromAnotherNode,
-        targetIndex,
-        insertPosition,
-      }))
+      dispatch(sort(targetIndex, null, insertPosition, dataFromAnotherNode, false))
     } else {
-      dispatch(sortGuessingRow({
-        targetIndex,
-        draggedIndex,
-        insertPosition,
-      }))
+      dispatch(sort(targetIndex, draggedIndex, insertPosition, false, false));
     }
     e.dataTransfer.clearData();
   }

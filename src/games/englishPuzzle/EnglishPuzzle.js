@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './EnglishPuzzle.scss';
-import { initState, imageLoaded } from './EnglishPuzzleReducer';
+import { initState, imageLoaded, changeLvl, initWithSetting } from './EnglishPuzzleReducer';
 import { Spinner } from '../../components';
 import {
   Controls, Surface, Shuffled, Actions,
-  Popup, Level,
+  Popup, Level, Results,
 } from './components';
-import { resizeImage } from './EnglishPuzzleUtils'
+import { resizeImage, getLocalStorage } from './EnglishPuzzleUtils'
 
 const EnglishPuzzle = () => {
   const dispatch = useDispatch();
   const [resizedImage, setResizedImage] = useState(null);
   const [isLvlSwitcher, setLvlSwitcherState] = useState(false);
+  const [isResultActive, setResultState] = useState(false);
   const {
-    isDataLoaded, isImgLoaded, width, height, pictureLink, rows,
+    isDataLoaded, width, height, pictureLink, rows,
     page, group,
   } = useSelector((state) => state.englishPuzzle);
+  const st = useSelector((state) => state.englishPuzzle);
+  const [isImgLoaded, setIsImgLoaded] = useState(false);
 
   const createImg = () => {
     const canvasHeigh = height * rows.length;
@@ -26,17 +29,38 @@ const EnglishPuzzle = () => {
       const newImg = document.createElement('img');
       newImg.src = resizeImage(img, width, canvasHeigh);
       setResizedImage(newImg)
-      dispatch(imageLoaded())
+      console.log('ffff')
+      setIsImgLoaded(true)
     }
   }
 
+  const nextRound = () => {
+    dispatch(changeLvl)
+  }
+
   useEffect(() => {
-    dispatch(initState(page, group))
+    // const settings = getLocalStorage('englishPuzzleSettings')
+    // if (settings && firstLoad) {
+    //   dispatch(initWithSetting(settings))
+    // } else {
+    //   dispatch(initState(page, group))
+    // }
+    // setFirstLoad(false)
   }, []);
 
   useEffect(() => {
-    dispatch(initState(page, group))
+    console.log('asdfas')
+    // if (!firstLoad) dispatch(initState(page, group))
+    const settings = getLocalStorage('englishPuzzleSettings')
+    if (settings) {
+      console.log('settings')
+      dispatch(initWithSetting(settings))
+    } else {
+      console.log('item')
+      dispatch(initState(page, group))
+    }
   }, [page, group]);
+
 
   useEffect(() => {
     createImg();
@@ -53,13 +77,25 @@ const EnglishPuzzle = () => {
       <Shuffled
         image={resizedImage}
       />
-      <Actions />
+      <Actions
+        resultStateSwitcher={() => setResultState(!isResultActive)}
+        nextRound={nextRound}
+      />
       <Popup
         isActive={isLvlSwitcher}
         onClick={() => setLvlSwitcherState(false)}
       >
         <Level
           hidePopup={() => setLvlSwitcherState(false)}
+        />
+      </Popup>
+      <Popup
+        isActive={isResultActive}
+        onClick={() => setResultState(false)}
+      >
+        <Results
+          lvlSwitcher={nextRound}
+          resultStateSwitcher={() => setResultState(false)}
         />
       </Popup>
     </div>

@@ -1,20 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeTextHintState } from '../../EnglishPuzzleReducer';
+import { changeTextHintState, setIsSound, setIsImg } from '../../EnglishPuzzleReducer';
 import { Button } from '..';
 
 const Controls = (props) => {
   const dispatch = useDispatch();
-  const [isSound, setSoundState] = useState(false);
   const [isText, setTextState] = useState(false);
-  const [isImage, setImageState] = useState(true);
   const {
-    translated, isTextHint, page, group,
+    translated, isTextHint, page, group, index, data,
+    isSound, isImg,
   } = useSelector((state) => state.englishPuzzle);
-  const { lvlStateSwitcher } = props;
+  const { lvlStateSwitcher, resultStateSwitcher } = props;
+
+  const audio = new Audio();
+
+  useEffect(() => {
+    const { audioExample } = data[index];
+    audio.src = `https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${audioExample}`;
+    if (!isSound) audio.autoplay = true;
+  }, []);
+
+  useEffect(() => {
+    const { audioExample } = data[index];
+    audio.src = `https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${audioExample}`;
+    if (!isSound) audio.autoplay = true;
+  }, [index]);
 
   const soundBtnClickHandler = () => {
-    setSoundState(!isSound)
+    console.log(isSound)
+    dispatch(setIsSound)
   }
 
   const textBtnClickHandler = () => {
@@ -23,10 +37,13 @@ const Controls = (props) => {
   }
 
   const playBtnClickHandler = () => {
+    const { audioExample } = data[index];
+    audio.src = `https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${audioExample}`;
+    if (!isSound) audio.play();
   }
 
   const imageBtnClickHandler = () => {
-    setImageState(!isImage)
+    dispatch(setIsImg)
   }
 
   return (
@@ -55,7 +72,7 @@ const Controls = (props) => {
         clickHandler={playBtnClickHandler}
       />
       <Button
-        className={`englishPuzzle__imageBtn ${isImage ? 'englishPuzzle__imageBtn--active' : ''}`}
+        className={`englishPuzzle__imageBtn ${isImg ? 'englishPuzzle__imageBtn--active' : ''}`}
         text=''
         clickHandler={imageBtnClickHandler}
       />

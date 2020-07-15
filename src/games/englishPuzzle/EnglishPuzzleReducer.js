@@ -2,14 +2,18 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit';
 import { getData } from './EnglishPuzzleApi';
-import { createRows } from './EnglishPuzzleUtils';
+import {
+  createRows, getImgData, setLocalStorage, getLocalStorage,
+} from './EnglishPuzzleUtils';
+
+const saved = getLocalStorage('englishPuzzleSettings')
 
 const initialEnglishPuzzleState = {
   data: [],
   isDataLoaded: false,
-  isImgLoaded: false,
   isTextHint: false,
-  isImgShow: true,
+  isImg: false,
+  isSound: false,
   index: 0,
   page: 0,
   group: 0,
@@ -17,6 +21,7 @@ const initialEnglishPuzzleState = {
   width: 600,
   height: 45,
   actionsType: 'dont',
+  pictureLink: null,
   rows: [{
     isVisible: false,
     isGuessed: false,
@@ -29,18 +34,26 @@ const englishPuzzleSlice = createSlice({
   name: 'englishPuzzle',
   initialState: { ...initialEnglishPuzzleState },
   reducers: {
-    init(state, action) {
-      const { data, rows } = action.payload;
-      state.data = data;
-      state.rows = rows;
-      state.isEnd = false;
-      state.index = 0;
-      state.isDataLoaded = true;
-      state.shuffled = state.data[state.index].shuffled;
-      state.translated = state.data[state.index].textExampleTranslate;
-      state.pictureLink = '/img/test.jpg';
+    updateRows(state, action) {
+      state.rows = action.payload.rows;
+    },
+    updateData(state, action) {
+      state.data = action.payload.data;
+    },
+    globalReset(state, action) {
+      state = action.payload.state;
+    },
+    setIsEnd(state, action) {
+      state.isEnd = action.payload.isEnd;
+    },
+    setDataLoad(state, action) {
+      state.isDataLoaded = action.payload.isDataLoaded;
+    },
+    updateImgData(state, action) {
+      state.imgData = action.payload.imgData;
     },
     imageLoaded(state, action) {
+      console.log('imgloade')
       state.isImgLoaded = true;
     },
     toGuessingRow(state, action) {
@@ -52,155 +65,69 @@ const englishPuzzleSlice = createSlice({
     toCurrentRow(state, action) {
       const { id } = action.payload;
       const wordObj = state.rows[state.index].sentence.filter((elem) => elem.id === id);
-      state.rows[state.index].sentence = state.rows[state.index].sentence.filter((elem) => elem.id !== id);
+      state.rows[state.index].sentence = state.rows[state.index].sentence.filter((elem) => {
+        return elem.id !== id;
+      });
       state.shuffled = [...state.shuffled, ...wordObj]
     },
-    sortGuessingRow(state, action) {
-      let { targetIndex } = action.payload;
-      const { draggedIndex, insertPosition, indexFromAnotherNode } = action.payload;
-      const stateCopy = state.shuffled.slice();
-      if (targetIndex > draggedIndex) targetIndex -= 1;
-      const pos = (insertPosition === 'before') ? targetIndex : targetIndex + 1;
-
-      if (indexFromAnotherNode || indexFromAnotherNode === 0) {
-        const elemFromAnotherNode = state.rows[state.index].sentence[indexFromAnotherNode];
-        state.rows[state.index].sentence = state.rows[state.index].sentence.filter((elem, ind) => {
-          return ind !== indexFromAnotherNode;
-        });
-        if (!targetIndex) {
-          state.shuffled = [...stateCopy, elemFromAnotherNode];
-        } else {
-          stateCopy.splice(pos, 0, elemFromAnotherNode);
-          state.shuffled = stateCopy;
-        }
-        return;
-      }
-      if (targetIndex || targetIndex === 0) {
-        const draggedElem = state.shuffled[draggedIndex];
-        stateCopy.splice(draggedIndex, 1);
-        stateCopy.splice(pos, 0, draggedElem);
-        state.shuffled = stateCopy;
-      }
+    updateGuessingRow(state, action) {
+      state.shuffled = action.payload.shuffled;
     },
-    sortCurrentRow(state, action) {
-      let { targetIndex } = action.payload;
-      const { draggedIndex, insertPosition, indexFromAnotherNode } = action.payload;
-      const stateCopy = state.rows[state.index].sentence.slice();
-      if (targetIndex > draggedIndex) targetIndex -= 1;
-      const pos = (insertPosition === 'before') ? targetIndex : targetIndex + 1;
-
-      if (indexFromAnotherNode || indexFromAnotherNode === 0) {
-        const elemFromAnotherNode = state.shuffled[indexFromAnotherNode];
-        state.shuffled = state.shuffled.filter((elem, ind) => ind !== indexFromAnotherNode);
-        if (!targetIndex) {
-          state.rows[state.index].sentence = [...stateCopy, elemFromAnotherNode];
-        } else {
-          stateCopy.splice(pos, 0, elemFromAnotherNode);
-          state.rows[state.index].sentence = stateCopy;
-        }
-        return;
-      }
-      if (targetIndex || targetIndex === 0) {
-        const draggedElem = state.rows[state.index].sentence[draggedIndex];
-        stateCopy.splice(draggedIndex, 1);
-        stateCopy.splice(pos, 0, draggedElem);
-        state.rows[state.index].sentence = stateCopy;
-      }
-    },
-    dontKnow(state, action) {
-      const sorted = [...state.data[state.index].shuffled].sort((objA, objB) => {
-        return objA.position - objB.position;
-      })
-      state.shuffled = [];
-      state.rows[state.index].sentence = sorted;
-      state.rows[state.index].isUseHint = true;
-
-      if (state.rows.length - 1 === state.index) {
-        state.isEnd = true;
-        state.rows[state.index].isCurrent = false;
-      }
-    },
-    switchWord(state, action) {
-      state.rows[state.index].isCurrent = false;
-      const newIndex = state.index + 1;
-      if (newIndex > state.rows.length - 1) {
-        state.isEnd = true;
-        state.isTextHint = false;
-      } else {
-        state.index = newIndex;
-        state.shuffled = state.data[state.index].shuffled;
-        state.translated = state.data[state.index].textExampleTranslate
-        state.rows[state.index].isVisible = true;
-        state.rows[state.index].isCurrent = true;
-      }
+    updateCurrentRow(state, action) {
+      state.rows[state.index].sentence = action.payload.sentence;
     },
     changeActionType(state, action) {
       state.actionsType = action.payload.type;
     },
-    check(state, action) {
-      let sentence = state.rows[state.index].sentence.slice();
-      const reference = state.rows[state.index].wordsArr.slice();
-      const checked = sentence.map((obj, index) => {
-        if (obj.word === reference[index]) {
-          obj.isRightPos = true;
-          return obj;
-        }
-        obj.isRightPos = false;
-        return obj;
-      })
-      const isGuessed = sentence.every((obj) => obj.isRightPos);
-      if (isGuessed) {
-        if (state.rows.length - 1 === state.index) {
-          state.isEnd = true;
-          state.rows[state.index].isCurrent = false;
-          sentence = sentence.map((obj) => {
-            delete obj.isRightPos
-            return obj;
-          });
-        } else {
-          state.actionsType = 'continue';
-        }
-        state.rows[state.index].isGuessed = true;
-      } else {
-        state.actionsType = 'dont';
-      }
-      state.rows[state.index].sentence = sentence;
-    },
-    resetWords(state, aciton) {
-      const sentence = state.rows[state.index].sentence.slice();
-      const checked = sentence.map((obj, index) => {
-        if (typeof obj.isRightPos !== 'undefined') delete obj.isRightPos
-        return obj;
-      })
-      state.rows[state.index].sentence = sentence;
-    },
     changeTextHintState(state, action) {
       state.isTextHint = !state.isTextHint;
     },
-    changePage(state, action) {
+    changeCurrentPage(state, action) {
       state.page = action.payload.page;
     },
-    changeGroup(state, action) {
+    changeCurrentGroup(state, action) {
       state.group = action.payload.group;
+    },
+    updateIsGuessed(state, action) {
+      state.rows[state.index].isGuessed = action.payload.isGuessed;
+    },
+    updateIsCurrent(state, action) {
+      state.rows[state.index].isCurrent = action.payload.isCurrent;
+    },
+    updateIsImg(state, action) {
+      state.isImg = !state.isImg
+    },
+    updateIsSound(state, action) {
+      state.isSound = !state.isSound;
+    },
+    updateIsEnd(state, action) {
+      state.isEnd = !state.isEnd;
+    },
+    updateIsUseHint(state, action) {
+      state.rows[state.index].isUseHint = true;
+    },
+    updateIndex(state, action) {
+      state.index = action.payload.index;
+    },
+    updateTranslated(state, action) {
+      state.translated = action.payload.translated
+    },
+    updateIsVisible(state, action) {
+      state.rows[state.index].isVisible = true;
+    },
+    updatePictureLink(state, action) {
+      state.pictureLink = action.payload.pictureLink;
     },
   },
 });
 
 export const {
-  init,
-  imageLoaded,
-  toCurrentRow,
-  toGuessingRow,
-  sortGuessingRow,
-  sortCurrentRow,
-  dontKnow,
-  switchWord,
-  changeActionType,
-  check,
-  resetWords,
-  changeTextHintState,
-  changeGroup,
-  changePage,
+  init, setIsEnd, imageLoaded, setDataLoad, toCurrentRow,
+  toGuessingRow, updateGuessingRow, updateCurrentRow, updateIsGuessed,
+  updateIsCurrent, changeActionType, changeTextHintState, changeCurrentGroup,
+  changeCurrentPage, updateImgData, updateIsSound, updateIsImg, updateIsUseHint,
+  updateIsEnd, updateTranslated, updateIsVisible, updateIndex, globalReset,
+  updatePictureLink, updateRows, updateData,
 } = englishPuzzleSlice.actions;
 
 export const englishPuzzleReducer = englishPuzzleSlice.reducer;
@@ -209,14 +136,190 @@ export const initState = (page, group) => async (dispatch, getState) => {
   const { englishPuzzle: { width, height }, englishPuzzle } = getState();
   try {
     const data = await getData(width, height, page, group);
+    const imgData = getImgData(page, group)
     if (data) {
       const rows = createRows(data);
-      dispatch(init({ data, rows }));
-      console.log(englishPuzzle)
+      dispatch(updateIndex({ index: 0 }))
+      dispatch(setIsEnd({ isEnd: false }));
+      dispatch(updateData({ data }));
+      dispatch(updateRows({ rows }));
+      dispatch(updateGuessingRow({ shuffled: data[0].shuffled }))
+      dispatch(updateImgData({ imgData }));
+      dispatch(setDataLoad({ isDataLoaded: true }));
+      dispatch(updatePictureLink({ pictureLink: imgData.imageSrc }))
+      dispatch(updateTranslated({ translated: data[0].textExampleTranslate }))
     } else {
-      console.log('no data');
+      console.warn('no data');
     }
   } catch (err) {
     console.log(err);
+  }
+}
+
+export const initWithSetting = (settings) => (dispatch, getState) => {
+  dispatch(globalReset({ settings }));
+  console.log(settings)
+  // dispatch(updateIndex({ index: 0 }))
+  // dispatch(setIsEnd({ isEnd: false }));
+  // dispatch(updateRows({ rows }));
+  // dispatch(updateGuessingRow({ shuffled: data[0].shuffled }))
+  // dispatch(updateImgData({ imgData }));
+  // dispatch(setDataLoad({ isDataLoaded: true }));
+  // dispatch(updatePictureLink({ pictureLink: imgData.imageSrc }))
+  // dispatch(updateTranslated({ translated: data[0].textExampleTranslate }))
+}
+
+export const changePage = (page) => (dispatch, getState) => {
+  dispatch(setDataLoad({ isDataLoaded: false }));
+  dispatch(changeCurrentPage({ page }))
+}
+
+export const changeGroup = (group) => (dispatch, getState) => {
+  dispatch(setDataLoad({ isDataLoaded: false }));
+  dispatch(changeCurrentGroup({ group }))
+}
+
+export const changeLvl = (dispatch, getState) => {
+  const { englishPuzzle: { group, page }, englishPuzzle } = getState();
+  dispatch(setDataLoad({ isDataLoaded: false }));
+  const pageLimit = (group < 3) ? 29 : 24;
+  if (page === pageLimit) {
+    const newGroupVal = group === 5 ? 0 : group + 1;
+    dispatch(changeCurrentGroup({ group: newGroupVal }))
+    dispatch(changeCurrentPage({ page: 0 }))
+  } else {
+    dispatch(changeCurrentPage({ page: page + 1 }))
+  }
+  setLocalStorage('englishPuzzleSettings', englishPuzzle)
+}
+
+const updateR = (dispatch, flag, newState, reverse) => {
+  if (!reverse) {
+    if (flag) dispatch(updateCurrentRow({ sentence: newState }))
+    if (!flag) dispatch(updateGuessingRow({ shuffled: newState }))
+  }
+  if (reverse) {
+    if (flag) dispatch(updateGuessingRow({ shuffled: newState }))
+    if (!flag) dispatch(updateCurrentRow({ sentence: newState }));
+  }
+}
+
+export const sort = (tgInd, dragInd, insPos, indFrom, flag) => (dispatch, getState) => {
+  const { englishPuzzle: { shuffled, rows, index }, englishPuzzle } = getState();
+  const { sentence } = rows[index];
+  const first = flag ? sentence : shuffled;
+  const second = flag ? shuffled : sentence;
+  const stateCopy = first.slice();
+  if (dragInd) tgInd = (tgInd > dragInd) ? tgInd -= 1 : tgInd;
+  const pos = (insPos === 'before') ? tgInd : tgInd + 1;
+
+  if (indFrom || indFrom === 0) {
+    const elemFromAnotherNode = second[indFrom];
+    const filtered = second.filter((elem, ind) => ind !== indFrom);
+    if (!tgInd) {
+      const newState = [...stateCopy, elemFromAnotherNode];
+      updateR(dispatch, flag, newState, false)
+      updateR(dispatch, flag, filtered, true)
+    } else {
+      stateCopy.splice(pos, 0, elemFromAnotherNode);
+      updateR(dispatch, flag, stateCopy, false)
+      updateR(dispatch, flag, filtered, true)
+    }
+    setLocalStorage('englishPuzzleSettings', englishPuzzle)
+    return false;
+  }
+  if (tgInd || tgInd === 0) {
+    const draggedElem = first[dragInd];
+    stateCopy.splice(dragInd, 1);
+    stateCopy.splice(pos, 0, draggedElem);
+    updateR(dispatch, flag, stateCopy, false)
+    setLocalStorage('englishPuzzleSettings', englishPuzzle)
+  }
+  return false;
+}
+
+const isGuess = (dispatch, rows, index, copy) => {
+  if (rows.length - 1 === index) {
+    dispatch(setIsEnd({ isEnd: true }));
+    dispatch(updateIsCurrent({ isCurrent: true }))
+    copy = copy.map((obj) => {
+      delete obj.isRightPos
+      return obj;
+    });
+  } else {
+    dispatch(changeActionType({ type: 'continue' }))
+  }
+  dispatch(updateIsGuessed({ isGuessed: true }))
+}
+
+export const checkSurface = (dispatch, getState) => {
+  const { englishPuzzle: { shuffled, rows, index }, englishPuzzle } = getState();
+  const { sentence, wordsArr } = rows[index];
+  let copy = JSON.parse(JSON.stringify(sentence));
+  const checked = copy.map((obj, i) => {
+    if (obj.word === wordsArr[i]) obj.isRightPos = true;
+    if (obj.word !== wordsArr[i]) obj.isRightPos = false;
+    return obj;
+  });
+  const isGuessed = copy.every((obj) => obj.isRightPos);
+  if (isGuessed) {
+    isGuess(dispatch, rows, index, copy)
+  } else {
+    dispatch(changeActionType({ type: 'dont' }))
+  }
+  dispatch(updateCurrentRow({ sentence: copy }))
+  setLocalStorage('englishPuzzleSettings', englishPuzzle)
+}
+
+export const resetWords = (dispatch, getState) => {
+  const { englishPuzzle: { shuffled, rows, index }, englishPuzzle } = getState();
+  const { sentence } = rows[index];
+  let copy = JSON.parse(JSON.stringify(sentence));
+  copy = copy.map((obj) => {
+    if (typeof obj.isRightPos !== 'undefined') delete obj.isRightPos
+    return obj;
+  })
+  dispatch(updateCurrentRow({ sentence: copy }))
+  setLocalStorage('englishPuzzleSettings', englishPuzzle)
+}
+
+export const setIsSound = (dispatch, getState) => {
+  const { englishPuzzle } = getState();
+  dispatch(updateIsSound());
+  setLocalStorage('englishPuzzleSettings', englishPuzzle)
+}
+
+export const setIsImg = (dispatch) => {
+  dispatch(updateIsImg());
+}
+
+export const ifDontKnow = (dispatch, getState) => {
+  const { englishPuzzle: { data, index, rows }, englishPuzzle } = getState();
+  const sorted = [...data[index].shuffled].sort((objA, objB) => {
+    return objA.position - objB.position;
+  });
+  dispatch(updateCurrentRow({ sentence: sorted }));
+  dispatch(updateGuessingRow({ shuffled: [] }));
+  dispatch(updateIsUseHint());
+
+  if (rows.length - 1 === index) {
+    dispatch(updateIsEnd())
+    dispatch(updateIsCurrent({ isCurrent: false }))
+  }
+}
+
+export const switchWord = (dispatch, getState) => {
+  const { englishPuzzle: { index, rows, data }, englishPuzzle } = getState();
+  const newIndex = index + 1;
+  dispatch(updateIsCurrent({ isCurrent: false }))
+  if (newIndex > rows.length - 1) {
+    dispatch(updateIsEnd({ index: 0 }))
+    dispatch(changeTextHintState())
+  } else {
+    dispatch(updateIndex({ index: newIndex }))
+    dispatch(updateGuessingRow({ shuffled: data[newIndex].shuffled }))
+    dispatch(updateTranslated({ translated: data[newIndex].textExampleTranslate }))
+    dispatch(updateIsVisible())
+    dispatch(updateIsCurrent({ isCurrent: true }))
   }
 }

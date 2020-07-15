@@ -1,33 +1,34 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  dontKnow, switchWord, changeActionType, check,
-  resetWords,
-} from '../../EnglishPuzzleReducer'
+  switchWord, changeActionType,
+  resetWords, checkSurface, ifDontKnow,
+} from '../../EnglishPuzzleReducer';
 import { Button } from '..';
 
-const Actions = () => {
+const Actions = (props) => {
   const {
     actionsType, rows, index, isEnd, shuffled,
   } = useSelector((state) => state.englishPuzzle);
+  const { resultStateSwitcher, nextRound } = props;
   const dispatch = useDispatch();
   const { isGuessed, isUseHint } = rows[index];
 
   const checkBtnClickHandler = () => {
-    dispatch(check())
+    dispatch(checkSurface)
   }
 
   const continueBtnClickHandler = () => {
-    dispatch(resetWords())
-    dispatch(switchWord())
+    dispatch(resetWords)
+    dispatch(switchWord)
   }
 
   const resultBtnClickHandler = () => {
-    console.log('result')
+    resultStateSwitcher();
   }
 
   const nextBtnClickHandler = () => {
-    console.log('nextClick')
+    nextRound();
   }
 
   const checkBtn = (
@@ -42,7 +43,7 @@ const Actions = () => {
     <Button
       className='englishPuzzle__button'
       text={'I don\'t know'}
-      clickHandler={() => dispatch(dontKnow())}
+      clickHandler={() => dispatch(ifDontKnow)}
     />
   );
 

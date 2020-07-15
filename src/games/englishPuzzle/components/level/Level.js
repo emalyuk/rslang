@@ -19,12 +19,12 @@ const Level = ({ hidePopup }) => {
 
   const levelClickHandler = (roundNum) => {
     hidePopup();
-    dispatch(changeGroup({ group: roundNum }))
+    dispatch(changeGroup(roundNum))
   }
 
   const roundClickHandler = (levelNum) => {
     hidePopup();
-    dispatch(changePage({ page: levelNum }))
+    dispatch(changePage(levelNum))
   }
 
   return (
@@ -52,6 +52,9 @@ const Level = ({ hidePopup }) => {
       <div className='level__header'>Раунд</div>
       <div className='level__btns-wrapper'>
         {roundsArr.map((round) => {
+          if (group > 2 && round > 24) {
+            return null;
+          }
           return (
             <Button
               className={`level__btn ${(round === page) ? 'level__btn--active' : ''} `}

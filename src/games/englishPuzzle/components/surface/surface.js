@@ -1,6 +1,8 @@
 import React, { Fragment, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { toCurrentRow, sortCurrentRow, resetWords } from '../../EnglishPuzzleReducer';
+import {
+  toCurrentRow, resetWords, sort,
+} from '../../EnglishPuzzleReducer';
 import { Word } from '..';
 
 const Surface = ({ image }) => {
@@ -9,7 +11,7 @@ const Surface = ({ image }) => {
   const parents = useRef(rows.map(() => React.createRef()));
 
   const clickHandler = (id) => {
-    dispatch(resetWords())
+    dispatch(resetWords)
     dispatch(toCurrentRow({ id }))
   }
 
@@ -36,7 +38,7 @@ const Surface = ({ image }) => {
   }
 
   const dragDrop = (e, i) => {
-    dispatch(resetWords())
+    dispatch(resetWords)
     dispatch(toCurrentRow({ type: 'check' }))
     const { target, pageX } = e.nativeEvent;
     const { x, width: elemWidth } = target.getBoundingClientRect();
@@ -50,17 +52,9 @@ const Surface = ({ image }) => {
     });
 
     if (dataFromAnotherNode || dataFromAnotherNode === 0) {
-      dispatch(sortCurrentRow({
-        indexFromAnotherNode: dataFromAnotherNode,
-        targetIndex,
-        insertPosition,
-      }))
+      dispatch(sort(targetIndex, null, insertPosition, dataFromAnotherNode, true))
     } else {
-      dispatch(sortCurrentRow({
-        targetIndex,
-        draggedIndex,
-        insertPosition,
-      }))
+      dispatch(sort(targetIndex, draggedIndex, insertPosition, false, true));
     }
     e.dataTransfer.clearData();
   }

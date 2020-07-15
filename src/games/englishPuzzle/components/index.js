@@ -6,3 +6,6 @@ export { default as Actions } from './actions/actions';
 export { default as Button } from './button/button';
 export { default as Popup } from './popup/Popup';
 export { default as Level } from './level/Level';
+export { default as Results } from './results/Results';
+export { default as Result } from './result/Result';
+export { default as CurrentStatistic } from './currentStatistic/CurrentStatistic';
