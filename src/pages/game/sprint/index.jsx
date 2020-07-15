@@ -7,13 +7,12 @@ import { getRandom } from './helpers';
 import Button from '../../../components/button/Button';
 import StartGameControls from './StartGameControls';
 
-import Timer from './Timer';
+import Timer from './Timer.jsx';
 import LevelSelect from './LevelSelect';
 
 import './styles.scss';
 
 const GameSprint = () => {
-
   //TODO: в редакс все если время будет (words - обязатьельн);
   const [isPlay, setIsPlay] = useState(false);
   const [isPlayAndNewRaund, setIsPlayAndNewRaund] = useState(false);
@@ -172,7 +171,8 @@ const GameSprint = () => {
   const RepeatGameControllers = () => {
     const currectAnswer = clickAnswerCounter.correctAnswer;
     const unCurrectAnswer = clickAnswerCounter.unCorrectAnswer;
-    const allAnswer = clickAnswerCounter.correctAnswer + clickAnswerCounter.unCorrectAnswer
+    const allAnswer =
+      clickAnswerCounter.correctAnswer + clickAnswerCounter.unCorrectAnswer;
 
     return (
       <div className='start-game-controller'>
@@ -195,9 +195,10 @@ const GameSprint = () => {
           <p>{`Не верно: ${unCurrectAnswer}`}</p>
           <p>
             {`Верных ответов:
-            ${(allAnswer !== 0)
-              ? Math.floor((currectAnswer / allAnswer) * 100)
-              : 0
+            ${
+              allAnswer !== 0
+                ? Math.floor((currectAnswer / allAnswer) * 100)
+                : 0
             }%`}
           </p>
         </div>
@@ -227,7 +228,7 @@ const GameSprint = () => {
       arrayStatisticAllGames.push(clickAnswerCounter),
     );
     setCurrentWord();
-  }
+  };
 
   useEffect(() => {
     window.addEventListener('keyup', handleKeyPress);
@@ -247,9 +248,7 @@ const GameSprint = () => {
       </h2>
 
       <div className='game-sprint__counetr'>
-        <div className='counter-box'>
-         {`Счет: ${score}`}
-        </div>
+        <div className='counter-box'>{`Счет: ${score}`}</div>
 
         <div className='counter-box'>
           <Timer isTimerRun={isPlay} onTimeLeft={handleTimeLeft} />
