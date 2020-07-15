@@ -1,11 +1,11 @@
 import React from 'react';
 import './ResultGame.scss';
 
-const Word = ({ wordTranslate, isGuessed }) => {
+const Word = ({ word, isGuessed }) => {
 
   return (
     <p className={['Word', isGuessed ? 'isGuessed' : 'isNotGuessed'].join(' ')}>
-      {wordTranslate}
+      {word}
     </p>
   )
 }
