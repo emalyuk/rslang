@@ -84,7 +84,9 @@ const ResultsModal = ({ results }) => {
 
   useEffect(() => {
     if (isUserLoggedIn) {
-      postStatistic();
+      if (results.valid.length || results.invalid.length) {
+        postStatistic();
+      }
     }
   }, [results]);
 
