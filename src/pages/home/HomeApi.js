@@ -56,3 +56,25 @@ export const putSettings = async (settings) => {
 export const putStats = async (stats) => {
   axios.put(statsPath, JSON.stringify(stats), config);
 };
+
+export const postWord = async (idWord, data) => {
+  axios.post(`/words/${idWord}`, data, config);
+};
+
+export const getUserWords = async () => axios.get('/words', config);
+
+export const deleteWord = async (idWord) => axios.delete(`/words/${idWord}`, config);
+
+export const getUserWordsWithFilter = async (filter) => {
+  const testfULTER = JSON.stringify({
+    $or: [
+      { ['userWord.difficulty']: `${filter}` },
+    ],
+  });
+
+  return axios.get(`/aggregatedWords?filter=${testfULTER}`, config);
+};
+
+export const putWord = async (idWord, data) => {
+  return axios.put(`/words/${idWord}`, data, config);
+};
