@@ -74,3 +74,7 @@ export const getUserWordsWithFilter = async (filter) => {
 
   return axios.get(`/aggregatedWords?filter=${testfULTER}`, config);
 };
+
+export const putWord = async (idWord, data) => {
+  return axios.put(`/words/${idWord}`, data, config);
+};
