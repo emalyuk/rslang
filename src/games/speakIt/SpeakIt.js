@@ -2,8 +2,10 @@ import React, {
   useEffect,
   useState,
 } from 'react'
+import Button from '../../components/button/Button'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import Card from './components/card/Card'
+import Level from './components/level/Level'
 import ViewBox from './components/viewBox/ViewBox'
 import ResultGame from './components/resultGame/ResultGame'
 import './SpeakIt.scss'
@@ -26,8 +28,6 @@ const activeInit = {
 }
 
 const Team = () => {
-  const audio = document.querySelector('audio')
-
   const [isFinish, setIsFinish] = useState(false)
   const [words, setWords] = useState([])
   const [active, setActive] = useState(activeInit)
@@ -38,7 +38,6 @@ const Team = () => {
   const [gameDifficulty, setGameDifficulty] = useState(0)
   const [numGuessedWords, setNumGuessedWords] = useState(0)
   const [numWords, setNumWords] = useState(0)
-  const [statistics, setStatistics] = useState({})
   const { finalTranscript, resetTranscript } = useSpeechRecognition()
 
   function getRandomNum(min, max) {
@@ -152,24 +151,32 @@ const Team = () => {
       setSpeakWord(finalTranscript)
     }
   }, [finalTranscript])
+  const changeGameDifficulty = (level) => {
+    const levelsArr = document.querySelectorAll('.level')
+    levelsArr.forEach((item) => {
+      item.classList.remove('isActive');
+    })
+    levelsArr[level].classList.add('isActive')
+    setGameDifficulty(level)
 
+  }
   return (
     <div className='SpeakIt'>
       <div className='container'>
         <ViewBox activeImg={active.img} activeAudio={activeAudio} wordTranslate={active.wordTranslate} />
         {
-          isGameMod ? '' : <button onClick={startGame}>начать игру</button>
+          isGameMod ? '' : <Button onClick={startGame} children='начать игру' className='gameBtn' type='button' disabled={false}></Button>
         }
         {
-          isGameMod ? <button onClick={finishedGame}>закончить игру</button> : ''
+          isGameMod ? <Button onClick={finishedGame} children='закончить игру' className='gameBtn' type='button' disabled={false}></Button> : ''
         }
         <div className='levels'>
-          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(0) }}>1</button>
-          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(1) }}>2</button>
-          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(2) }}>3</button>
-          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(3) }}>4</button>
-          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(4) }}>5</button>
-          <button className={isGameMod ? 'hide' : ''} onClick={() => { setGameDifficulty(5) }}>6</button>
+          <Level isGameMod={isGameMod} changeGameDifficulty={changeGameDifficulty} level='0' />
+          <Level isGameMod={isGameMod} changeGameDifficulty={changeGameDifficulty} level='1' />
+          <Level isGameMod={isGameMod} changeGameDifficulty={changeGameDifficulty} level='2' />
+          <Level isGameMod={isGameMod} changeGameDifficulty={changeGameDifficulty} level='3' />
+          <Level isGameMod={isGameMod} changeGameDifficulty={changeGameDifficulty} level='4' />
+          <Level isGameMod={isGameMod} changeGameDifficulty={changeGameDifficulty} level='5' />
         </div>
         <div className='cards'>
           {
