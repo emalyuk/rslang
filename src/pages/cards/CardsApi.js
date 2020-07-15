@@ -55,7 +55,4 @@ export const createUserWord = async (wordId, word) => {
     },
     body: JSON.stringify(word),
   });
-  const content = await rawResponse.json();
-
-  console.log(content);
 };

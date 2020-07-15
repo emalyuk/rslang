@@ -1,3 +1,6 @@
+@import 'scss/variables';
+@import 'scss/mixins';
+
 .card__header {
   display: flex;
   flex-direction: row;
@@ -8,6 +11,10 @@
   &__button {
     max-width: 200px;
     font-size: 16px;
+
+    @include exSm() {
+      width: 150px;
+    }
 
     &--del {
       width: 40px;

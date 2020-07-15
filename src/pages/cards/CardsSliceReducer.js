@@ -4,14 +4,6 @@ import { getWordsData, createUserWord } from './CardsApi';
 
 const initialCardsState = {
   data: [],
-  todayStats: {
-    date: null,
-    todayWordLearned: 0,
-    bestSeries: 0,
-    countRightAnswers: 0,
-    countWrongAnswers: 0,
-    countSkipedWords: 0,
-  },
   currentCardAction: {
     isAnswerReceived: false,
     isCorrectAnswer: false,
@@ -44,9 +36,6 @@ const cardsSlice = createSlice({
     showNextCard(state) {
       state.data = [...state.data.slice(1)];
     },
-    setTodayStats(state, action) {
-      state.todayStats = action.payload;
-    },
   },
 });
 
@@ -72,16 +61,16 @@ export const getNextWord = (id, userWord) => (dispatch) => {
   dispatch(showNextCard());
 };
 
-export const getWords = (learnedWords, group, wordsPerDay) => async (
+export const getWords = (numberStartCard, group, wordsPerDay) => async (
   dispatch,
 ) => {
   try {
-    const { data } = await getWordsData(learnedWords, group, wordsPerDay);
+    const { data } = await getWordsData(numberStartCard, group, wordsPerDay);
 
     if (data) {
       dispatch(
         getDataSuccess([
-          ...data.slice(learnedWords, learnedWords + wordsPerDay),
+          ...data.slice(numberStartCard, numberStartCard + wordsPerDay),
         ]),
       );
     } else {

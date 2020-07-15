@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Button from 'components/button/Button';
 import { playAudioArr } from 'utils/playAudioArr';
+import { putStats } from 'pages/home/HomeApi';
 import { showNextCard, setIsSkipAnswer } from '../../CardsSliceReducer';
 
 import './CardFooter.scss';
 
-const CardFooter = ({ data, cardMainInfo }) => {
+const CardFooter = ({ data, cardMainInfo, stats }) => {
   const dispatch = useDispatch();
 
   const showNextWord = () => {
@@ -20,6 +21,17 @@ const CardFooter = ({ data, cardMainInfo }) => {
   const handleOnClickShowAnswer = () => {
     const { audio, audioMeaning, audioExample } = data;
     const { isShowWordMeaning, isShowWordExample } = cardMainInfo;
+
+    putStats({
+      ...stats,
+      optional: {
+        ...stats.optional,
+        cardStats: {
+          ...stats.optional.cardStats,
+          countSkipedWords: stats.optional.cardStats.countSkipedWords + 1,
+        },
+      },
+    });
 
     dispatch(setIsSkipAnswer(true));
 
