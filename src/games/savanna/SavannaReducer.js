@@ -201,6 +201,18 @@ export const changeDifficulity = (value) => async (dispatch, getState) => {
   }
 }
 
+export const resetState = () => async (dispatch) => {
+  dispatch(getWords([]));
+  dispatch(toggleShowModal(true));
+  dispatch(getWordNumber(0));
+  dispatch(getShowStart(true));
+  dispatch(getPlaySound(true));
+  dispatch(getShowCloseModal(false));
+  dispatch(getShowResultsModal(false));
+  dispatch(getShowDeleteModal(false));
+  dispatch(getIsRefresh(false));
+};
+
 export const getSavannaInfo = (isLogin) => async (dispatch, getState) => {
   const currentDifficulity = getState().savanna.difficulity;
   const currentPage = getState().savanna.page;

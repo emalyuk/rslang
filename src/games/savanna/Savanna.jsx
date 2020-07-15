@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import './Savanna.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import Axios from 'axios';
-import { getUserWordsWithFilter } from 'pages/home/HomeApi';
+import { getUserWordsWithFilter, getUserWords } from 'pages/home/HomeApi';
 import { ModalWindow } from '../../components';
 import { defaultHearts } from './data';
-import { getSavannaInfo, changeWordNumber, changeShowCloseModal, changeShowResultsModal, changeWords, changePlaySound, changeIsRefresh, changeShowChangeDifficulity, changeUserWeakWords, changePage } from './SavannaReducer';
+import { getSavannaInfo, changeWordNumber, changeShowCloseModal, changeShowResultsModal, changeWords, changePlaySound, changeIsRefresh, changeShowChangeDifficulity, changeUserWeakWords, changePage, resetState } from './SavannaReducer';
 import StartModal from './modals/start/StartModal';
 import CloseModal from './modals/close/CloseModal';
 import ResultsModal from './modals/results/ResultsModal';
@@ -51,6 +51,32 @@ const Savanna = () => {
     setTimeout(() => {
       answerTrueRef.current.dataset.state = 'start';
     }, 300);
+  };
+
+  const updateHeartToDefault = () => {
+    const copyDefaultHearts = [
+      {
+        id: 1,
+        live: true,
+      },
+      {
+        id: 2,
+        live: true,
+      },
+      {
+        id: 3,
+        live: true,
+      },
+      {
+        id: 4,
+        live: true,
+      },
+      {
+        id: 5,
+        live: true,
+      },
+    ];
+    setHearts(copyDefaultHearts);
   };
 
   const repeatAnimateAndFails = () => {
@@ -218,46 +244,31 @@ const Savanna = () => {
   };
 
   const updateGame = async () => {
+    answerTrueRef.current.dataset.state = 'end';
     setResults({
       valid: [],
       invalid: [],
     });
-    answerTrueRef.current.dataset.state = 'start';
-    const copyDefaultHearts = [
-      {
-        id: 1,
-        live: true,
-      },
-      {
-        id: 2,
-        live: true,
-      },
-      {
-        id: 3,
-        live: true,
-      },
-      {
-        id: 4,
-        live: true,
-      },
-      {
-        id: 5,
-        live: true,
-      },
-    ];
-    setHearts(copyDefaultHearts);
+    updateHeartToDefault();
     setFails(0);
     const newWords = await getNewDefaultWords();
-    dispatch(changeWords(newWords))
+    dispatch(changeWords(newWords));
     dispatch(changeWordNumber(0));
     dispatch(changeIsRefresh(false));
+    dispatch(changeShowResultsModal(false));
+    answerTrueRef.current.dataset.state = 'start';
   };
 
   const getUserWordsWrapper = async () => {
-    const studiedWords = await getUserWordsWithFilter('weak');
-    dispatch(changeUserWeakWords(studiedWords.data[0].paginatedResults.length));
-    if (studiedWords.data[0].paginatedResults.length > 19) {
-      dispatch(getSavannaInfo(true));
+    if (isUserLoggedIn) {
+      const studiedWords = await getUserWordsWithFilter('weak');
+      dispatch(changeUserWeakWords(studiedWords.data[0].paginatedResults.length));
+      if (studiedWords.data[0].paginatedResults.length > 19) {
+        dispatch(getSavannaInfo(true));
+      } else {
+        dispatch(getSavannaInfo(false));
+        dispatch(changeShowChangeDifficulity(true));
+      }
     } else {
       dispatch(getSavannaInfo(false));
       dispatch(changeShowChangeDifficulity(true));
@@ -299,11 +310,10 @@ const Savanna = () => {
   }, [wordNumber, words]);
 
   useEffect(() => {
-    if (isUserLoggedIn) {
-      getUserWordsWrapper();
-    } else {
-      dispatch(getSavannaInfo(false));
-    }
+    getUserWordsWrapper();
+    updateHeartToDefault();
+
+    return () => dispatch(resetState());
   }, []);
 
   useEffect(() => {
