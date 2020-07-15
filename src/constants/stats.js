@@ -1,4 +1,5 @@
 const initialStats = {
+  id: localStorage.JWT.userId,
   learnedWords: 0,
   optional: {
     cardStats: {

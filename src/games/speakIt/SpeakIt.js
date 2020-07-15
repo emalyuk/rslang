@@ -105,23 +105,16 @@ const Team = () => {
     SpeechRecognition.abortListening()
   }
   const showResult = async () => {
+    const userId = JSON.parse(localStorage.JWT).userId
     const date = new Date().toLocaleDateString()
-    const time = new Date().toLocaleTimeString()
     const curentGameStats = {
-      [date]: {
-        [time]: {
-          wrong: numWords - numGuessedWords,
-          right: numGuessedWords,
-        }
-      }
+      date,
+      wrong: numWords - numGuessedWords,
+      right: numGuessedWords,
     };
     let stat = await getStats()
-    stat.optional.speakit = curentGameStats
-    console.log(curentGameStats)
-    console.log(stat)
-    console.log(statistics)
-    console.log(`угадано слов: ${numGuessedWords}`)
-    console.log(`не угадано слов: ${numWords - numGuessedWords}`)
+    stat.optional.speakit.statistic.push(curentGameStats)
+    putStats(stat)
   }
   function finishedGame() {
     setIsFinish(true)
@@ -160,21 +153,9 @@ const Team = () => {
     }
   }, [finalTranscript])
 
-
-
-
-
-
-
-
-  async function show() {
-    const a = await getStats('https://afternoon-falls-25894.herokuapp.com/users/5f0768fa5f4f84001790b5b4/statistics')
-    console.log(a)
-  }
   return (
     <div className='SpeakIt'>
       <div className='container'>
-        <button onClick={show}>asdfasdf</button>
         <ViewBox activeImg={active.img} activeAudio={activeAudio} wordTranslate={active.wordTranslate} />
         {
           isGameMod ? '' : <button onClick={startGame}>начать игру</button>
