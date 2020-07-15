@@ -20,6 +20,8 @@ const navOptions = [
   { route: ROUTS.game, title: 'Game' },
   { route: ROUTS.promo, title: 'Promo' },
   { route: ROUTS.team, title: 'Team' },
+  { route: ROUTS.statistic, title: 'Statistics' },
+  { route: ROUTS.dictionary, title: 'Dictionary' },
 ];
 
 const navOptionsUnLoginUser = [

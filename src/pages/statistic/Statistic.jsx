@@ -8,6 +8,7 @@ import './Statistic.scss';
 const defaultStat = { labels: [], series: [[]] };
 
 const Statistic = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [savanna, setSavanna] = useState(defaultStat);
   const [speakit, setSpeakit] = useState(defaultStat);
   const [englishpuzzle, setEnglishpuzzle] = useState(defaultStat);
@@ -53,6 +54,8 @@ const Statistic = () => {
     setSpeakit(newSpeakit);
     setLeosprint(newLeosprint);
     setEnglishpuzzle(newEnglishpuzzle);
+    
+    setIsLoaded(true);
   };
 
   useEffect(() => {
@@ -61,41 +64,47 @@ const Statistic = () => {
 
   return (
     <div className='statistic-wrapper'>
-      <div className='graph-wrapper'>
-        <div className='blur' />
-        <div className='inner-wrapper'>
-          <h1>Savanna</h1>
-          {savanna.series[0].length ? <ChartistGraph data={savanna} type='Line' options={options} />
-            : <p>Статистика отсутствует</p> }
-        </div>
-      </div>
+      {isLoaded && !savanna.series[0].length && !speakit.series[0].length && !leosprint.series[0].length && !englishpuzzle.series[0].length && <h2>Статистика отсутствует</h2>}
 
-      <div className='graph-wrapper'>
-        <div className='blur' />
-        <div className='inner-wrapper'>
-          <h1>Leo-sprint</h1>
-          {speakit.series[0].length ? <ChartistGraph data={speakit} type='Line' options={options} />
-            : <p>Статистика отсутствует</p> }
+      {!!savanna.series[0].length && (
+        <div className='graph-wrapper'>
+          <div className='blur' />
+          <div className='inner-wrapper'>
+            <h1>Savanna</h1>
+            <ChartistGraph data={savanna} type='Line' options={options}/>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className='graph-wrapper'>
-        <div className='blur' />
-        <div className='inner-wrapper'>
-          <h1>Speak-it</h1>
-          {leosprint.series[0].length ? <ChartistGraph data={leosprint} type='Line' options={options} />
-            : <p>Статистика отсутствует</p> }
+      {!!speakit.series[0].length && (
+        <div className='graph-wrapper'>
+          <div className='blur' />
+          <div className='inner-wrapper'>
+            <h1>Leo-sprint</h1>
+            <ChartistGraph data={speakit} type='Line' options={options}/>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className='graph-wrapper'>
-        <div className='blur' />
-        <div className='inner-wrapper'>
-          <h1>English-puzzle</h1>
-          {englishpuzzle.series[0].length ? <ChartistGraph data={englishpuzzle} type='Line' options={options} />
-            : <p>Статистика отсутствует</p> }
+      {!!leosprint.series[0].length && (
+        <div className='graph-wrapper'>
+          <div className='blur' />
+          <div className='inner-wrapper'>
+            <h1>Leo-sprint</h1>
+            <ChartistGraph data={leosprint} type='Line' options={options} />
+          </div>
         </div>
-      </div>
+      )}
+
+      {!!englishpuzzle.series[0].length && (
+        <div className='graph-wrapper'>
+          <div className='blur' />
+          <div className='inner-wrapper'>
+            <h1>Leo-sprint</h1>
+            <ChartistGraph data={englishpuzzle} type='Line' options={options} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
