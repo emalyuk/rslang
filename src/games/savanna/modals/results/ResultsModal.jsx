@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getStats, putStats } from 'pages/home/HomeApi';
-import { changeShowResultsModal, changeIsRefresh } from '../../SavannaReducer';
+import { changeIsRefresh } from '../../SavannaReducer';
 import './ResultsModal.scss';
 
 const ResultsModal = ({ results }) => {
@@ -19,7 +19,6 @@ const ResultsModal = ({ results }) => {
 
   const continueTrain = () => {
     dispatch(changeIsRefresh(true));
-    dispatch(changeShowResultsModal(false));
   };
 
   const [score, setScore] = useState(true);
