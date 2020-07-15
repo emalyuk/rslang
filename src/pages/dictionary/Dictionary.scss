@@ -1,4 +1,5 @@
 .dictionary-wrapper {
+  position: relative;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -13,6 +14,8 @@
     align-items: center;
 
     .dictionary-title {
+      max-width: 245px;
+      width: 100%;
       font-size: 20px;
       font-weight: 700;
       font-style: normal;
@@ -75,9 +78,9 @@
   .dictionary-control {
     max-width: 900px;
     width: 100%;
-    height: 100%;
+    height: 80px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     min-height: 40px;
     margin: 0 auto;
@@ -129,6 +132,32 @@
       &:hover {
         background-image: url('../../assets/images/dictionary/hover-trash.svg');
       }
+    }
+  }
+
+  .dictionary-more-words {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .dictionary-more-btn {
+      padding: 5px 10px;
+      background-color: purple;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .loading-words {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+
+    .loading-words-content {
+      font-size: 20px;
     }
   }
 
