@@ -8,6 +8,7 @@ import './Statistic.scss';
 const defaultStat = { labels: [], series: [[]] };
 
 const Statistic = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [savanna, setSavanna] = useState(defaultStat);
   const [speakit, setSpeakit] = useState(defaultStat);
   const [englishpuzzle, setEnglishpuzzle] = useState(defaultStat);
@@ -53,6 +54,8 @@ const Statistic = () => {
     setSpeakit(newSpeakit);
     setLeosprint(newLeosprint);
     setEnglishpuzzle(newEnglishpuzzle);
+
+    setIsLoaded(true);
   };
 
   useEffect(() => {
@@ -61,7 +64,9 @@ const Statistic = () => {
 
   return (
     <div className='statistic-wrapper'>
-      {savanna.series[0].length && (
+      {isLoaded && !savanna.series[0].length && !speakit.series[0].length && !leosprint.series[0].length && !englishpuzzle.series[0].length && <h2>Статистика отсутствует</h2>}
+
+      {!!savanna.series[0].length && (
         <div className='graph-wrapper'>
           <div className='blur' />
           <div className='inner-wrapper'>
@@ -71,7 +76,7 @@ const Statistic = () => {
         </div>
       )}
 
-      {speakit.series[0].length && (
+      {!!speakit.series[0].length && (
         <div className='graph-wrapper'>
           <div className='blur' />
           <div className='inner-wrapper'>
@@ -81,7 +86,7 @@ const Statistic = () => {
         </div>
       )}
 
-      {leosprint.series[0].length && (
+      {!!leosprint.series[0].length && (
         <div className='graph-wrapper'>
           <div className='blur' />
           <div className='inner-wrapper'>
@@ -91,7 +96,7 @@ const Statistic = () => {
         </div>
       )}
 
-      {englishpuzzle.series[0].length && (
+      {!!englishpuzzle.series[0].length && (
         <div className='graph-wrapper'>
           <div className='blur' />
           <div className='inner-wrapper'>
