@@ -26,3 +26,12 @@
     left: 40px;
   }
 }
+@media screen and (max-width: 425px) {
+  .SpeakIt {
+    padding: 100px 0;
+    & .levels {
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+  }
+}
