@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Axios from 'axios';
-import { get } from 'http';
+import { getUserWordsWithFilter } from '../../pages/home/HomeApi';
 
 const initialSavannaState = {
   words: [],
   showModal: null,
+  difficulity: 0,
+  userWeakWords: 0,
+  page: 0,
   wordNumber: 0,
   showStart: null,
   showCloseModal: null,
@@ -12,6 +15,7 @@ const initialSavannaState = {
   playSound: null,
   showDeleteModal: null,
   isRefresh: null,
+  showChangeDifficulity: false,
 };
 
 const savannaSlice = createSlice({
@@ -45,6 +49,18 @@ const savannaSlice = createSlice({
     getIsRefresh(state, action) {
       state.isRefresh = action.payload;
     },
+    getDifficulity(state, action) {
+      state.difficulity = action.payload;
+    },
+    getPage(state, action) {
+      state.page = action.payload;
+    },
+    toggleShowChangeDifficulity(state, action) {
+      state.showChangeDifficulity = action.payload;
+    },
+    getUserWeakWords(state, action) {
+      state.userWeakWords = action.payload;
+    },
   },
 });
 
@@ -58,9 +74,21 @@ export const {
   getShowResultsModal,
   getShowDeleteModal,
   getIsRefresh,
+  getDifficulity,
+  getPage,
+  toggleShowChangeDifficulity,
+  getUserWeakWords,
 } = savannaSlice.actions;
 
 export const savannaSliceReducer = savannaSlice.reducer;
+
+export const changeUserWeakWords = (value) => async (dispatch) => {
+  dispatch(getUserWeakWords(value));
+};
+
+export const changeShowChangeDifficulity = (value) => async (dispatch) => {
+  dispatch(toggleShowChangeDifficulity(value));
+};
 
 export const changePlaySound = (value) => async (dispatch) => {
   try {
@@ -134,30 +162,103 @@ export const changeWords = (value) => async (dispatch) => {
   }
 }
 
-export const getSavannaInfo = () => async (dispatch) => {
+export const changePage = (value) => async (dispatch, getState) => {
+  dispatch(getPage(value));
+  const curDif = getState().savanna.difficulity;
+  const link = 'https://afternoon-falls-25894.herokuapp.com/words?';
+  const response = await Axios.get(`${link}page=${value}&group=${curDif}`);
+  const words = response.data.map((res) => {
+    return {
+      word: res.word,
+      translate: res.wordTranslate,
+      id: res.id,
+      audio: res.audio,
+    };
+  });
+
+  if (words) {
+    dispatch(getWords(words));
+  }
+};
+
+export const changeDifficulity = (value) => async (dispatch, getState) => {
+  dispatch(getDifficulity(value));
+  const curPage = getState().savanna.page;
+
+  const link = 'https://afternoon-falls-25894.herokuapp.com/words?';
+  const response = await Axios.get(`${link}page=${curPage}&group=${value}`);
+  const words = response.data.map((res) => {
+    return {
+      word: res.word,
+      translate: res.wordTranslate,
+      id: res.id,
+      audio: res.audio,
+    };
+  });
+
+  if (words) {
+    dispatch(getWords(words));
+  }
+}
+
+export const resetState = () => async (dispatch) => {
+  dispatch(getWords([]));
+  dispatch(toggleShowModal(true));
+  dispatch(getWordNumber(0));
+  dispatch(getShowStart(true));
+  dispatch(getPlaySound(true));
+  dispatch(getShowCloseModal(false));
+  dispatch(getShowResultsModal(false));
+  dispatch(getShowDeleteModal(false));
+  dispatch(getIsRefresh(false));
+};
+
+export const getSavannaInfo = (isLogin) => async (dispatch, getState) => {
+  const currentDifficulity = getState().savanna.difficulity;
+  const currentPage = getState().savanna.page;
+  const link = 'https://afternoon-falls-25894.herokuapp.com/words?';
+
   try {
-    const response = await Axios.get('https://afternoon-falls-25894.herokuapp.com/words?page=0&group=0');
-    console.log(response);
-    const words = response.data.map((res) => {
-      return {
-        word: res.word,
-        translate: res.wordTranslate,
-        id: res.id,
-        audio: res.audio,
-      };
-    });
-    if (words) {
-      dispatch(getWords(words));
-      dispatch(toggleShowModal(true));
-      dispatch(getWordNumber(0));
-      dispatch(getShowStart(true));
-      dispatch(getPlaySound(true));
-      dispatch(getShowCloseModal(false));
-      dispatch(getShowResultsModal(false));
-      dispatch(getShowDeleteModal(false));
-      dispatch(getIsRefresh(false));
+    if (isLogin) {
+      const response = await getUserWordsWithFilter('weak');
+      const words = response.data[0].paginatedResults.map((res) => {
+        return {
+          word: res.word,
+          translate: res.wordTranslate,
+          id: res.id,
+          audio: res.audio,
+        };
+      });
+
+      if (words) {
+        dispatch(getWords(words));
+      }
+    } else {
+      const response = await Axios.get(`${link}page=${currentPage}&group=${currentDifficulity}`);
+
+      const words = response.data.map((res) => {
+        return {
+          word: res.word,
+          translate: res.wordTranslate,
+          id: res.id,
+          audio: res.audio,
+        };
+      });
+
+      if (words) {
+        dispatch(getWords(words));
+      }
     }
+
+    dispatch(toggleShowModal(true));
+    dispatch(getWordNumber(0));
+    dispatch(getShowStart(true));
+    dispatch(getPlaySound(true));
+    dispatch(getShowCloseModal(false));
+    dispatch(getShowResultsModal(false));
+    dispatch(getShowDeleteModal(false));
+    dispatch(getIsRefresh(false));
   } catch (error) {
     console.log(error);
   }
-}
+};

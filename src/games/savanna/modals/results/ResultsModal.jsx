@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import './ResultsModal.scss';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { DeleteModal, ModalWindow } from '../../../../components';
-import { changeShowDeleteModal, changeShowResultsModal, changeIsRefresh } from '../../SavannaReducer';
+import { getStats, putStats } from 'pages/home/HomeApi';
+import { changeIsRefresh } from '../../SavannaReducer';
+import './ResultsModal.scss';
 
 const ResultsModal = ({ results }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const showDeleteModal = useSelector((state) => state.savanna.showDeleteModal);
   const wordsLength = useSelector((state) => state.savanna.words.length);
+  const { isUserLoggedIn } = useSelector((state) => state.login);
 
   const playAudio = (src) => {
     const link = `https://raw.githubusercontent.com/himimetsu/rslang-data/master/${src}`;
@@ -19,7 +19,6 @@ const ResultsModal = ({ results }) => {
 
   const continueTrain = () => {
     dispatch(changeIsRefresh(true));
-    dispatch(changeShowResultsModal(false));
   };
 
   const [score, setScore] = useState(true);
@@ -30,7 +29,6 @@ const ResultsModal = ({ results }) => {
         <div className='invalid-word'>{inv.word}</div>
         <div className='tr'>   —   </div>
         <div className='invalid-translate'>{inv.translate}</div>
-        <div className='trash-icon' onClick={() => dispatch(changeShowDeleteModal(true))} />
       </div>
     ))
   );
@@ -42,10 +40,55 @@ const ResultsModal = ({ results }) => {
         <div className='valid-word'>{val.word}</div>
         <div className='tr'>   —   </div>
         <div className='valid-translate'>{val.translate}</div>
-        <div className='trash-icon' onClick={() => dispatch(changeShowDeleteModal(true))} />
       </div>
     ))
   );
+
+  const postStatistic = async () => {
+    const stats = await getStats();
+
+    const currentGameStats = {
+      date: new Date().toLocaleDateString(),
+      right: results.valid.length,
+      wrong: results.invalid.length,
+    };
+
+    let newStats;
+
+    if (stats.optional === undefined) {
+      newStats = {
+        ...stats,
+        optional: {
+          ...stats.optional,
+          savanna: {
+            statistics: [currentGameStats],
+          },
+        },
+      };
+    } else {
+      if (stats.optional.savanna !== undefined) {
+        newStats = {
+          ...stats,
+          optional: {
+            ...stats.optional,
+            savanna: {
+              statistics: [...stats.optional.savanna.statistics, currentGameStats],
+            },
+          },
+        }
+      }
+    }
+
+    putStats(newStats);
+  };
+
+  useEffect(() => {
+    if (isUserLoggedIn) {
+      if (results.valid.length || results.invalid.length) {
+        postStatistic();
+      }
+    }
+  }, [results]);
 
   return (
     <div className='results-wrapper'>
@@ -54,7 +97,6 @@ const ResultsModal = ({ results }) => {
           Игра окончена
         </div>
         <div className='results-slider'>
-          {showDeleteModal ? <ModalWindow><DeleteModal hideFunc={() => dispatch(changeShowDeleteModal(false))} /></ModalWindow> : null}
           {score ? (
             <div className='results-score'>
               <div className='results-satiety'>

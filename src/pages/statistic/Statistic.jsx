@@ -54,7 +54,7 @@ const Statistic = () => {
     setSpeakit(newSpeakit);
     setLeosprint(newLeosprint);
     setEnglishpuzzle(newEnglishpuzzle);
-
+    
     setIsLoaded(true);
   };
 

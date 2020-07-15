@@ -14,7 +14,7 @@ import { getFormattedData } from 'utils/getFormattedData';
 import { initialSettings } from 'constants/cardSettings';
 import { initialStats } from 'constants/stats';
 
-const authOption = JSON.parse(localStorage.getItem(userLoginDataKey));
+const authOption = JSON.parse(localStorage.getItem(userLoginDataKey)) || 'temp';
 const { token, userId } = authOption;
 
 const usersUrl = `${process.env.REACT_APP_BASE_URL}${usersPath}${userId}`;
@@ -27,6 +27,15 @@ const config = {
     'Content-Type': 'application/json',
   },
 };
+
+axios.interceptors.request.use(function (config) {
+  config.headers['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('JWT')).token}`;
+  config.baseURL = `${process.env.REACT_APP_BASE_URL}${usersPath}${JSON.parse(localStorage.getItem('JWT')).userId}`;
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
 
 const getData = async (path, initialData) => {
   let data;
@@ -55,4 +64,26 @@ export const putSettings = async (settings) => {
 
 export const putStats = async (stats) => {
   axios.put(statsPath, JSON.stringify(stats), config);
+};
+
+export const postWord = async (idWord, data) => {
+  axios.post(`/words/${idWord}`, data, config);
+};
+
+export const getUserWords = async () => axios.get('/words', config);
+
+export const deleteWord = async (idWord) => axios.delete(`/words/${idWord}`, config);
+
+export const getUserWordsWithFilter = async (filter) => {
+  const testfULTER = JSON.stringify({
+    $or: [
+      { ['userWord.difficulty']: `${filter}` },
+    ],
+  });
+
+  return axios.get(`/aggregatedWords?filter=${testfULTER}`, config);
+};
+
+export const putWord = async (idWord, data) => {
+  return axios.put(`/words/${idWord}`, data, config);
 };

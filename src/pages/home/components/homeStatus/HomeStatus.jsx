@@ -10,7 +10,8 @@ import './HomeStatus.scss';
 const HomeStatus = ({ stats, totalCardsPerDay }) => (
   <div className='home__status'>
     <Welcome />
-    <TodayStatus stats={stats} totalCardsPerDay={totalCardsPerDay} />
+    {typeof stats.optional.cardStats !== 'undefined' && <TodayStatus stats={stats} totalCardsPerDay={totalCardsPerDay} />}
+
     <Progress wordsCountLearned={stats.learnedWords} />
   </div>
 );
