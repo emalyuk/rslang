@@ -14,7 +14,6 @@ const initialSettings = {
       isShowDeleteButton: true,
       isShowHardButton: true,
       isShowAnswerButton: true,
-      isShowAnkiButtons: true,
       isOnlyNewWords: true,
     },
     newWordsPerDay: 50,
@@ -32,7 +31,6 @@ const labelsForSwitchers = {
   isShowDeleteButton: 'Кнопка удалить слово',
   isShowHardButton: 'Кнопка добавить к сложным словам',
   isShowAnswerButton: 'Кнопка показать ответ',
-  isShowAnkiButtons: 'Кнопки оценки сложности слов',
   isOnlyNewWords: 'Только новые слова',
 };
 

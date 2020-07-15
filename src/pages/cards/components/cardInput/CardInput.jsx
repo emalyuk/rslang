@@ -12,12 +12,19 @@ import {
 } from 'pages/cards/CardsSliceReducer';
 import { playAudioArr } from 'utils/playAudioArr';
 import { prepareWordToFetch } from 'utils/prepareWordToFetch';
-import { putStats, getStats } from 'pages/home/HomeApi';
+import { putStats } from 'pages/home/HomeApi';
+import Button from 'components/button/Button';
+import { userStatsKey } from 'constants/constants';
 import CardHintAnswer from '../cardHintAnswer/CardHintAnswer';
 
 import './CardInput.scss';
 
-const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample, userStats }) => {
+const CardInput = ({
+  cardInfo,
+  isShowWordMeaning,
+  isShowWordExample,
+  userStats,
+}) => {
   const { id, word, audio, audioMeaning, audioExample } = cardInfo;
   const dispatch = useDispatch();
   const { isCorrectAnswer, isAnswerReceived, isSkippedWord } = useSelector(
@@ -29,8 +36,6 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample, userStats }
   const [incorrectAnswerCount, setIncorrectAnswerCount] = useState(0);
   const [bestSeries, setBestSeries] = useState(0);
 
-  console.log(stats);
-
   const inputEl = useRef(null);
 
   const wordLength = word.length;
@@ -38,6 +43,8 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample, userStats }
   const inputValueArr = inputValue.split('');
 
   useEffect(() => {
+    console.log(stats);
+    localStorage.setItem(userStatsKey, JSON.stringify(stats));
     putStats(stats);
   }, [stats]);
 
@@ -71,9 +78,10 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample, userStats }
               ...stats.optional,
               cardStats: {
                 ...stats.optional.cardStats,
-                date: (new Date(Date.now())).toLocaleDateString(),
+                date: new Date(Date.now()).toLocaleDateString(),
                 todayWordLearned: stats.optional.cardStats.todayWordLearned + 1,
-                countRightAnswers: stats.optional.cardStats.countRightAnswers + 1,
+                countRightAnswers:
+                  stats.optional.cardStats.countRightAnswers + 1,
               },
             },
           };
@@ -98,8 +106,12 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample, userStats }
               ...stats.optional,
               cardStats: {
                 ...stats.optional.cardStats,
-                bestSeries: stats.optional.cardStats.bestSeries < bestSeries ? bestSeries : stats.optional.cardStats.bestSeries,
-                countWrongAnswers: stats.optional.cardStats.countWrongAnswers + 1,
+                bestSeries:
+                  stats.optional.cardStats.bestSeries < bestSeries
+                    ? bestSeries
+                    : stats.optional.cardStats.bestSeries,
+                countWrongAnswers:
+                  stats.optional.cardStats.countWrongAnswers + 1,
               },
             },
           };
@@ -126,29 +138,41 @@ const CardInput = ({ cardInfo, isShowWordMeaning, isShowWordExample, userStats }
   }
 
   return (
-    <form className='card__input__container' onSubmit={handleCheckAnswer}>
-      <input
-        className={inputClass}
-        type='text'
-        value={inputValue}
-        size={wordLength}
-        maxLength={wordLength}
-        autoFocus
-        disabled={isCorrectAnswer}
-        onChange={(event) => setInputValue(event.target.value)}
-        ref={inputEl}
-      />
-      <div className='card__result'>
-        {(isAnswerReceived || isSkippedWord) && (
-          <CardHintAnswer
-            wordLength={wordLength}
-            wordArr={wordArr}
-            inputValueArr={inputValueArr}
-            handleOnChangeAnswer={handleOnChangeAnswer}
-          />
-        )}
+    <>
+      <form className='card__input__container' onSubmit={handleCheckAnswer}>
+        <input
+          className={inputClass}
+          type='text'
+          value={inputValue}
+          size={wordLength}
+          maxLength={wordLength}
+          autoFocus
+          disabled={isCorrectAnswer}
+          onChange={(event) => setInputValue(event.target.value)}
+          ref={inputEl}
+        />
+        <div className='card__result'>
+          {(isAnswerReceived || isSkippedWord) && (
+            <CardHintAnswer
+              wordLength={wordLength}
+              wordArr={wordArr}
+              inputValueArr={inputValueArr}
+              handleOnChangeAnswer={handleOnChangeAnswer}
+            />
+          )}
+        </div>
+      </form>
+      <div className='card__submit-container'>
+        <Button
+          type='submit'
+          className='card__submit-button'
+          disabled={false}
+          onClick={handleCheckAnswer}
+        >
+          &#8594;
+        </Button>
       </div>
-    </form>
+    </>
   );
 };
 

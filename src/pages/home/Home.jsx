@@ -5,7 +5,7 @@ import Loading from 'components/loading/Loading';
 import { settingsLabelName } from 'constants/cardSettings';
 import { userStatsKey, userSettingsKey } from 'constants/constants';
 import isPossibilitySwitch from 'utils/isPossibilitySwitch';
-import { getSettings, putSettings, getStats } from './HomeApi';
+import { getSettings, putSettings, getStats, putStats } from './HomeApi';
 import HomeStatus from './components/homeStatus/HomeStatus';
 import CardSettings from './components/cardSettings/CardSettings';
 
@@ -17,10 +17,15 @@ export const Home = () => {
   const [settings, setSettings] = useState(null);
   const [stats, setStats] = useState(null);
 
+  console.log(stats);
+
   useEffect(() => {
+    console.log('1');
     async function getHomeData() {
       const receivedSettings = await getSettings();
       const receivedStats = await getStats();
+
+      console.log(receivedStats, 'receivedStats');
 
       if (receivedSettings && receivedStats) {
         setSettings(receivedSettings);

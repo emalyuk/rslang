@@ -16,7 +16,7 @@ const TodayStatus = ({ stats, totalCardsPerDay }) => {
     countSkipedWords,
   } = stats.optional.cardStats;
 
-  console.log(todayWordLearned);
+  console.log(stats);
 
   const todayInfoItems = todayInfoItemsToArr(
     bestSeries,

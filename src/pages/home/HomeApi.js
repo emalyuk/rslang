@@ -44,6 +44,7 @@ const getData = async (path, initialData) => {
   let data;
   try {
     const response = await axios.get(path, config);
+    console.log(response);
     return getFormattedData(response.data);
   } catch (err) {
     // TODO: 401 Access token is missing or invalid

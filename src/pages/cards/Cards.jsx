@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from 'components/loading/Loading';
-import Button from 'components/button/Button';
 import {
   userStatsKey,
   userSettingsKey,
   wordsInGroup,
 } from 'constants/constants';
-import { putStats, getStats } from 'pages/home/HomeApi';
 import { getWords, resetData } from './CardsSliceReducer';
 import { getUserWords } from './CardsApi';
 
@@ -27,6 +25,10 @@ const Cards = () => {
   const { cardExtraInfo, cardMainInfo } = userSettings.optional;
   const { wordsPerDay } = userSettings;
   const { learnedWords } = userStats;
+  const { countDeletedWords, countHardWords } = userStats.optional.cardStats;
+
+  const numberStartCard = learnedWords + countDeletedWords + countHardWords;
+
   let group;
 
   if (learnedWords <= wordsInGroup) {
@@ -34,23 +36,23 @@ const Cards = () => {
   }
 
   useEffect(() => {
-    dispatch(getWords(learnedWords, group, wordsPerDay));
+    dispatch(getWords(numberStartCard, group, wordsPerDay));
     getUserWords();
-    console.log('GET FIRST DATA');
     return () => dispatch(resetData());
-  }, [dispatch, learnedWords, group, wordsPerDay]);
+  }, [dispatch, numberStartCard, group, wordsPerDay]);
 
-  useEffect(() => {
-    console.log('DATA ARR UPDATE!');
-    console.log(data);
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   return (
     <div className='card__container container'>
       {data.length ? (
         <>
           <div className='card shadow'>
-            <CardHeader settings={cardExtraInfo} />
+            <CardHeader
+              settings={cardExtraInfo}
+              stats={userStats}
+              wordId={data[currentCardIndex].id}
+            />
 
             <CardMain
               cardSettings={userSettings}
@@ -61,19 +63,8 @@ const Cards = () => {
             <CardFooter
               cardMainInfo={cardMainInfo}
               data={data[currentCardIndex]}
+              stats={userStats}
             />
-          </div>
-          <div className='card__submit-container'>
-            <Button
-              type='submit'
-              className='card__submit-button'
-              disabled={false}
-              onClick={() => {
-                console.log('NEXT');
-              }}
-            >
-              &#8594;
-            </Button>
           </div>
         </>
       ) : (

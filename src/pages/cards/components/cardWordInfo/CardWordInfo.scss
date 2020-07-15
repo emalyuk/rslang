@@ -1,3 +1,8 @@
-.card__main__word-info__text {
+.card__main__word-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 10px;
+  font-size: 22px;
   user-select: none;
 }

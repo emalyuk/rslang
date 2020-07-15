@@ -6,7 +6,6 @@ import './CardImage.scss';
 import { baseAssetsUrl } from 'constants/constants';
 
 const CardImage = ({ imgUrlEnding }) => {
-  console.log('IMAGE UPDATE');
   return (
     <div className='card__main__image-container'>
       <img

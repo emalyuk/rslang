@@ -1,34 +1,27 @@
+@import 'scss/variables';
+@import 'scss/mixins';
+
 .card__main {
   font-size: 18px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+
+  @include md() {
+    flex-direction: column;
+  }
+
+  @include sm() {
+    flex-direction: column;
+  }
+
+  @include exSm() {
+    flex-direction: column;
+  }
 
   .card__main__text-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  &__word-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    padding: 10px;
-    font-size: 22px;
-  }
-
-  &__text-example-translate {
-    text-align: center;
-    padding: 10px;
-  }
-
-  &__text-meaning {
-    border: 1px solid tomato;
-    background-color: tomato;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 10px;
   }
 }

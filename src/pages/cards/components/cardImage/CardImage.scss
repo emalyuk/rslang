@@ -1,3 +1,6 @@
+@import 'scss/variables';
+@import 'scss/mixins';
+
 .card__main {
   &__image-container {
     display: flex;
@@ -5,11 +8,33 @@
     align-items: center;
     justify-content: center;
     padding-right: 10px;
+
+    @include md() {
+      margin-bottom: 10px;
+    }
+
+    @include sm() {
+      margin-bottom: 10px;
+    }
+
+    @include exSm() {
+      margin-bottom: 10px;
+    }
   }
 
   &__image {
     display: block;
     margin: 0 auto;
     border-radius: 10px;
+
+    @include sm() {
+      width: 300px;
+      height: 190px;
+    }
+
+    @include exSm() {
+      width: 200px;
+      height: 130px;
+    }
   }
 }
