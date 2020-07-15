@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Dictionary.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { CheckBox, LeoFaw } from '../../components';
-import { toggleIsAllSelected, changeShowDeleteModal, updateAllWords, updateTrash } from './DictionaryReducer';
+import { putWord, postWord } from 'pages/home/HomeApi';
+import { LeoFaw } from '../../components';
+import { toggleIsAllSelected, updateAllWords, updateTrash, toggleIsSelect, changeIsLoadingWords } from './DictionaryReducer';
 import DictionaryTabs from './DictionaryTabs/DictionaryTabs';
+import './Dictionary.scss';
+import { useHistory } from 'react-router-dom';
 
 const Dictonary = () => {
+  const history = useHistory();
   const [currentTab, setCurrentTab] = useState('studied');
-  const { words, deletedWords, difficultWords, isAllSelected, studiedWords } = useSelector((state) => state.dictionary);
+  const { isUserLoggedIn } = useSelector((state) => state.login);
+  const { deletedWords, difficultWords, isAllSelected, studiedWords, trash, isLoadingWords } = useSelector((state) => state.dictionary);
   const dispatch = useDispatch();
   const studiedTabRef = useRef();
   const difficultTabRef = useRef();
@@ -63,6 +67,41 @@ const Dictonary = () => {
     dispatch(toggleIsAllSelected(!isAllSelected));
   };
 
+  const dictionaryHandler = async () => {
+    const copyTrash = trash.slice();
+    if (copyTrash.length) {
+      dispatch(changeIsLoadingWords(true));
+      let obj;
+      if (currentTab === 'studied') {
+        obj = {
+          "difficulty": "deleted",
+          "optional": {},
+        }
+      } else if (currentTab === 'difficult') {
+        obj = {
+          "difficulty": "weak",
+          "optional": {},
+        }
+      } else if (currentTab === 'deleted') {
+        obj = {
+          "difficulty": "weak",
+          "optional": {},
+        }
+      }
+
+      const arr = copyTrash.map((word) => putWord(word, obj).then((res) => res));
+      Promise.all(arr)
+        .then(() => {
+          dispatch(updateAllWords());
+          dispatch(updateTrash([]));
+        });
+    }
+  };
+
+  useEffect(() => {
+    dispatch(toggleIsSelect(false));
+  }, [studiedWords, difficultWords, deletedWords]);
+
   useEffect(() => {
     if (isAllSelected) {
       const copyTrash = [];
@@ -80,7 +119,10 @@ const Dictonary = () => {
   }, [isAllSelected]);
 
   useEffect(() => {
-    dispatch(updateAllWords());
+    if (isUserLoggedIn) {
+      dispatch(changeIsLoadingWords(true));
+      dispatch(updateAllWords());
+    }
   }, []);
 
   return (
@@ -93,10 +135,10 @@ const Dictonary = () => {
         </div>
         <div className='dictionary-header-buttons'>
           <div className='button-wrapper'>
-            <button type='button'>Посмотреть все карточки</button>
+            <button type='button' onClick={() => history.push('/cards')}>Посмотреть все карточки</button>
           </div>
           <div className='button-wrapper'>
-            <button type='button'>
+            <button type='button' onClick={() => history.push('/cards')}>
               <span>
                 Изучить слова
               </span>
@@ -105,17 +147,24 @@ const Dictonary = () => {
         </div>
       </div>
       <div className='dictionary-control'>
-        <div className='check-all'>
-          <CheckBox onClick={() => allSelectedDictionary()} id='allSelect' isChecked={isAllSelected ? true : false} />
-        </div>
         <div className='toggle-tabs'>
           {!isSelect && renderOptions()}
         </div>
-        <div className='trash-icon' onClick={() => dispatch(changeShowDeleteModal(true))}></div>
+      </div>
+      <div className='dictionary-more-words'>
+        <div className='dictionary-more-btn' onClick={() => dictionaryHandler()}>
+          {currentTab === 'studied' && 'Удалить слова'}
+          {currentTab === 'difficult' && 'Сделать слова лёгкими'}
+          {currentTab === 'deleted' && 'Восстановить слова'}
+        </div>
+      </div>
+      <div className='loading-words'>
+        <div className='loading-words-content'>
+          {isLoadingWords && 'Загрузка слов...'}
+        </div>
       </div>
       <div className='dictionary-content'>
         <DictionaryTabs
-          words={words}
           currentTab={currentTab}
           deletedWords={deletedWords}
           difficultWords={difficultWords}
