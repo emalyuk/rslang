@@ -61,41 +61,45 @@ const Statistic = () => {
 
   return (
     <div className='statistic-wrapper'>
-      <div className='graph-wrapper'>
-        <div className='blur' />
-        <div className='inner-wrapper'>
-          <h1>Savanna</h1>
-          {savanna.series[0].length ? <ChartistGraph data={savanna} type='Line' options={options} />
-            : <p>Статистика отсутствует</p> }
+      {savanna.series[0].length && (
+        <div className='graph-wrapper'>
+          <div className='blur' />
+          <div className='inner-wrapper'>
+            <h1>Savanna</h1>
+            <ChartistGraph data={savanna} type='Line' options={options}/>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className='graph-wrapper'>
-        <div className='blur' />
-        <div className='inner-wrapper'>
-          <h1>Leo-sprint</h1>
-          {speakit.series[0].length ? <ChartistGraph data={speakit} type='Line' options={options} />
-            : <p>Статистика отсутствует</p> }
+      {speakit.series[0].length && (
+        <div className='graph-wrapper'>
+          <div className='blur' />
+          <div className='inner-wrapper'>
+            <h1>Leo-sprint</h1>
+            <ChartistGraph data={speakit} type='Line' options={options}/>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className='graph-wrapper'>
-        <div className='blur' />
-        <div className='inner-wrapper'>
-          <h1>Speak-it</h1>
-          {leosprint.series[0].length ? <ChartistGraph data={leosprint} type='Line' options={options} />
-            : <p>Статистика отсутствует</p> }
+      {leosprint.series[0].length && (
+        <div className='graph-wrapper'>
+          <div className='blur' />
+          <div className='inner-wrapper'>
+            <h1>Leo-sprint</h1>
+            <ChartistGraph data={leosprint} type='Line' options={options} />
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className='graph-wrapper'>
-        <div className='blur' />
-        <div className='inner-wrapper'>
-          <h1>English-puzzle</h1>
-          {englishpuzzle.series[0].length ? <ChartistGraph data={englishpuzzle} type='Line' options={options} />
-            : <p>Статистика отсутствует</p> }
+      {englishpuzzle.series[0].length && (
+        <div className='graph-wrapper'>
+          <div className='blur' />
+          <div className='inner-wrapper'>
+            <h1>Leo-sprint</h1>
+            <ChartistGraph data={englishpuzzle} type='Line' options={options} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
