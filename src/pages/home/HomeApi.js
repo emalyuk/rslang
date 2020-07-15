@@ -28,6 +28,15 @@ const config = {
   },
 };
 
+axios.interceptors.request.use(function (config) {
+  config.headers['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('JWT')).token}`;
+  config.baseURL = `${process.env.REACT_APP_BASE_URL}${usersPath}${JSON.parse(localStorage.getItem('JWT')).userId}`;
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
+
 const getData = async (path, initialData) => {
   let data;
   try {
