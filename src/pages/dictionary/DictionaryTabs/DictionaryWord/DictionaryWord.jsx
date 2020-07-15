@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './DictionaryWord.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import LeoFaw from '../../../../components/leoFaw/LeoFaw';
 import CheckBox from '../../../../components/checkBox/CheckBox';
 import playAudio from '../../../../utils/playAudio';
 import { changeShowDeleteModal, updateTrash, toggleIsSelect, toggleIsAllSelected } from '../../DictionaryReducer';
+import './DictionaryWord.scss';
 
-const DictionaryWord = ({ word, translate, image, audio, id, isAll, color }) => {
+const DictionaryWord = ({ word, wordTranslate, image, audio, _id, isAll, color }) => {
   const trash = useSelector((state) => state.dictionary.trash);
   const isSelect = useSelector((state) => state.dictionary.isSelect);
   const [linkRaw] = useState('https://raw.githubusercontent.com/himimetsu/rslang-data/master/');
@@ -38,7 +38,7 @@ const DictionaryWord = ({ word, translate, image, audio, id, isAll, color }) => 
     }
   };
 
-  const deleteWord = (idWord) => {
+  const wordHandler = (idWord) => {
     const copyTrash = trash.slice();
     copyTrash.push(idWord);
     dispatch(updateTrash(copyTrash));
@@ -47,15 +47,15 @@ const DictionaryWord = ({ word, translate, image, audio, id, isAll, color }) => 
 
   return (
     <div className='dictionary-word'>
-      <CheckBox id={id} onClick={() => toggleWordInTrash(id, false)} isChecked={isAll} />
+      <CheckBox id={_id} onClick={() => toggleWordInTrash(_id, false)} isChecked={isAll} />
       <div className='audio-icon' onClick={() => playAudio(linkRaw, audio)} />
       <div className='my-words'>
         <div className='word'>{word}</div>
-        <div className='translate'>{translate}</div>
+        <div className='translate'>{wordTranslate}</div>
       </div>
       <div className='word-image' style={{ backgroundImage: `url('${linkRaw}${image}')` }} />
       <LeoFaw color={color} />
-      {!isSelect && <div className='trash-icon' onClick={() => deleteWord(id)} />}
+      {!isSelect ? <div className='trash-icon' onClick={() => wordHandler(_id)} /> : <div className='empty' />}
     </div>
   );
 };

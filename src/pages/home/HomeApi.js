@@ -14,7 +14,7 @@ import { getFormattedData } from 'utils/getFormattedData';
 import { initialSettings } from 'constants/cardSettings';
 import { initialStats } from 'constants/stats';
 
-const authOption = JSON.parse(localStorage.getItem(userLoginDataKey));
+const authOption = JSON.parse(localStorage.getItem(userLoginDataKey)) || 'temp';
 const { token, userId } = authOption;
 
 const usersUrl = `${process.env.REACT_APP_BASE_URL}${usersPath}${userId}`;
@@ -27,6 +27,15 @@ const config = {
     'Content-Type': 'application/json',
   },
 };
+
+axios.interceptors.request.use(function (config) {
+  config.headers['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem('JWT')).token}`;
+  config.baseURL = `${process.env.REACT_APP_BASE_URL}${usersPath}${JSON.parse(localStorage.getItem('JWT')).userId}`;
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
 
 const getData = async (path, initialData) => {
   let data;

@@ -1,94 +1,70 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  updateDeletedWords, updateStudiedWords,
-  updateDifficultWords, updateTrash, toggleIsAllSelected, toggleIsSelect,
-} from '../../pages/dictionary/DictionaryReducer';
+import { putWord } from 'pages/home/HomeApi';
+import { updateAllWords, updateTrash, changeIsLoadingWords } from '../../pages/dictionary/DictionaryReducer';
 import './DeleteModal.scss';
 
 const DeleteModal = ({ hideFunc, tab }) => {
   const dispatch = useDispatch();
-  const { deletedWords, difficultWords, studiedWords } = useSelector((state) => state.dictionary);
-  const trashWords = useSelector((state) => state.dictionary.trash);
+  const { trash } = useSelector((state) => state.dictionary);
 
-  const deleteWordsFromTrash = (section, copyWords) => {
-    const copyTrash = trashWords.slice();
-    const copyDeletedWords = deletedWords.slice();
-    const newArr = [];
-    const deleteIndex = [];
-    copyWords.forEach((word, index) => {
-      copyTrash.forEach((id) => {
-        if (id === word.id) {
-          deleteIndex.push(index);
+  const actionHandler = () => {
+    const copyTrash = trash.slice();
+    if (copyTrash.length) {
+      dispatch(changeIsLoadingWords(true));
+      let obj;
+      if (tab === 'studied') {
+        obj = {
+          "difficulty": "deleted",
+          "optional": {},
         }
-      })
-    })
-
-    copyWords.forEach((item, index) => {
-      if (!deleteIndex.includes(index)) {
-        newArr.push(copyWords[index]);
-      } else {
-        copyDeletedWords.push(copyWords[index]);
+      } else if (tab === 'difficult') {
+        obj = {
+          "difficulty": "weak",
+          "optional": {},
+        }
+      } else if (tab === 'deleted') {
+        obj = {
+          "difficulty": "weak",
+          "optional": {},
+        }
       }
-    })
 
-    switch (section) {
-      case 'deletedWords':
-        dispatch(updateDeletedWords(newArr));
-        break;
-      case 'studiedWords':
-        dispatch(updateStudiedWords(newArr));
-        dispatch(updateDeletedWords(copyDeletedWords));
-        break;
-      case 'difficultWords':
-        dispatch(updateDifficultWords(newArr));
-        dispatch(updateDeletedWords(copyDeletedWords));
-        break;
+      const arr = copyTrash.map((word) => putWord(word, obj).then((res) => res));
+      Promise.all(arr)
+        .then(() => {
+          dispatch(updateAllWords());
+          dispatch(updateTrash([]));
+          hideFunc();
+        });
     }
-
-    dispatch(updateTrash([]));
-    dispatch(toggleIsAllSelected(false));
-    dispatch(toggleIsSelect(false));
   };
 
-  const deleteWords = () => {
-    let copySectionWords = [];
-    switch (tab) {
-      case 'deleted':
-        copySectionWords = deletedWords.slice();
-        deleteWordsFromTrash('deletedWords', copySectionWords);
-        break;
-      case 'studied':
-        copySectionWords = studiedWords.slice();
-        deleteWordsFromTrash('studiedWords', copySectionWords);
-        break;
-      case 'difficult':
-        copySectionWords = difficultWords.slice();
-        deleteWordsFromTrash('difficultWords', copySectionWords);
-        break;
-    }
-
+  const cancelDeleteModal = () => {
     hideFunc();
+    dispatch(updateTrash([]));
   };
-
-  const cancelDeleteModal = () => hideFunc();
 
   return (
     <div className='delete-wrapper'>
       <div className='delete-window'>
         <div className='delete-title'>
-          Вы точно хотите удалить эти слова из вашего словаря?
+          {tab === 'studied' && 'Вы точно хотите удалить это слово из вашего словаря?'}
+          {tab === 'deleted' && 'Вы точно хотите восстановить это слово?'}
+          {tab === 'difficult' && 'Вы точно хотите сделать это слово вновь изучаемыми?'}
         </div>
         <div className='delete-buttons'>
           <div className='btn-wrapper'>
             <button
               className='delete-btn'
               type='button'
-              onClick={() => deleteWords()}
+              onClick={() => actionHandler()}
             >
               <span className='delete-btn-content'>
-                Удалить слова
+                {tab === 'studied' && 'Удалить слово'}
+                {tab === 'deleted' && 'Восстановить слово'}
+                {tab === 'difficult' && 'Сделать слово лёгким'}
               </span>
             </button>
           </div>

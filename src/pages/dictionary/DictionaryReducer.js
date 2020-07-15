@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import fetchWords from '../../utils/fetchWords';
+import { getUserWordsWithFilter } from 'pages/home/HomeApi';
 
 const initialDictionaryState = {
   showDeleteModal: false,
@@ -10,6 +10,7 @@ const initialDictionaryState = {
   difficultWords: [],
   studiedWords: [],
   currentTab: 'all',
+  isLoadingWords: false,
 };
 
 const dictionarySlice = createSlice({
@@ -40,6 +41,9 @@ const dictionarySlice = createSlice({
     getCurrentTab(state, action) {
       state.currentTab = action.payload;
     },
+    getLoadingWords(state, action) {
+      state.isLoadingWords = action.payload;
+    },
   },
 });
 
@@ -52,9 +56,14 @@ export const {
   getDifficultWords,
   getStudiedWords,
   getCurrentTab,
+  getLoadingWords,
 } = dictionarySlice.actions;
 
 export const dictionarySliceReducer = dictionarySlice.reducer;
+
+export const changeIsLoadingWords = (value) => async (dispatch) => {
+  dispatch(getLoadingWords(value));
+};
 
 export const changeCurrentTab = (value) => async (dispatch) => {
   try {
@@ -114,10 +123,13 @@ export const updateDifficultWords = (value) => async (dispatch) => {
 
 export const updateAllWords = () => async (dispatch) => {
   try {
-    const difficultFetchWords = await fetchWords(0, 3);
-    const studiedFetchWords = await fetchWords(0, 0);
-    dispatch(getDifficultWords(difficultFetchWords));
-    dispatch(getStudiedWords(studiedFetchWords))
+    const difficultFetchWords = await getUserWordsWithFilter('hard');
+    const studiedFetchWords = await getUserWordsWithFilter('weak');
+    const deletedFetchWords = await getUserWordsWithFilter('deleted');
+    dispatch(getDifficultWords(difficultFetchWords.data[0].paginatedResults));
+    dispatch(getStudiedWords(studiedFetchWords.data[0].paginatedResults));
+    dispatch(getDeletedWords(deletedFetchWords.data[0].paginatedResults));
+    dispatch(getLoadingWords(false));
   } catch (error) {
     console.log(error);
   }
