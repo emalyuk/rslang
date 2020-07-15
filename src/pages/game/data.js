@@ -2,7 +2,7 @@ export const games = [
   {
     name: 'Cпринт',
     description: 'Учит быстро переводить с английского на ваш родной язык. Для этой тренировки используются слова из вашего словаря.',
-    path: '/game/leo-sprint',
+    path: '/game/sprint',
   },
   {
     name: 'Саванна',

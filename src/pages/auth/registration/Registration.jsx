@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRegistrationInfo } from './RegistrationSliceReducer';
@@ -34,21 +34,14 @@ export const Registration = () => {
 
   const formSubmition = async (e) => {
     e.preventDefault();
-    // const validation = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})');
-    // const validationSimbolFound = password.match(validation);
 
-    // if (validationSimbolFound !== null && validationSimbolFound.input === confirmPassword) {
-    if (!isLoading && !error.langth) {
-      await getRegistrationInfo({ email, password })(dispatch);
-      // alert(error)
+    if (password === confirmPassword) {
+      if (!isLoading && !error.langth) {
+        await getRegistrationInfo({ email, password })(dispatch);
+        history.push(ROUTER.login)
+      }
     }
-    // } else {
-    //   alert('Что-то не так, проверьте вводимые данные!');
-    // }
   }
-  //TODO:
-  // const { error } = useSelector((state) => state.regist);
-  //TODO: редирек только при удачнйо регистрации (флаг когда регистрация true);
 
   return (
     <div className='auth-wrapper'>
@@ -69,7 +62,7 @@ export const Registration = () => {
         />
 
         <span className='password-input-reglament'>{' Пароль должен содержать не менее 8-ми символов, '}</span>
-        <span className='password-input-reglament'>{'заглавную букву(A-Z), символ: +-_@$!%*?&#.,;:[]'}</span>
+        <span className='password-input-reglament'>заглавную букву(A-Z), 1 символ</span>
         <Input
           required
           value={password}
@@ -89,6 +82,7 @@ export const Registration = () => {
         />
 
         {error.map((i) => (<div className='unvalid-data'>{i}</div>))}
+        {(password !== confirmPassword) ? <div className='unvalid-data'>Не совпадают пароли</div> : ''}
 
         <Button type='submit' onClick={() => {}} className='' disabled={isLoading}>
           Sign Up

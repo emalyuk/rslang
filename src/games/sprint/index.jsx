@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 import { getWords } from './sprintApi';
-import { GUESS_FROM_QUANTITY } from '../../../constants/constants';
-import { getRandom } from './helpers';
+import { GUESS_FROM_QUANTITY } from '../../constants/constants';
+import { getRandom, isCurrentTranslateCorrect } from './helpers';
 
-import Button from '../../../components/button/Button';
+import Button from '../../components/button/Button';
 import StartGameControls from './StartGameControls';
+import RepeatGameControllers from './RepeatGameControllers'
 
-import Timer from './Timer.jsx';
-import LevelSelect from './LevelSelect';
+import Timer from './Timer';
 
 import './styles.scss';
 
 const GameSprint = () => {
-  //TODO: в редакс все если время будет (words - обязатьельн);
   const [isPlay, setIsPlay] = useState(false);
   const [isPlayAndNewRaund, setIsPlayAndNewRaund] = useState(false);
   const [score, setScore] = useState(0);
@@ -66,24 +65,24 @@ const GameSprint = () => {
     setIsPlay(!isPlay);
   };
 
-  const isCurrentTranslateCorrect = () => {
-    if (words.length) {
-      const findWord = words.find((item) => {
-        return item.word === currentWord.enWord;
-      });
+  // const isCurrentTranslateCorrect = () => {
+  //   if (words.length) {
+  //     const findWord = words.find((item) => {
+  //       return item.word === currentWord.enWord;
+  //     });
 
-      if (findWord) {
-        return findWord.wordTranslate === currentWord.ruWord;
-      }
-    }
-  };
+  //     if (findWord) {
+  //       return findWord.wordTranslate === currentWord.ruWord;
+  //     }
+  //   }
+  // };
 
   const handlerLeavelChanche = (e) => {
     setLeavels(e.target.value);
   };
 
   const scorCounter = (answer) => {
-    const isCorrectAnswer = isCurrentTranslateCorrect() === answer;
+    const isCorrectAnswer = isCurrentTranslateCorrect(words, currentWord) === answer;
 
     let kkkkombo = 0;
 
@@ -168,50 +167,19 @@ const GameSprint = () => {
     );
   };
 
-  const RepeatGameControllers = () => {
-    const currectAnswer = clickAnswerCounter.correctAnswer;
-    const unCurrectAnswer = clickAnswerCounter.unCorrectAnswer;
-    const allAnswer =
-      clickAnswerCounter.correctAnswer + clickAnswerCounter.unCorrectAnswer;
-
-    return (
-      <div className='start-game-controller'>
-        <div className='repeat-game-menu'>
-          <Button
-            disabled={false}
-            onClick={handlerToStart}
-            className='button-to-start'
-            type='button'
-          >
-            Повторить
-          </Button>
-
-          <LevelSelect onSelect={handlerLeavelChanche} value={leavels} />
-        </div>
-
-        <div className='statistics'>
-          <p>{`Всего: ${allAnswer}`}</p>
-          <p>{`Правильные: ${currectAnswer}`}</p>
-          <p>{`Не верно: ${unCurrectAnswer}`}</p>
-          <p>
-            {`Верных ответов:
-            ${
-              allAnswer !== 0
-                ? Math.floor((currectAnswer / allAnswer) * 100)
-                : 0
-            }%`}
-          </p>
-        </div>
-      </div>
-    );
-  };
-
   const renderControllersOnPlay = () => {
     if (isPlay) {
       return <UserControllerAnswer />;
     }
     return isPlayAndNewRaund ? (
-      <RepeatGameControllers />
+      <RepeatGameControllers
+        currectAnswer={clickAnswerCounter.correctAnswer}
+        unCurrectAnswer={clickAnswerCounter.unCorrectAnswer}
+        allAnswer={clickAnswerCounter.correctAnswer + clickAnswerCounter.unCorrectAnswer}
+        onClick={handlerToStart}
+        onSelect={handlerLeavelChanche}
+        leavels={leavels}
+      />
     ) : (
       <StartGameControls
         onStart={handlerToStart}

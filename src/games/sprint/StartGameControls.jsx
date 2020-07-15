@@ -1,5 +1,6 @@
 import React from 'react';
-import Button from '../../../components/button/Button';
+import PropTypes from 'prop-types';
+import Button from 'components/button/Button';
 import LevelSelect from './LevelSelect'
 
 const StartGameControls = (props) => {
@@ -22,3 +23,12 @@ const StartGameControls = (props) => {
 }
 
 export default StartGameControls;
+
+StartGameControls.propTypes = {
+  onStart: PropTypes.func.isRequired,
+  onLeavelSelect: PropTypes.func.isRequired,
+  leavels: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+}

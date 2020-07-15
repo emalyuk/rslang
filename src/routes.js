@@ -3,7 +3,6 @@ export default {
   cards: '/cards',
   login: '/login',
   registration: '/registration',
-  forgotPassword: '/forgot-password',
   promo: '/promo',
   game: '/game',
   gameSprint: '/game/sprint',
@@ -11,6 +10,7 @@ export default {
   dictionary: '/dictionary',
   games: {
     savanna: '/game/savanna',
+    sprint: '/game/sprint',
   },
   statistic: '/statistic',
 };

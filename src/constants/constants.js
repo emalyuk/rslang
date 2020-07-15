@@ -16,15 +16,17 @@ const responseStatusNotFound = 404;
 const responseStatusInvalidToken = 401;
 
 const navOptions = [
-  { route: ROUTS.home, title: 'Home' },
-  { route: ROUTS.game, title: 'Game' },
   { route: ROUTS.promo, title: 'Promo' },
+  { route: ROUTS.home, title: 'Home' },
+  { route: ROUTS.game, title: 'Games' },
+  { route: ROUTS.statistic, title: 'Statistic' },
   { route: ROUTS.team, title: 'Team' },
   { route: ROUTS.statistic, title: 'Statistics' },
   { route: ROUTS.dictionary, title: 'Dictionary' },
 ];
 
 const navOptionsUnLoginUser = [
+  { route: ROUTS.promo, title: 'Promo' },
   { route: ROUTS.login, title: 'Login' },
   { route: ROUTS.registration, title: 'Registration' },
 ];
