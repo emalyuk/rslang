@@ -5,7 +5,6 @@ import './StartModal.scss';
 
 const StartModal = () => {
   const dispatch = useDispatch();
-  const { isUserLoggedIn } = useSelector((state) => state.login);
   const { showChangeDifficulity } = useSelector((state) => state.savanna);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
