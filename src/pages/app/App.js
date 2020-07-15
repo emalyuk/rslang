@@ -15,7 +15,6 @@ const Login = lazy(() => import('pages/auth/login/Login'));
 const Registration = lazy(() => import('pages/auth/registration/Registration'));
 const NotFound = lazy(() => import('pages/notFound/NotFound'));
 const Promo = lazy(() => import('pages/promo/Promo'));
-const Games = lazy(() => import('pages/game/Game'));
 const Dictionary = lazy(() => import('pages/dictionary/Dictionary'));
 const Statistic = lazy(() => import('pages/statistic/Statistic'));
 
@@ -29,14 +28,12 @@ const App = () => {
             <Route path={routes.login} component={Login} exact />
             <Route path={routes.game} component={Game} exact />
             <Route path={routes.registration} component={Registration} exact />
-            <Route path={routes.game} component={Games} exact />
             <Route path={routes.games.savanna} component={Savanna} exact />
-            <Route path={routes.statistic} component={Statistic} exact />
-            <PrivateRoute path={routes.team} component={Team} exact />
+            <Route path={routes.team} component={Team} exact />
+            <Route path={routes.promo} component={Promo} exact />
+            <PrivateRoute path={routes.statistic} component={Statistic} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
-            <PrivateRoute path={routes.promo} component={Promo} exact />
-
-            <Route path={routes.dictionary} component={Dictionary} exact />
+            <PrivateRoute path={routes.dictionary} component={Dictionary} exact />
             <Route component={NotFound} />
           </Switch>
         </React.Suspense>
