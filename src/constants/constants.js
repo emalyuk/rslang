@@ -27,6 +27,9 @@ const navOptions = [
 const navOptionsUnLoginUser = [
   { route: ROUTS.login, title: 'Login' },
   { route: ROUTS.registration, title: 'Registration' },
+  { route: ROUTS.game, title: 'Game' },
+  { route: ROUTS.promo, title: 'Promo' },
+  { route: ROUTS.team, title: 'Team' },
 ];
 
 export {
