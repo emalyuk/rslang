@@ -32,14 +32,6 @@ const teamData = [
     duties: ['FrontEnd Developer', 'Game developer', 'Main Page Developer'],
   },
   {
-    github: 'krohnic',
-    name: 'Nickolay Kroh',
-    position: 'Frontend Developer',
-    city: 'Minsk',
-    avatar: 'nKroh.jpg',
-    duties: ['FrontEnd Developer', 'Game developer', 'Main Page Developer'],
-  },
-  {
     github: 'a-klimovich',
     name: 'Arthur Klimovich',
     position: 'Frontend Developer',

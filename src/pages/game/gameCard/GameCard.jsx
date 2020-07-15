@@ -34,9 +34,6 @@ const GameCard = React.forwardRef(({ name, description, path, id, heightDescript
         <div className='gamecard-name'>
           {name}
         </div>
-        <div className='gamecard-words'>
-          Слов: 123
-        </div>
       </div>
       <div className='woah'>
         <div
