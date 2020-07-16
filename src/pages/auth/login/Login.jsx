@@ -9,10 +9,12 @@ import Button from '../../../components/button/Button';
 import Form from '../../../components/form/Form';
 import Subtitle from '../../../components/subtitle/subtitle';
 
+import '../auth.scss';
+
 export const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isLoading, isUserLoggedIn } = useSelector((state) => state.login);
+  const { isLoading, isUserLoggedIn, error } = useSelector((state) => state.login);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,6 +51,8 @@ export const Login = () => {
       <Form onSubmit={formSubmition} className='form login-form'>
         <Input required value={email} onChange={handleEmailChange} type='email' className='email' placeholder='Email' />
         <Input required value={password} onChange={handlePasswordChange} type='password' className='password' placeholder='Password' />
+
+        {error.map((i) => (<div className='unvalid-data'>{i}</div>))}
         <Button type='submit' onClick={() => {}} disabled={isLoading} className='submit btn-hover color-9'>
           Login
         </Button>
