@@ -7,11 +7,18 @@ const initialStats = {
       countWrongAnswer: 0,
       countSkipedWords: 0,
     },
-    audioChallenge: {},
-    englishPuzzle: {},
-    savanna: {},
-    speakit: {},
-    sprint: {},
+    savanna: {
+      statistics: [],
+    },
+    speakit: {
+      statistics: [],
+    },
+    englishpuzzle: {
+      statistics: [],
+    },
+    leosprint: {
+      statistics: [],
+    },
   },
 };
 
