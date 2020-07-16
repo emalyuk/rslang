@@ -32,11 +32,28 @@
     }
     & .close {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 5px;
+      right: 5px;
       width: 30px;
       height: 30px;
       background-color: #000000;
+      border-radius: 50%;
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 25px;
+        height: 2px;
+        background-color: #ffffff;
+      }
+      &::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      &::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
     }
     & .wrongWords,
     & .rightWords {

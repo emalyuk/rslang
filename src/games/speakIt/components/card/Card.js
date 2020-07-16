@@ -5,13 +5,12 @@ const Card = ({
   word, transcription, active, setActive,
   id, image, setActiveAudio,
   audio, wordTranslate,
-  isGameMod, isGuessed, isNotGuessed,
-  activeAudio
+  isGameMod, isGuessed, isNotGuessed
 }) => {
   const isActive = active.id === id;
 
   function setCurrentItem(id, image, setActive) {
-    if (isActive) {
+    if (isActive && document.querySelector('audio')) {
       document.querySelector('audio').play()
     } else {
       setActive({

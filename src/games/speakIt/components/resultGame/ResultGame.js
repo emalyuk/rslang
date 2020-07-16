@@ -5,13 +5,7 @@ import Word from './Word'
 const ResultGame = ({ words, setWords, setIsFinish, setGameWordNum, init }) => {
   const wrongWords = words.filter(word => !word.isGuessed)
   const rightWords = words.filter(word => word.isGuessed)
-  const newWords = words.sort(sortFunction)
-  function sortFunction(a, b) {
-    if (a.isGuessed < b.isGuessed) {
-      return 1;
-    }
-    return -1;
-  }
+
   const closeResult = () => {
     setIsFinish(false);
     setGameWordNum(0)

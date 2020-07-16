@@ -104,7 +104,6 @@ const Team = () => {
     SpeechRecognition.abortListening()
   }
   const showResult = async () => {
-    const userId = JSON.parse(localStorage.JWT).userId
     const date = new Date().toLocaleDateString()
     const curentGameStats = {
       date,
