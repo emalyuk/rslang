@@ -67,7 +67,7 @@ const SpeakIt = () => {
     }
   }
   function checkWord(word) {
-    if (word.toLowerCase() === words[gameWordNum].wordTranslate) {
+    if (word.toLowerCase() === words[gameWordNum].word) {
       words[gameWordNum].isGuessed = true;
       setNumGuessedWords(numGuessedWords + 1)
     } else {
@@ -87,7 +87,10 @@ const SpeakIt = () => {
     }
   }
   function startRecording() {
-    SpeechRecognition.startListening({ continuous: true })
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: 'en-GB',
+    })
   }
   function startGame() {
     setIsGameMod(true)
@@ -146,6 +149,7 @@ const SpeakIt = () => {
     init()
   }, [])
   useEffect(() => {
+    console.log(finalTranscript)
     if (finalTranscript !== '') {
       setSpeakWord(finalTranscript)
     }

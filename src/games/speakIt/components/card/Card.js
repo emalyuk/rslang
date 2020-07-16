@@ -37,7 +37,6 @@ const Card = ({
       onClick={() => setCurrentItem(id, image, setActive)}
     >
       <p>{word}</p>
-      <p>{wordTranslate}</p>
       <p>{transcription}</p>
     </div>
   )
