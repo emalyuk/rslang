@@ -42,7 +42,7 @@ const Actions = (props) => {
   const dontKnowBtn = (
     <Button
       className='englishPuzzle__button'
-      text={'I don\'t know'}
+      text={'Не знаю'}
       clickHandler={() => dispatch(ifDontKnow)}
     />
   );
@@ -50,7 +50,7 @@ const Actions = (props) => {
   const continueBtn = (
     <Button
       className='englishPuzzle__button'
-      text='Continue'
+      text='Продолжить'
       clickHandler={continueBtnClickHandler}
     />
   );
@@ -58,7 +58,7 @@ const Actions = (props) => {
   const nextRoundBtn = (
     <Button
       className='englishPuzzle__button englishPuzzle__button--next'
-      text='Next Round'
+      text='След раунд'
       clickHandler={nextBtnClickHandler}
     />
   );
@@ -66,7 +66,7 @@ const Actions = (props) => {
   const resultBtn = (
     <Button
       className='englishPuzzle__button'
-      text='Results'
+      text='Результат'
       clickHandler={resultBtnClickHandler}
     />
   );

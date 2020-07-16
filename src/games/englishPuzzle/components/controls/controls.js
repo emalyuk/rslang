@@ -14,32 +14,31 @@ const Controls = (props) => {
 
   const audio = new Audio();
 
-  useEffect(() => {
+  const playSound = () => {
     const { audioExample } = data[index];
     audio.src = `https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${audioExample}`;
     if (!isSound) audio.autoplay = true;
+  }
+
+  useEffect(() => {
+    playSound()
   }, []);
 
   useEffect(() => {
-    const { audioExample } = data[index];
-    audio.src = `https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${audioExample}`;
-    if (!isSound) audio.autoplay = true;
+    playSound()
   }, [index]);
 
   const soundBtnClickHandler = () => {
-    console.log(isSound)
     dispatch(setIsSound)
   }
 
   const textBtnClickHandler = () => {
     setTextState(!isText)
-    dispatch(changeTextHintState());
+    dispatch(changeTextHintState);
   }
 
   const playBtnClickHandler = () => {
-    const { audioExample } = data[index];
-    audio.src = `https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/${audioExample}`;
-    if (!isSound) audio.play();
+    playSound()
   }
 
   const imageBtnClickHandler = () => {
@@ -48,13 +47,11 @@ const Controls = (props) => {
 
   return (
     <div className='englishPuzzle__controls'>
-
       <Button
         className='englishPuzzle__levelBtn'
         text={`Уровень ${group + 1}.${page + 1}`}
         clickHandler={lvlStateSwitcher}
       />
-
       <div className='englishPuzzle__textHint'>{isTextHint ? translated : null}</div>
       <Button
         className={`englishPuzzle__soundBtn ${isSound ? 'englishPuzzle__soundBtn--active' : ''}`}
@@ -62,7 +59,7 @@ const Controls = (props) => {
         clickHandler={soundBtnClickHandler}
       />
       <Button
-        className={`englishPuzzle__textBtn ${isText ? 'englishPuzzle__textBtn--active' : ''}`}
+        className={`englishPuzzle__textBtn ${isTextHint ? 'englishPuzzle__textBtn--active' : ''}`}
         text=''
         clickHandler={textBtnClickHandler}
       />

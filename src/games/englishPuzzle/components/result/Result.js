@@ -62,12 +62,12 @@ const Result = (props) => {
       <div className='result__btns'>
         <Button
           className='englishPuzzle__button result__btn result__btn--first'
-          text='continue'
+          text='Продолжить'
           clickHandler={continueClickHandler}
         />
         <Button
           className='englishPuzzle__button result__btn'
-          text='statistic'
+          text='Статистика'
           clickHandler={() => showStatistic()}
         />
       </div>

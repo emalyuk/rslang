@@ -10,7 +10,7 @@ const saved = getLocalStorage('englishPuzzleSettings')
 
 const initialEnglishPuzzleState = {
   data: [],
-  isDataLoaded: false,
+  isImgLoaded: false,
   isTextHint: false,
   isImg: false,
   isSound: false,
@@ -43,6 +43,9 @@ const englishPuzzleSlice = createSlice({
     globalReset(state, action) {
       state = action.payload.state;
     },
+    setIsImgLoaded(state, action) {
+      state.isImgLoaded = true;
+    },
     setIsEnd(state, action) {
       state.isEnd = action.payload.isEnd;
     },
@@ -51,10 +54,6 @@ const englishPuzzleSlice = createSlice({
     },
     updateImgData(state, action) {
       state.imgData = action.payload.imgData;
-    },
-    imageLoaded(state, action) {
-      console.log('imgloade')
-      state.isImgLoaded = true;
     },
     toGuessingRow(state, action) {
       const { id } = action.payload;
@@ -79,8 +78,8 @@ const englishPuzzleSlice = createSlice({
     changeActionType(state, action) {
       state.actionsType = action.payload.type;
     },
-    changeTextHintState(state, action) {
-      state.isTextHint = !state.isTextHint;
+    updateTextHint(state, action) {
+      state.isTextHint = action.payload.isTextHint;
     },
     changeCurrentPage(state, action) {
       state.page = action.payload.page;
@@ -95,10 +94,10 @@ const englishPuzzleSlice = createSlice({
       state.rows[state.index].isCurrent = action.payload.isCurrent;
     },
     updateIsImg(state, action) {
-      state.isImg = !state.isImg
+      state.isImg = action.payload.isImg
     },
     updateIsSound(state, action) {
-      state.isSound = !state.isSound;
+      state.isSound = action.payload.isSound;
     },
     updateIsEnd(state, action) {
       state.isEnd = !state.isEnd;
@@ -118,16 +117,19 @@ const englishPuzzleSlice = createSlice({
     updatePictureLink(state, action) {
       state.pictureLink = action.payload.pictureLink;
     },
+    updateSwitchLvl(state, action) {
+      state.switchLvl = action.payload.switchLvl;
+    },
   },
 });
 
 export const {
   init, setIsEnd, imageLoaded, setDataLoad, toCurrentRow,
   toGuessingRow, updateGuessingRow, updateCurrentRow, updateIsGuessed,
-  updateIsCurrent, changeActionType, changeTextHintState, changeCurrentGroup,
+  updateIsCurrent, changeActionType, updateTextHint, changeCurrentGroup,
   changeCurrentPage, updateImgData, updateIsSound, updateIsImg, updateIsUseHint,
   updateIsEnd, updateTranslated, updateIsVisible, updateIndex, globalReset,
-  updatePictureLink, updateRows, updateData,
+  updatePictureLink, updateRows, updateData, setIsImgLoaded, updateSwitchLvl,
 } = englishPuzzleSlice.actions;
 
 export const englishPuzzleReducer = englishPuzzleSlice.reducer;
@@ -148,6 +150,7 @@ export const initState = (page, group) => async (dispatch, getState) => {
       dispatch(setDataLoad({ isDataLoaded: true }));
       dispatch(updatePictureLink({ pictureLink: imgData.imageSrc }))
       dispatch(updateTranslated({ translated: data[0].textExampleTranslate }))
+      dispatch(updateSwitchLvl({ switchLvl: false }))
     } else {
       console.warn('no data');
     }
@@ -156,32 +159,53 @@ export const initState = (page, group) => async (dispatch, getState) => {
   }
 }
 
-export const initWithSetting = (settings) => (dispatch, getState) => {
-  dispatch(globalReset({ settings }));
-  console.log(settings)
-  // dispatch(updateIndex({ index: 0 }))
-  // dispatch(setIsEnd({ isEnd: false }));
-  // dispatch(updateRows({ rows }));
-  // dispatch(updateGuessingRow({ shuffled: data[0].shuffled }))
-  // dispatch(updateImgData({ imgData }));
-  // dispatch(setDataLoad({ isDataLoaded: true }));
-  // dispatch(updatePictureLink({ pictureLink: imgData.imageSrc }))
-  // dispatch(updateTranslated({ translated: data[0].textExampleTranslate }))
+export const initWithSetting = (state) => (dispatch, getState) => {
+  const {
+    pictureLink, actionsType, data, group, page, index,
+    rows, imgData, isImg, isTextHint, isSound, translated,
+  } = state;
+  delete state.pictureLink;
+  delete state.isDataLoaded;
+  delete state.switchLvl;
+  dispatch(updateIsImg({ isImg }));
+  dispatch(updateTextHint({ isTextHint }));
+  dispatch(updateTranslated({ translated }))
+  dispatch(updateIsSound({ isSound }));
+  dispatch(changeCurrentGroup({ group }))
+  dispatch(changeCurrentPage({ page }))
+  dispatch(updateIndex({ index }))
+  dispatch(updateData({ data }))
+  dispatch(updateRows({ rows }))
+  dispatch(updateGuessingRow({ shuffled: data[index].shuffled }))
+  dispatch(updateImgData({ imgData }));
+  dispatch(changeActionType({ type: actionsType }))
+  dispatch(updatePictureLink({ pictureLink }))
+  dispatch(setDataLoad({ isDataLoaded: true }));
 }
 
 export const changePage = (page) => (dispatch, getState) => {
+  const { englishPuzzle } = getState();
   dispatch(setDataLoad({ isDataLoaded: false }));
   dispatch(changeCurrentPage({ page }))
+  dispatch(updateSwitchLvl({ switchLvl: true }))
+  setLocalStorage('englishPuzzleSettings', { ...englishPuzzle, page })
 }
 
 export const changeGroup = (group) => (dispatch, getState) => {
+  const { englishPuzzle, englishPuzzle: { page } } = getState();
   dispatch(setDataLoad({ isDataLoaded: false }));
   dispatch(changeCurrentGroup({ group }))
+  dispatch(updateSwitchLvl({ switchLvl: true }))
+  if (group >= 3 && page > 24) {
+    dispatch(changeCurrentPage({ page: 0 }))
+  }
+  setLocalStorage('englishPuzzleSettings', { ...englishPuzzle, group })
 }
 
 export const changeLvl = (dispatch, getState) => {
   const { englishPuzzle: { group, page }, englishPuzzle } = getState();
   dispatch(setDataLoad({ isDataLoaded: false }));
+  dispatch(updateSwitchLvl({ switchLvl: true }))
   const pageLimit = (group < 3) ? 29 : 24;
   if (page === pageLimit) {
     const newGroupVal = group === 5 ? 0 : group + 1;
@@ -238,7 +262,7 @@ export const sort = (tgInd, dragInd, insPos, indFrom, flag) => (dispatch, getSta
   return false;
 }
 
-const isGuess = (dispatch, rows, index, copy) => {
+const isGuess = (dispatch, rows, index, copy, englishPuzzle) => {
   if (rows.length - 1 === index) {
     dispatch(setIsEnd({ isEnd: true }));
     dispatch(updateIsCurrent({ isCurrent: true }))
@@ -250,12 +274,13 @@ const isGuess = (dispatch, rows, index, copy) => {
     dispatch(changeActionType({ type: 'continue' }))
   }
   dispatch(updateIsGuessed({ isGuessed: true }))
+  setLocalStorage('englishPuzzleSettings', englishPuzzle)
 }
 
 export const checkSurface = (dispatch, getState) => {
   const { englishPuzzle: { shuffled, rows, index }, englishPuzzle } = getState();
   const { sentence, wordsArr } = rows[index];
-  let copy = JSON.parse(JSON.stringify(sentence));
+  const copy = JSON.parse(JSON.stringify(sentence));
   const checked = copy.map((obj, i) => {
     if (obj.word === wordsArr[i]) obj.isRightPos = true;
     if (obj.word !== wordsArr[i]) obj.isRightPos = false;
@@ -263,7 +288,7 @@ export const checkSurface = (dispatch, getState) => {
   });
   const isGuessed = copy.every((obj) => obj.isRightPos);
   if (isGuessed) {
-    isGuess(dispatch, rows, index, copy)
+    isGuess(dispatch, rows, index, copy, englishPuzzle)
   } else {
     dispatch(changeActionType({ type: 'dont' }))
   }
@@ -284,13 +309,15 @@ export const resetWords = (dispatch, getState) => {
 }
 
 export const setIsSound = (dispatch, getState) => {
-  const { englishPuzzle } = getState();
-  dispatch(updateIsSound());
-  setLocalStorage('englishPuzzleSettings', englishPuzzle)
+  const { englishPuzzle, englishPuzzle: { isSound } } = getState();
+  dispatch(updateIsSound({ isSound: !isSound }));
+  setLocalStorage('englishPuzzleSettings', { ...englishPuzzle, isSound: !isSound })
 }
 
-export const setIsImg = (dispatch) => {
-  dispatch(updateIsImg());
+export const setIsImg = (dispatch, getState) => {
+  const { englishPuzzle, englishPuzzle: { isImg } } = getState();
+  dispatch(updateIsImg({ isImg: !isImg }));
+  setLocalStorage('englishPuzzleSettings', { ...englishPuzzle, isImg: !isImg })
 }
 
 export const ifDontKnow = (dispatch, getState) => {
@@ -306,6 +333,7 @@ export const ifDontKnow = (dispatch, getState) => {
     dispatch(updateIsEnd())
     dispatch(updateIsCurrent({ isCurrent: false }))
   }
+  setLocalStorage('englishPuzzleSettings', englishPuzzle)
 }
 
 export const switchWord = (dispatch, getState) => {
@@ -313,8 +341,8 @@ export const switchWord = (dispatch, getState) => {
   const newIndex = index + 1;
   dispatch(updateIsCurrent({ isCurrent: false }))
   if (newIndex > rows.length - 1) {
-    dispatch(updateIsEnd({ index: 0 }))
-    dispatch(changeTextHintState())
+    dispatch(updateIsEnd())
+    dispatch(updateTextHint({ isTextHint: true }))
   } else {
     dispatch(updateIndex({ index: newIndex }))
     dispatch(updateGuessingRow({ shuffled: data[newIndex].shuffled }))
@@ -322,4 +350,11 @@ export const switchWord = (dispatch, getState) => {
     dispatch(updateIsVisible())
     dispatch(updateIsCurrent({ isCurrent: true }))
   }
+  setLocalStorage('englishPuzzleSettings', englishPuzzle)
+}
+
+export const changeTextHintState = (dispatch, getState) => {
+  const { englishPuzzle, englishPuzzle: { isTextHint } } = getState();
+  dispatch(updateTextHint({ isTextHint: !isTextHint }))
+  setLocalStorage('englishPuzzleSettings', { ...englishPuzzle, isTextHint: !isTextHint })
 }

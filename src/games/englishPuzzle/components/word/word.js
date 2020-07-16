@@ -6,7 +6,6 @@ const Word = (props) => {
   const {
     data, image, clickHandler, dragStart,
     dragEnter, dragEnd, dragOver, index,
-    imgFlag
   } = props;
   const canvas = useRef(null);
   const {
@@ -17,11 +16,6 @@ const Word = (props) => {
 
   useEffect(() => {
     canvasProcessor.updateCtx(canvas.current);
-    canvasProcessor.drawUnmarked(imgFlag);
-  }, [imgFlag]);
-
-  useEffect(() => {
-    canvasProcessor.updateCtx(canvas.current);
     if (typeof isRightPos !== 'undefined') {
       canvasProcessor.drawMarked(isRightPos);
     }
@@ -29,11 +23,6 @@ const Word = (props) => {
       canvasProcessor.drawUnmarked(isRightPos);
     }
   }, [isRightPos, canvasProcessor]);
-
-  // useEffect(() => {
-  //   // canvasProcessor.drawUnmarked();
-
-  // }, [imgFlag]);
 
   return (
     <canvas

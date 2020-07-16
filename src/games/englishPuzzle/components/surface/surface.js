@@ -15,8 +15,6 @@ const Surface = ({ image }) => {
     dispatch(toCurrentRow({ id }))
   }
 
-  //drag and drop part
-  // ======================drag and drop temp data
   let draggedIndex = null;
   let targetIndex = null;
   let targetElem = null;
@@ -24,7 +22,6 @@ const Surface = ({ image }) => {
   let startOfElem = null;
   let endOfElem = null;
 
-  // ==========================================drag and drop container handlers
   const dragOver = (e) => {
     e.preventDefault();
     const elemBorderFactor = 10;
@@ -58,7 +55,7 @@ const Surface = ({ image }) => {
     }
     e.dataTransfer.clearData();
   }
-  // ==========================================drag and drop item handlers
+
   const dragStart = (e, index) => {
     draggedIndex = index;
     e.dataTransfer.setData('text/surface', index)

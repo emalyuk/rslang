@@ -4,7 +4,7 @@ import { Button } from '..';
 import { Spinner } from '../../../../components';
 
 const CurrentStatistic = ({ closeStatistic }) => {
-  const [isLoad, setLoadState] = useState(true);
+  const [isLoad, setLoadState] = useState(false);
   const [isSpecificResult, setSpecificResultState] = useState(false);
 
   const loader = isLoad ? null : <Spinner />;

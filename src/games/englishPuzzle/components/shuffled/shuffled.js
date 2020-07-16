@@ -7,7 +7,6 @@ const Shuffled = ({ image }) => {
   const { shuffled, width, height, isImgShow } = useSelector((state) => state.englishPuzzle);
   const dispatch = useDispatch();
   const parent = useRef(null);
-
   const clickHandler = (id) => {
     dispatch(toGuessingRow({ id }));
   }

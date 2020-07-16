@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './EnglishPuzzle.scss';
-import { initState, imageLoaded, changeLvl, initWithSetting } from './EnglishPuzzleReducer';
+import {
+  initState, changeLvl, initWithSetting, setIsImgLoaded,
+} from './EnglishPuzzleReducer';
 import { Spinner } from '../../components';
 import {
   Controls, Surface, Shuffled, Actions,
@@ -16,10 +18,8 @@ const EnglishPuzzle = () => {
   const [isResultActive, setResultState] = useState(false);
   const {
     isDataLoaded, width, height, pictureLink, rows,
-    page, group,
+    page, group, isImgLoaded, switchLvl,
   } = useSelector((state) => state.englishPuzzle);
-  const st = useSelector((state) => state.englishPuzzle);
-  const [isImgLoaded, setIsImgLoaded] = useState(false);
 
   const createImg = () => {
     const canvasHeigh = height * rows.length;
@@ -29,8 +29,7 @@ const EnglishPuzzle = () => {
       const newImg = document.createElement('img');
       newImg.src = resizeImage(img, width, canvasHeigh);
       setResizedImage(newImg)
-      console.log('ffff')
-      setIsImgLoaded(true)
+      dispatch(setIsImgLoaded())
     }
   }
 
@@ -39,31 +38,20 @@ const EnglishPuzzle = () => {
   }
 
   useEffect(() => {
-    // const settings = getLocalStorage('englishPuzzleSettings')
-    // if (settings && firstLoad) {
-    //   dispatch(initWithSetting(settings))
-    // } else {
-    //   dispatch(initState(page, group))
-    // }
-    // setFirstLoad(false)
+    const settings = getLocalStorage('englishPuzzleSettings')
+    if (settings) {
+      dispatch(initWithSetting(settings))
+    } else {
+      dispatch(initState(page, group))
+    }
   }, []);
 
   useEffect(() => {
-    console.log('asdfas')
-    // if (!firstLoad) dispatch(initState(page, group))
-    const settings = getLocalStorage('englishPuzzleSettings')
-    if (settings) {
-      console.log('settings')
-      dispatch(initWithSetting(settings))
-    } else {
-      console.log('item')
-      dispatch(initState(page, group))
-    }
-  }, [page, group]);
-
+    if (switchLvl) dispatch(initState(page, group))
+  }, [switchLvl]);
 
   useEffect(() => {
-    createImg();
+    if (pictureLink) createImg();
   }, [pictureLink]);
 
   const mainContent = (
@@ -103,7 +91,7 @@ const EnglishPuzzle = () => {
 
   return (
     <div className='englishPuzzle'>
-      {(!isDataLoaded || !isImgLoaded) && <Spinner />}
+      {(!isImgLoaded || !isDataLoaded) && <Spinner />}
       {(isDataLoaded && isImgLoaded) && mainContent}
     </div>
   )

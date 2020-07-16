@@ -204,16 +204,24 @@ export class CanvasApi {
     this.ctx.clip();
 
     if (!this.isFirst) {
-      this.ctx.drawImage(
-        this.image, this.xOffset - this.radius, this.yOffset, this.width + this.radius,
-        this.height, 0, 0, this.width + this.radius, this.height,
-      );
+      try {
+        this.ctx.drawImage(
+          this.image, this.xOffset - this.radius, this.yOffset, this.width + this.radius,
+          this.height, 0, 0, this.width + this.radius, this.height
+        );
+      } catch (err) {
+        console.log(err)
+      }
     }
     if (this.isFirst) {
-      this.ctx.drawImage(
-        this.image, this.xOffset, this.yOffset, this.width, this.height, 0, 0,
-        this.width, this.height,
-      );
+      try {
+        this.ctx.drawImage(
+          this.image, this.xOffset, this.yOffset, this.width, this.height, 0, 0,
+          this.width, this.height,
+        );
+      } catch (err) {
+        console.log(err)
+      }
     }
 
     this.ctx.globalCompositeOperation = 'destination-put';
