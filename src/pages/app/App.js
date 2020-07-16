@@ -36,7 +36,7 @@ const App = () => {
             <Route path={routes.promo} component={Promo} exact />
             <Route path={routes.game} component={Games} exact />
             <Route path={routes.games.savanna} component={Savanna} exact />
-            <Route path={routes.games.spealIt} component={SpeakIt} exact />
+            <Route path={routes.games.speakIt} component={SpeakIt} exact />
             <Route path={routes.games.sprint} component={Sprint} exact />
             <PrivateRoute path={routes.statistic} component={Statistic} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
