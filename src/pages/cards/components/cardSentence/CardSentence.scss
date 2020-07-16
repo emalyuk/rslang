@@ -1,0 +1,39 @@
+@import 'scss/variables.scss';
+@import 'scss/mixins';
+
+.card__main {
+  &__sentence {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 24px;
+    font-weight: bold;
+    color: $baseGray;
+    user-select: none;
+
+    @include sm() {
+      font-size: 18px;
+    }
+
+    @include exSm() {
+      font-size: 16px;
+    }
+  }
+}
+
+.card__setnence__word {
+  &.main {
+    border-bottom: 1px solid $baseGray;
+    margin-right: 5px;
+    color: $secondColor;
+  }
+
+  &.visible {
+    color: $rightAnswerColor;
+  }
+
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
+}

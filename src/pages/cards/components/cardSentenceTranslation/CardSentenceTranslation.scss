@@ -1,0 +1,21 @@
+@import 'scss/variables.scss';
+@import 'scss/mixins';
+
+.card__main__sentence-translation {
+  text-align: center;
+  color: $secondColor;
+  font-size: 20px;
+  user-select: none;
+
+  @include sm() {
+    font-size: 16px;
+  }
+
+  @include exSm() {
+    font-size: 14px;
+  }
+
+  &.visible {
+    color: $rightAnswerColor;
+  }
+}

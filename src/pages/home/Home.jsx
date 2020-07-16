@@ -3,8 +3,9 @@ import { useHistory } from 'react-router-dom';
 
 import Loading from 'components/loading/Loading';
 import { settingsLabelName } from 'constants/cardSettings';
+import { userStatsKey, userSettingsKey } from 'constants/constants';
 import isPossibilitySwitch from 'utils/isPossibilitySwitch';
-import { getSettings, putSettings, getStats } from './HomeApi';
+import { getSettings, putSettings, getStats, putStats } from './HomeApi';
 import HomeStatus from './components/homeStatus/HomeStatus';
 import CardSettings from './components/cardSettings/CardSettings';
 
@@ -16,10 +17,15 @@ export const Home = () => {
   const [settings, setSettings] = useState(null);
   const [stats, setStats] = useState(null);
 
+  console.log(stats);
+
   useEffect(() => {
+    console.log('1');
     async function getHomeData() {
       const receivedSettings = await getSettings();
       const receivedStats = await getStats();
+
+      console.log(receivedStats, 'receivedStats');
 
       if (receivedSettings && receivedStats) {
         setSettings(receivedSettings);
@@ -33,7 +39,8 @@ export const Home = () => {
   }, [history]);
 
   useEffect(() => {
-    localStorage.setItem('settings', JSON.stringify(settings));
+    localStorage.setItem(userSettingsKey, JSON.stringify(settings));
+    localStorage.setItem(userStatsKey, JSON.stringify(stats));
     if (settings) {
       const timeout = setTimeout(() => {
         putSettings(settings);
@@ -41,7 +48,7 @@ export const Home = () => {
 
       return () => clearTimeout(timeout);
     }
-  }, [settings]);
+  }, [settings, stats]);
 
   const handleOnChangeSelect = useCallback(
     (event, tag) => {

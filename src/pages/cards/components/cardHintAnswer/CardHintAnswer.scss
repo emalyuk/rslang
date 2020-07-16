@@ -1,0 +1,23 @@
+@import 'scss/variables.scss';
+
+.card__result {
+  font-family: monospace;
+  font-size: 32px;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  user-select: none;
+  z-index: 2;
+
+  &__letter {
+    color: green;
+
+    &.wrong {
+      color: orange;
+    }
+
+    &.wrongest {
+      color: red;
+    }
+  }
+}

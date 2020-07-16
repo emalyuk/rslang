@@ -40,14 +40,15 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(error);
 });
 
-const getData = async (path, initialData) => {
+const getData = async (path, initialData, putData) => {
   let data;
   try {
     const response = await axios.get(path, config);
+    console.log(response);
     return getFormattedData(response.data);
   } catch (err) {
-    // TODO: 401 Access token is missing or invalid
     if (err.response.status === responseStatusNotFound) {
+      putData(initialData);
       data = initialData;
     } else if (err.response.status === responseStatusInvalidToken) {
       data = initialData;
@@ -57,9 +58,9 @@ const getData = async (path, initialData) => {
   }
 };
 
-export const getSettings = async () => getData(settingsPath, initialSettings);
+export const getSettings = async () => getData(settingsPath, initialSettings, putSettings);
 
-export const getStats = async () => getData(statsPath, initialStats);
+export const getStats = async () => getData(statsPath, initialStats, putStats);
 
 export const putSettings = async (settings) => {
   axios.put(settingsPath, JSON.stringify(settings), config);

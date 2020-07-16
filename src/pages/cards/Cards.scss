@@ -1,0 +1,16 @@
+@import '../../scss/variables.scss';
+
+.card__container {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.card {
+  min-height: 300px;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: $secondColor;
+}

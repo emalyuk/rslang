@@ -11,6 +11,7 @@ import './App.scss';
 const Registration = lazy(() => import('pages/auth/registration/Registration'));
 const Login = lazy(() => import('pages/auth/login/Login'));
 const Home = lazy(() => import('pages/home/Home'));
+const Cards = lazy(() => import('pages/cards/Cards'));
 const Team = lazy(() => import('pages/team/Team'));
 const Promo = lazy(() => import('pages/promo/Promo'));
 const Dictionary = lazy(() => import('pages/dictionary/Dictionary'));
@@ -31,7 +32,7 @@ const App = () => {
       <div className='content'>
         <React.Suspense fallback={<Loading />}>
           <Switch>
-            <Route path={routes.login} component={Login} exact />
+          <Route path={routes.login} component={Login} exact />
             <Route path={routes.registration} component={Registration} exact />
             <Route path={routes.team} component={Team} exact />
             <Route path={routes.promo} component={Promo} exact />
@@ -43,6 +44,7 @@ const App = () => {
             <Route path={routes.games.englishPuzzle} component={EnglishPuzzle} exact />
             <PrivateRoute path={routes.team} component={Team} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
+            <PrivateRoute path={routes.cards} component={Cards} exact />
             <PrivateRoute path={routes.dictionary} component={Dictionary} exact />
             <Route component={NotFound} />
           </Switch>
