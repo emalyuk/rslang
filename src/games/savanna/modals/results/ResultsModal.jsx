@@ -55,7 +55,17 @@ const ResultsModal = ({ results }) => {
 
     let newStats;
 
-    if (stats.optional === undefined) {
+    if (stats.optional.savanna.statistics.length) {
+      newStats = {
+        ...stats,
+        optional: {
+          ...stats.optional,
+          savanna: {
+            statistics: [...stats.optional.savanna.statistics, currentGameStats],
+          },
+        },
+      }
+    } else {
       newStats = {
         ...stats,
         optional: {
@@ -65,18 +75,6 @@ const ResultsModal = ({ results }) => {
           },
         },
       };
-    } else {
-      if (stats.optional.savanna !== undefined) {
-        newStats = {
-          ...stats,
-          optional: {
-            ...stats.optional,
-            savanna: {
-              statistics: [...stats.optional.savanna.statistics, currentGameStats],
-            },
-          },
-        }
-      }
     }
 
     putStats(newStats);
