@@ -16,6 +16,7 @@ const EnglishPuzzle = () => {
   const [resizedImage, setResizedImage] = useState(null);
   const [isLvlSwitcher, setLvlSwitcherState] = useState(false);
   const [isResultActive, setResultState] = useState(false);
+  const [isSmallDevice, setSmallDevice] = useState(false);
   const {
     isDataLoaded, width, height, pictureLink, rows,
     page, group, isImgLoaded, switchLvl,
@@ -37,13 +38,25 @@ const EnglishPuzzle = () => {
     dispatch(changeLvl)
   }
 
+  const checkViewportSize = () => {
+    if (window.innerWidth <= 768) {
+      setSmallDevice(true)
+      console.log(window.innerWidth);
+    } else {
+      setSmallDevice(false)
+    }
+  }
+
   useEffect(() => {
+    checkViewportSize()
     const settings = getLocalStorage('englishPuzzleSettings')
     if (settings) {
       dispatch(initWithSetting(settings))
     } else {
       dispatch(initState(page, group))
     }
+
+    window.addEventListener('resize', checkViewportSize)
   }, []);
 
   useEffect(() => {
@@ -89,10 +102,19 @@ const EnglishPuzzle = () => {
     </div>
   );
 
+  const setSmallDeviceContent = (
+    <div className='englishPuzzle__smallDeviceText'>
+      Извините, ваш дисплей маленького размера.
+      Для вашего удобства используйте устройство с экраном большего размера
+    </div>
+  );
+
+
   return (
     <div className='englishPuzzle'>
-      {(!isImgLoaded || !isDataLoaded) && <Spinner />}
-      {(isDataLoaded && isImgLoaded) && mainContent}
+      {((!isSmallDevice && !isImgLoaded) || (!isSmallDevice && !isDataLoaded)) && <Spinner />}
+      {((!isSmallDevice && isDataLoaded) && (!isSmallDevice && isImgLoaded)) && mainContent}
+      {isSmallDevice && setSmallDeviceContent}
     </div>
   )
 }

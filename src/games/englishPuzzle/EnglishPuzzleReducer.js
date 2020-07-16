@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getData } from './EnglishPuzzleApi';
 import {
   createRows, getImgData, setLocalStorage, getLocalStorage,
+  postStat, setLocalStorageStat,
 } from './EnglishPuzzleUtils';
 
 const saved = getLocalStorage('englishPuzzleSettings')
@@ -270,6 +271,8 @@ const isGuess = (dispatch, rows, index, copy, englishPuzzle) => {
       delete obj.isRightPos
       return obj;
     });
+    postStat(englishPuzzle)
+    setLocalStorageStat(englishPuzzle)
   } else {
     dispatch(changeActionType({ type: 'continue' }))
   }
@@ -330,8 +333,10 @@ export const ifDontKnow = (dispatch, getState) => {
   dispatch(updateIsUseHint());
 
   if (rows.length - 1 === index) {
-    dispatch(updateIsEnd())
+    dispatch(setIsEnd({ isEnd: true }));
     dispatch(updateIsCurrent({ isCurrent: false }))
+    postStat(englishPuzzle)
+    setLocalStorageStat(englishPuzzle)
   }
   setLocalStorage('englishPuzzleSettings', englishPuzzle)
 }
@@ -341,8 +346,10 @@ export const switchWord = (dispatch, getState) => {
   const newIndex = index + 1;
   dispatch(updateIsCurrent({ isCurrent: false }))
   if (newIndex > rows.length - 1) {
-    dispatch(updateIsEnd())
+    dispatch(setIsEnd({ isEnd: true }));
     dispatch(updateTextHint({ isTextHint: true }))
+    postStat(englishPuzzle)
+    setLocalStorageStat(englishPuzzle)
   } else {
     dispatch(updateIndex({ index: newIndex }))
     dispatch(updateGuessingRow({ shuffled: data[newIndex].shuffled }))

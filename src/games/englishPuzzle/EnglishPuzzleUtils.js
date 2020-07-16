@@ -1,4 +1,5 @@
-import { gallery } from '../../constants'
+import { gallery } from '../../constants';
+import { getStats, putStats } from '../../pages/home/HomeApi';
 
 export function setUniqueId() {
   return `_${Math.random().toString(36).substr(2, 9)}`;
@@ -259,4 +260,63 @@ export function getLocalStorage(key) {
   const item = window.localStorage.getItem(key)
   const result = JSON.parse(item);
   return result;
+}
+
+export const postStat = async (st) => {
+  const guessed = st.rows.filter((obj) => obj.isGuessed)
+  const notGuessed = st.rows.filter((obj) => !obj.isGuessed)
+  const stats = await getStats();
+
+  const currentGameStats = {
+    date: new Date().toLocaleDateString(),
+    right: guessed.length,
+    wrong: notGuessed.length,
+  };
+
+  let newStats;
+
+  if (stats.optional.englishpuzzle.statistics.length) {
+    newStats = {
+      ...stats,
+      optional: {
+        ...stats.optional,
+        englishpuzzle: {
+          statistics: [...stats.optional.englishpuzzle.statistics, currentGameStats],
+        },
+      },
+    }
+  } else {
+    newStats = {
+      ...stats,
+      optional: {
+        ...stats.optional,
+        englishpuzzle: {
+          statistics: [currentGameStats],
+        },
+      },
+    };
+  }
+  putStats(newStats);
+};
+
+export function setLocalStorageStat(value) {
+  const stat = window.localStorage.getItem('englishPuzzleStat')
+  const { page, group, rows } = value;
+  const round = `${group + 1}/${page + 1}`;
+  const guessed = rows.filter((obj) => obj.isGuessed);
+  const notGuessed = rows.filter((obj) => !obj.isGuessed);
+  const date = new Date().toLocaleDateString();
+  const newItem = { date, round, guessed: guessed.length, notGuessed: notGuessed.length };
+  let newStat
+  if (stat) {
+    const parsed = JSON.parse(stat);
+    newStat = [...parsed, newItem];
+  } else {
+    newStat = [newItem];
+  }
+  window.localStorage.setItem('englishPuzzleStat', JSON.stringify(newStat))
+}
+
+export function getLocalStorageStat() {
+  return JSON.parse(window.localStorage.getItem('englishPuzzleStat'));
 }
