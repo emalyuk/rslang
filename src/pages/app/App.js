@@ -18,7 +18,7 @@ const Statistic = lazy(() => import('pages/statistic/Statistic'));
 
 const Games = lazy(() => import('pages/game/Game'));
 const Savanna = lazy(() => import('../../games/savanna/Savanna'));
-const Savanna = lazy(() => import('../../games/savanna/SpeakIt'));
+const SpeakIt = lazy(() => import('../../games/speakIt/SpeakIt'));
 const Sprint = lazy(() => import('../../games/sprint'));
 
 const NotFound = lazy(() => import('pages/notFound/NotFound'));
