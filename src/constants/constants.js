@@ -21,7 +21,6 @@ const navOptions = [
   { route: ROUTS.game, title: 'Games' },
   { route: ROUTS.statistic, title: 'Statistic' },
   { route: ROUTS.team, title: 'Team' },
-  { route: ROUTS.statistic, title: 'Statistics' },
   { route: ROUTS.dictionary, title: 'Dictionary' },
 ];
 
