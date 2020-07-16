@@ -12,8 +12,6 @@ const CardFooter = ({ data, cardMainInfo, stats }) => {
   const dispatch = useDispatch();
   const { countSkipedWords } = stats.optional.cardStats;
 
-  console.log(stats, 'stats');
-
   const [countSkip, setCountSkip] = useState(countSkipedWords);
 
   useEffect(() => {
@@ -55,9 +53,6 @@ const CardFooter = ({ data, cardMainInfo, stats }) => {
       showNextWord,
     );
   };
-
-  console.log(countSkip, 'ASFASFASDASD');
-  console.log(stats);
 
   return (
     <div className='card__footer'>

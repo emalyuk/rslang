@@ -31,7 +31,7 @@ const App = () => {
       <div className='content'>
         <React.Suspense fallback={<Loading />}>
           <Switch>
-            <Route path={routes.login} component={Login} exact />
+          <Route path={routes.login} component={Login} exact />
             <Route path={routes.registration} component={Registration} exact />
             <Route path={routes.team} component={Team} exact />
             <Route path={routes.promo} component={Promo} exact />
@@ -41,8 +41,8 @@ const App = () => {
             <Route path={routes.games.sprint} component={Sprint} exact />
             <PrivateRoute path={routes.statistic} component={Statistic} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
-            <PrivateRoute path={routes.dictionary} component={Dictionary} exact />
             <PrivateRoute path={routes.cards} component={Cards} exact />
+            <PrivateRoute path={routes.dictionary} component={Dictionary} exact />
             <Route component={NotFound} />
           </Switch>
         </React.Suspense>

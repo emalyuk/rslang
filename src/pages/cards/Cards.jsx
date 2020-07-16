@@ -7,7 +7,6 @@ import {
   wordsInGroup,
 } from 'constants/constants';
 import { getWords, resetData } from './CardsSliceReducer';
-// import { getUserWords } from './CardsApi';
 
 import CardHeader from './components/cardHeader/CardHeader';
 import CardMain from './components/cardMain/CardMain';
@@ -37,17 +36,12 @@ const Cards = () => {
 
   useEffect(() => {
     dispatch(getWords(numberStartCard, group, wordsPerDay));
-    // getUserWords();
     return () => dispatch(resetData());
   }, [dispatch, numberStartCard, group, wordsPerDay]);
 
   useEffect(() => {}, [data]);
 
   const isLimitCards = todayWordLearned >= wordsPerDay;
-
-  console.log(todayWordLearned);
-  console.log(wordsPerDay);
-  console.log(isLimitCards);
 
   return (
     <div className='card__container container'>

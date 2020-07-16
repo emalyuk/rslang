@@ -20,6 +20,7 @@ export const Home = () => {
   console.log(stats);
 
   useEffect(() => {
+    console.log('1');
     async function getHomeData() {
       const receivedSettings = await getSettings();
       const receivedStats = await getStats();

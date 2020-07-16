@@ -67,8 +67,6 @@ export const getWords = (numberStartCard, group, wordsPerDay) => async (
   try {
     const { data } = await getWordsData(group);
 
-    console.log(data)
-
     if (data) {
       dispatch(
         getDataSuccess([
