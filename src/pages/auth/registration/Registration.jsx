@@ -9,10 +9,12 @@ import Button from '../../../components/button/Button';
 import Form from '../../../components/form/Form';
 import Subtitle from '../../../components/subtitle/subtitle';
 
+import '../auth.scss';
+
 export const Registration = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isLoading } = useSelector((state) => state.login);
+  const { isLoading, error } = useSelector((state) => state.registration);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,12 +36,10 @@ export const Registration = () => {
     e.preventDefault();
 
     if (password === confirmPassword) {
-      if (!isLoading) {
+      if (!isLoading && !error.langth) {
         await getRegistrationInfo({ email, password })(dispatch);
-        history.push(ROUTER.login);
+        history.push(ROUTER.login)
       }
-    } else {
-      alert('Password and confirm password are not equale!');
     }
   }
 
@@ -61,6 +61,8 @@ export const Registration = () => {
           placeholder='Email'
         />
 
+        <span className='password-input-reglament'>{' Пароль должен содержать не менее 8-ми символов, '}</span>
+        <span className='password-input-reglament'>заглавную букву(A-Z), 1 символ</span>
         <Input
           required
           value={password}
@@ -78,6 +80,9 @@ export const Registration = () => {
           className='password'
           placeholder='Confirm Password'
         />
+
+        {error.map((i) => (<div className='unvalid-data'>{i}</div>))}
+        {(password !== confirmPassword) ? <div className='unvalid-data'>Не совпадают пароли</div> : ''}
 
         <Button type='submit' onClick={() => {}} className='' disabled={isLoading}>
           Sign Up

@@ -4,12 +4,12 @@ import createUser from './RegistrationApi';
 
 const initialRegistrationState = {
   data: [],
-  error: null,
+  error: [],
   isLoading: false,
 };
 
 const RegistrationSlice = createSlice({
-  name: 'Registration',
+  name: 'registration',
   initialState: { ...initialRegistrationState },
   reducers: {
     getRegistrationDataRequest(state) {
@@ -20,7 +20,12 @@ const RegistrationSlice = createSlice({
       state.isLoading = false;
     },
     getRegistrationDataFailure(state, action) {
-      state.error = action.payload;
+      if (typeof action.payload.response.data === 'string') {
+        state.error = [action.payload.response.data];
+      } else {
+        state.error = action.payload.response.data.error.errors.map((item) => item.message);
+      }
+
       state.isLoading = false;
     },
     resetRegistrationState(state) {
@@ -36,7 +41,7 @@ export const {
   getRegistrationDataRequest,
 } = RegistrationSlice.actions;
 
-export const RegistrationSliceReducer = RegistrationSlice.reducer;
+export const registrationSliceReducer = RegistrationSlice.reducer;
 
 export const getRegistrationInfo = (data) => async (dispatch) => {
   try {

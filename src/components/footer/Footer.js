@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <footer className='footer'>
       <div className='footer__container'>
-        <a href={rsSchoolLink} className='footer__link'>Rs school</a>
+        {/* <a href={rsSchoolLink} className='footer__link'>Rs school</a>
         {!isTeamPage && (
           <button
             className='footer__button'
@@ -21,7 +21,7 @@ const Footer = () => {
           >
             Team №48
           </button>
-        )}
+        )} */}
         {isTeamPage && <span className='footer__owner'> Team №48 </span>}
         <div className='footer__copyright'>
           <span className='footer__copyright-symbol'>{'\u00A9'}</span>

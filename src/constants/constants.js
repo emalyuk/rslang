@@ -16,18 +16,27 @@ const responseStatusNotFound = 404;
 const responseStatusInvalidToken = 401;
 
 const navOptions = [
-  { route: ROUTS.home, title: 'Home' },
-  { route: ROUTS.game, title: 'Game' },
   { route: ROUTS.promo, title: 'Promo' },
+  { route: ROUTS.home, title: 'Home' },
+  { route: ROUTS.game, title: 'Games' },
+  { route: ROUTS.statistic, title: 'Statistic' },
   { route: ROUTS.team, title: 'Team' },
   { route: ROUTS.statistic, title: 'Statistics' },
   { route: ROUTS.dictionary, title: 'Dictionary' },
 ];
 
 const navOptionsUnLoginUser = [
+  { route: ROUTS.promo, title: 'Promo' },
   { route: ROUTS.login, title: 'Login' },
   { route: ROUTS.registration, title: 'Registration' },
 ];
+
+const CORRECT_WORD_CHANCE = 50; // in %
+const GUESS_FROM_QUANTITY = 100 / CORRECT_WORD_CHANCE;
+
+const convertMsToSeconds = (ms) => (ms / 1000).toFixed(0);
+const initialTime = 60 * 1000;
+const interval = 1000;
 
 export {
   imgPath,
@@ -45,4 +54,9 @@ export {
   usersPath,
   statsPath,
   settingsPath,
+  CORRECT_WORD_CHANCE,
+  GUESS_FROM_QUANTITY,
+  convertMsToSeconds,
+  initialTime,
+  interval,
 };
