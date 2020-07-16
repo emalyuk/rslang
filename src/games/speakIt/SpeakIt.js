@@ -27,7 +27,7 @@ const activeInit = {
   wordTranslate: '',
 }
 
-const Team = () => {
+const SpeakIt = () => {
   const [isFinish, setIsFinish] = useState(false)
   const [words, setWords] = useState([])
   const [active, setActive] = useState(activeInit)
@@ -210,4 +210,4 @@ const Team = () => {
   )
 };
 
-export default Team;
+export default SpeakIt;
