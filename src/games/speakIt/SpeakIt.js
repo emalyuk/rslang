@@ -114,7 +114,7 @@ const SpeakIt = () => {
       right: numGuessedWords,
     };
     let stat = await getStats()
-    stat.optional.speakit.statistic.push(curentGameStats)
+    stat.optional.speakit.statistics.push(curentGameStats)
     putStats(stat)
   }
   function finishedGame() {
