@@ -19,15 +19,17 @@ const navOptions = [
   { route: ROUTS.promo, title: 'Promo' },
   { route: ROUTS.home, title: 'Home' },
   { route: ROUTS.game, title: 'Games' },
-  { route: ROUTS.statistic, title: 'Statistic' },
   { route: ROUTS.team, title: 'Team' },
+  { route: ROUTS.statistic, title: 'Statistics' },
   { route: ROUTS.dictionary, title: 'Dictionary' },
 ];
 
 const navOptionsUnLoginUser = [
-  { route: ROUTS.promo, title: 'Promo' },
   { route: ROUTS.login, title: 'Login' },
   { route: ROUTS.registration, title: 'Registration' },
+  { route: ROUTS.game, title: 'Games' },
+  { route: ROUTS.promo, title: 'Promo' },
+  { route: ROUTS.team, title: 'Team' },
 ];
 
 const CORRECT_WORD_CHANCE = 50; // in %
