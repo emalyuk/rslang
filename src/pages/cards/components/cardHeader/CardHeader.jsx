@@ -10,15 +10,18 @@ import './CardHeader.scss';
 
 const CardHeader = ({ settings, wordId, stats }) => {
   const { isShowDeleteButton, isShowHardButton } = settings;
+  const { countDeletedWords, countHardWords} = stats.optional.cardStats;
   const dispatch = useDispatch();
 
   const [countWords, setCountWords] = useState({
-    countDeletedWords: 0,
-    countHardWords: 0,
+    countDeletedWords,
+    countHardWords,
   });
 
+  console.log(countWords);
+
   useEffect(() => {
-    putStats({
+    const newStats = {
       ...stats,
       optional: {
         ...stats.optional,
@@ -28,7 +31,9 @@ const CardHeader = ({ settings, wordId, stats }) => {
           countHardWords: countWords.countHardWords,
         },
       },
-    });
+    };
+    localStorage.setItem('stats', JSON.stringify(newStats));
+    putStats(newStats);
   }, [countWords, stats]);
 
   const pushToServer = (value) => {
@@ -42,7 +47,7 @@ const CardHeader = ({ settings, wordId, stats }) => {
       ...countWords,
       countDeletedWords: countWords.countDeletedWords + 1,
     });
-    pushToServer('del');
+    pushToServer('deleted');
   };
 
   const handleOnHardWord = () => {

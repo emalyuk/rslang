@@ -32,13 +32,20 @@ const getUserWordsConfig = {
 };
 
 export const getWordsData = async (group) => {
-  return axios.get(
-    `${groupPath}${group}${wordsPerExampleSentencePath}${wordsPerPagePath}`,
-    getWordsConfig,
+  const response = await axios.get(
+    `${process.env.REACT_APP_BASE_URL}${baseWordsUrl}${groupPath}${group}${wordsPerExampleSentencePath}${wordsPerPagePath}`,
+    {
+      headers: {
+        Accept: 'application/json',
+      },
+    }
   );
+
+  return response;
 };
 
 export const getUserWords = async () => {
+  console.log('user words')
   const response = await axios.get(wordsPathEnding, getUserWordsConfig);
 
   console.log(response.data, 'getUserWords');

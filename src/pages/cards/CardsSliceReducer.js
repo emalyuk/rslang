@@ -54,10 +54,10 @@ export const {
 export const cardsSliceReducer = cardsSlice.reducer;
 
 export const getNextWord = (id, userWord) => (dispatch) => {
+  createUserWord(id, userWord);
   dispatch(setIsAnswerReceived(false));
   dispatch(setIsCorrectAnswer(false));
   dispatch(setIsSkipAnswer(false));
-  createUserWord(id, userWord);
   dispatch(showNextCard());
 };
 
@@ -65,7 +65,9 @@ export const getWords = (numberStartCard, group, wordsPerDay) => async (
   dispatch,
 ) => {
   try {
-    const { data } = await getWordsData(numberStartCard, group, wordsPerDay);
+    const { data } = await getWordsData(group);
+
+    console.log(data)
 
     if (data) {
       dispatch(

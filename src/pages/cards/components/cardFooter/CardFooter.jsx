@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Button from 'components/button/Button';
@@ -10,6 +10,26 @@ import './CardFooter.scss';
 
 const CardFooter = ({ data, cardMainInfo, stats }) => {
   const dispatch = useDispatch();
+  const { countSkipedWords } = stats.optional.cardStats;
+
+  console.log(stats, 'stats');
+
+  const [countSkip, setCountSkip] = useState(countSkipedWords);
+
+  useEffect(() => {
+    const newStats = {
+      ...stats,
+      optional: {
+        ...stats.optional,
+        cardStats: {
+          ...stats.optional.cardStats,
+          countSkipedWords: countSkip,
+        },
+      },
+    };
+    localStorage.setItem('stats', JSON.stringify(newStats));
+    putStats(newStats);
+  }, [countSkip]);
 
   const showNextWord = () => {
     setTimeout(() => {
@@ -22,16 +42,7 @@ const CardFooter = ({ data, cardMainInfo, stats }) => {
     const { audio, audioMeaning, audioExample } = data;
     const { isShowWordMeaning, isShowWordExample } = cardMainInfo;
 
-    putStats({
-      ...stats,
-      optional: {
-        ...stats.optional,
-        cardStats: {
-          ...stats.optional.cardStats,
-          countSkipedWords: stats.optional.cardStats.countSkipedWords + 1,
-        },
-      },
-    });
+    setCountSkip(countSkip + 1);
 
     dispatch(setIsSkipAnswer(true));
 
@@ -44,6 +55,9 @@ const CardFooter = ({ data, cardMainInfo, stats }) => {
       showNextWord,
     );
   };
+
+  console.log(countSkip, 'ASFASFASDASD');
+  console.log(stats);
 
   return (
     <div className='card__footer'>

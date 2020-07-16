@@ -7,7 +7,7 @@ import {
   wordsInGroup,
 } from 'constants/constants';
 import { getWords, resetData } from './CardsSliceReducer';
-import { getUserWords } from './CardsApi';
+// import { getUserWords } from './CardsApi';
 
 import CardHeader from './components/cardHeader/CardHeader';
 import CardMain from './components/cardMain/CardMain';
@@ -25,7 +25,7 @@ const Cards = () => {
   const { cardExtraInfo, cardMainInfo } = userSettings.optional;
   const { wordsPerDay } = userSettings;
   const { learnedWords } = userStats;
-  const { countDeletedWords, countHardWords } = userStats.optional.cardStats;
+  const { countDeletedWords, countHardWords, todayWordLearned } = userStats.optional.cardStats;
 
   const numberStartCard = learnedWords + countDeletedWords + countHardWords;
 
@@ -37,15 +37,25 @@ const Cards = () => {
 
   useEffect(() => {
     dispatch(getWords(numberStartCard, group, wordsPerDay));
-    getUserWords();
+    // getUserWords();
     return () => dispatch(resetData());
   }, [dispatch, numberStartCard, group, wordsPerDay]);
 
   useEffect(() => {}, [data]);
 
+  const isLimitCards = todayWordLearned >= wordsPerDay;
+
+  console.log(todayWordLearned);
+  console.log(wordsPerDay);
+  console.log(isLimitCards);
+
   return (
     <div className='card__container container'>
-      {data.length ? (
+      {
+      data.length && isLimitCards ? (
+        <div>Сегодня вы выучили максимум слов. Отдохните и приходите завтра. Если вы хотите, продожить сегодня, перейдите на главную страницу и увеличте количство карточек для изучения.</div>
+      ) :
+      data.length && !isLimitCards ? (
         <>
           <div className='card shadow'>
             <CardHeader
