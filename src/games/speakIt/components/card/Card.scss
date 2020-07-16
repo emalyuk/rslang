@@ -1,0 +1,44 @@
+@import '../../../../scss/variables';
+@import '../../../../scss/mixins';
+.Card {
+  width: 18%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: $secondColor;
+  border: 1px solid $fourthColor;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &:hover {
+    box-shadow: 5px 5px 10px 0 rgba($color: $firstColor, $alpha: 0.3);
+  }
+  &.isActive {
+    background-color: $fourthColor;
+    box-shadow: 5px 5px 10px 0 rgba($color: $firstColor, $alpha: 0.3);
+  }
+  &.isGame {
+    pointer-events: none;
+  }
+  &.isGuessed {
+    background-color: green;
+  }
+  &.isNotGuessed {
+    background-color: red;
+  }
+  & p {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .Card {
+    width: 30%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .Card {
+    width: 48%;
+  }
+}

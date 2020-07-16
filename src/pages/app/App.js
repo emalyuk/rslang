@@ -8,19 +8,20 @@ import routes from '../../routes';
 
 import './App.scss';
 
-const Registration =    lazy(() => import('pages/auth/registration/Registration'));
-const Login        =    lazy(() => import('pages/auth/login/Login'));
-const Home         =    lazy(() => import('pages/home/Home'));
-const Team         =    lazy(() => import('pages/team/Team'));
-const Promo        =    lazy(() => import('pages/promo/Promo'));
-const Dictionary   =    lazy(() => import('pages/dictionary/Dictionary'));
-const Statistic    =    lazy(() => import('pages/statistic/Statistic'));
+const Registration = lazy(() => import('pages/auth/registration/Registration'));
+const Login = lazy(() => import('pages/auth/login/Login'));
+const Home = lazy(() => import('pages/home/Home'));
+const Team = lazy(() => import('pages/team/Team'));
+const Promo = lazy(() => import('pages/promo/Promo'));
+const Dictionary = lazy(() => import('pages/dictionary/Dictionary'));
+const Statistic = lazy(() => import('pages/statistic/Statistic'));
 
-const Games        =    lazy(() => import('pages/game/Game'));
-const Savanna      =    lazy(() => import('../../games/savanna/Savanna'));
-const Sprint       =    lazy(() => import('../../games/sprint'));
+const Games = lazy(() => import('pages/game/Game'));
+const Savanna = lazy(() => import('../../games/savanna/Savanna'));
+const SpeakIt = lazy(() => import('../../games/speakIt/SpeakIt'));
+const Sprint = lazy(() => import('../../games/sprint'));
 
-const NotFound     =    lazy(() => import('pages/notFound/NotFound'));
+const NotFound = lazy(() => import('pages/notFound/NotFound'));
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
             <Route path={routes.promo} component={Promo} exact />
             <Route path={routes.game} component={Games} exact />
             <Route path={routes.games.savanna} component={Savanna} exact />
+            <Route path={routes.games.speakIt} component={SpeakIt} exact />
             <Route path={routes.games.sprint} component={Sprint} exact />
             <PrivateRoute path={routes.statistic} component={Statistic} exact />
             <PrivateRoute path={routes.home} component={Home} exact />

@@ -11,6 +11,7 @@ export default {
   games: {
     savanna: '/game/savanna',
     sprint: '/game/sprint',
+    speakIt: '/game/speakIt',
   },
   statistic: '/statistic',
 };
