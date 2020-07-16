@@ -54,7 +54,7 @@ const Statistic = () => {
     setSpeakit(newSpeakit);
     setLeosprint(newLeosprint);
     setEnglishpuzzle(newEnglishpuzzle);
-    
+
     setIsLoaded(true);
   };
 
@@ -64,14 +64,18 @@ const Statistic = () => {
 
   return (
     <div className='statistic-wrapper'>
-      {isLoaded && !savanna.series[0].length && !speakit.series[0].length && !leosprint.series[0].length && !englishpuzzle.series[0].length && <h2>Статистика отсутствует</h2>}
+      {isLoaded &&
+        !savanna.series[0].length &&
+        !speakit.series[0].length &&
+        !leosprint.series[0].length &&
+        !englishpuzzle.series[0].length && <h2>Статистика отсутствует</h2>}
 
       {!!savanna.series[0].length && (
         <div className='graph-wrapper'>
           <div className='blur' />
           <div className='inner-wrapper'>
             <h1>Savanna</h1>
-            <ChartistGraph data={savanna} type='Line' options={options}/>
+            <ChartistGraph data={savanna} type='Line' options={options} />
           </div>
         </div>
       )}
@@ -80,8 +84,8 @@ const Statistic = () => {
         <div className='graph-wrapper'>
           <div className='blur' />
           <div className='inner-wrapper'>
-            <h1>Leo-sprint</h1>
-            <ChartistGraph data={speakit} type='Line' options={options}/>
+            <h1>Speak-It</h1>
+            <ChartistGraph data={speakit} type='Line' options={options} />
           </div>
         </div>
       )}
@@ -100,7 +104,7 @@ const Statistic = () => {
         <div className='graph-wrapper'>
           <div className='blur' />
           <div className='inner-wrapper'>
-            <h1>Leo-sprint</h1>
+            <h1>English Puzzle</h1>
             <ChartistGraph data={englishpuzzle} type='Line' options={options} />
           </div>
         </div>
