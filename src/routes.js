@@ -12,6 +12,7 @@ export default {
     savanna: '/game/savanna',
     sprint: '/game/sprint',
     speakIt: '/game/speakIt',
+    englishPuzzle: '/game/englishPuzzle',
   },
   statistic: '/statistic',
 };

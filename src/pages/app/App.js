@@ -20,6 +20,7 @@ const Games = lazy(() => import('pages/game/Game'));
 const Savanna = lazy(() => import('../../games/savanna/Savanna'));
 const SpeakIt = lazy(() => import('../../games/speakIt/SpeakIt'));
 const Sprint = lazy(() => import('../../games/sprint'));
+const EnglishPuzzle = lazy(() => import('../../games/englishPuzzle/EnglishPuzzle'));
 
 const NotFound = lazy(() => import('pages/notFound/NotFound'));
 
@@ -39,6 +40,8 @@ const App = () => {
             <Route path={routes.games.speakIt} component={SpeakIt} exact />
             <Route path={routes.games.sprint} component={Sprint} exact />
             <PrivateRoute path={routes.statistic} component={Statistic} exact />
+            <Route path={routes.games.englishPuzzle} component={EnglishPuzzle} exact />
+            <PrivateRoute path={routes.team} component={Team} exact />
             <PrivateRoute path={routes.home} component={Home} exact />
             <PrivateRoute path={routes.dictionary} component={Dictionary} exact />
             <Route component={NotFound} />

@@ -1,0 +1,12 @@
+@import '../../../../scss/variables';
+@import '../../../../scss/mixins';
+
+.results{
+  max-width: 300px;
+  min-width: 300px;
+  min-height: 200px;
+  padding: 10px 15px;
+  border-radius: 7px;
+  margin: auto;
+  background-color: $secondColor;
+}

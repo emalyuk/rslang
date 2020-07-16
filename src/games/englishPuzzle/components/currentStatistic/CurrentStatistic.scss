@@ -1,0 +1,12 @@
+.currentStatistic{
+  min-height: 200px;
+  display: flex;
+  place-items: center;
+  flex-direction: column;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.currentStatistic__cell{
+  text-align: center;
+}

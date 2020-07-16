@@ -1,0 +1,89 @@
+@import '../../../../scss/variables';
+@import '../../../../scss/mixins';
+
+
+.level{
+  position: relative;
+  min-width: 300px;
+  border-radius: 3px;
+  background-color: $secondColor;
+  padding: 10px;
+}
+
+.level__header{
+  font-size: 30px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  position: relative;
+
+    &:after{
+      position: absolute;
+      content: '';
+      left: 0;
+      bottom: 5px;
+      right: 0;
+      height: 2px;
+      background-color: $firstColor;
+    }
+}
+
+.level__btns-wrapper{
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.level__btn{
+  background-image: $btnGradient;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 5px;
+  transition: all .4s ease-in-out;
+  background-image: $btnGradient;
+
+  &:hover {
+    background-position: 100% 0;
+    transition: all .4s ease-in-out;
+  }
+
+  &--active{
+    background: none;
+    background-color: $activeBtnLvlColor;
+  }
+
+  &:focus{
+    outline: none;
+  }
+}
+
+.level__closeBtn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  background-size: cover;
+  background-image: url('/img/close.svg');
+  z-index: 3;
+
+  &:hover {
+    background-image: url('/img/close-hovered.svg');
+  }
+
+  &--active{
+
+    background-color: $activeBtnLvlColor;
+  }
+
+  &:focus{
+    outline: none;
+  }
+
+}

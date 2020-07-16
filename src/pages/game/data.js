@@ -12,7 +12,7 @@ export const games = [
   {
     name: 'Пазл',
     description: 'Помогает выучить значение слов и учит лучше выражать свои мысли на английском.',
-    path: '/game/puzzle-english',
+    path: '/game/englishPuzzle',
   },
   {
     name: 'Произношение',
